@@ -1,0 +1,915 @@
+<html>
+    <style>
+
+        /*@import url(css/treemap-style.css?aea6f0a);*/
+
+        #chart {
+            width: 960px;
+            height: 500px;
+            background: #ddd;
+        }
+
+        text {
+            pointer-events: none;
+        }
+
+        .grandparent text {
+            font-weight: bold;
+        }
+
+        rect {
+            fill: none;
+            stroke: #fff;
+        }
+
+        rect.parent,
+        .grandparent rect {
+            stroke-width: 2px;
+        }
+
+        .grandparent rect {
+            fill: orange;
+        }
+
+        .grandparent:hover rect {
+            fill: #ee9700;
+        }
+
+        .children rect.parent,
+        .grandparent rect {
+            cursor: pointer;
+        }
+
+        .children rect.parent {
+            fill: #bbb;
+            fill-opacity: .5;
+        }
+
+        .children:hover rect.child {
+            fill: #bbb;
+        }
+
+        .node {
+            border: solid 1px white;
+            font: 10px sans-serif;
+            line-height: 12px;
+            overflow: hidden;
+            position: absolute;
+            text-indent: 2px;
+        }
+
+        .c3-line, .c3-focused {stroke-width: 3px !important;}
+        .c3-bar {stroke: white !important; stroke-width: 1;}
+        .c3 text { font-size: 12px; color: grey;}
+        .tick line {stroke: white;}
+        .c3-axis path {stroke: grey;}
+        .c3-circle { opacity: 1 !important; }
+
+        .pace {
+            -webkit-pointer-events: none;
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        .pace-inactive {
+            display: none;
+        }
+
+        .pace .pace-progress {
+            background: #29d;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            right: 100%;
+            width: 100%;
+            height: 2px;
+        }
+
+        .pace .pace-progress-inner {
+            display: block;
+            position: absolute;
+            right: 0px;
+            width: 100px;
+            height: 100%;
+            box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+            opacity: 1.0;
+            -webkit-transform: rotate(3deg) translate(0px, -4px);
+            -moz-transform: rotate(3deg) translate(0px, -4px);
+            -ms-transform: rotate(3deg) translate(0px, -4px);
+            -o-transform: rotate(3deg) translate(0px, -4px);
+            transform: rotate(3deg) translate(0px, -4px);
+        }
+
+        .pace .pace-activity {
+            display: block;
+            position: fixed;
+            z-index: 2000;
+            top: 15px;
+            right: 15px;
+            width: 14px;
+            height: 14px;
+            border: solid 2px transparent;
+            border-top-color: #29d;
+            border-left-color: #29d;
+            border-radius: 10px;
+            -webkit-animation: pace-spinner 400ms linear infinite;
+            -moz-animation: pace-spinner 400ms linear infinite;
+            -ms-animation: pace-spinner 400ms linear infinite;
+            -o-animation: pace-spinner 400ms linear infinite;
+            animation: pace-spinner 400ms linear infinite;
+        }
+
+        @-webkit-keyframes pace-spinner {
+            0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+        }
+        @-moz-keyframes pace-spinner {
+            0% { -moz-transform: rotate(0deg); transform: rotate(0deg); }
+            100% { -moz-transform: rotate(360deg); transform: rotate(360deg); }
+        }
+        @-o-keyframes pace-spinner {
+            0% { -o-transform: rotate(0deg); transform: rotate(0deg); }
+            100% { -o-transform: rotate(360deg); transform: rotate(360deg); }
+        }
+        @-ms-keyframes pace-spinner {
+            0% { -ms-transform: rotate(0deg); transform: rotate(0deg); }
+            100% { -ms-transform: rotate(360deg); transform: rotate(360deg); }
+        }
+        @keyframes pace-spinner {
+            0% { transform: rotate(0deg); transform: rotate(0deg); }
+            100% { transform: rotate(360deg); transform: rotate(360deg); }
+        }
+
+    </style>
+    <head>
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
+        <!-- Include roboto.css to use the Roboto web font, material.css to include the theme and ripples.css to style the ripple effect -->
+        <link href="css/roboto.min.css" rel="stylesheet">
+        <link href="css/material.min.css" rel="stylesheet">
+        <link href="css/ripples.min.css" rel="stylesheet">
+        <link href="css/pivot.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <!-- Your site -->
+
+        <div class="container">
+            <!--navBar-->
+            <div class="bs-component">
+                <div class="navbar navbar-default navbar-material-light-blue">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="javascript:loadHome()">SCT Statistics</a>
+                    </div>
+                    <div class="navbar-collapse collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+                            <li id="tab-overview"><a href="javascript:loadOverview()">Overview</a></li>
+                            <!--<li class="active"><a href="javascript:void(0)">Active</a></li>-->
+                            <!--<li><a href="javascript:void(0)">Link</a></li>-->
+                            <li id="tab-reports" class="dropdown">
+                                <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Table Reports <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:setReportsActive();loadGeneralReleaseStatistics()">General Release Statistics</a></li>
+                                    <li><a href="javascript:setReportsActive();loadNewConceptsStatistics()">New Concepts</a></li>
+                                    <li><a href="javascript:setReportsActive();loadRetiredConceptsStatistics()">Inactivated Concepts</a></li>
+                                    <li><a href="javascript:setReportsActive();loadExistingConceptsCount()">Changes to Existing Concepts (counts)</a></li>
+                                    <li><a href="javascript:setReportsActive();loadExistingConceptsPercent()">Changes to Existing Concepts (percents)</a></li>
+                                    <!--<li class="divider"></li>-->
+                                </ul>
+                            </li>
+                            <!--<li><a href="javascript:loadTreemap()">TreeMaps</a></li>-->
+                            <li id="tab-pivot">
+                                <a href="" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Data Explorer <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:setReportsActive();loadPivotChanges()">Explore changes data</a></li>
+                                    <li><a href="javascript:setReportsActive();loadPivotNew()">Explore new concepts data</a></li>
+                                    <li><a href="javascript:setReportsActive();loadPivotInactive()">Explore concept inactivation data</a></li>
+                                    <!--<li class="divider"></li>-->
+                                </ul>
+                            </li>
+                        </ul>
+                        <!--<ul class="nav navbar-nav navbar-right">-->
+                            <!--<li><a href="javascript:void(0)">Link</a></li>-->
+                            <!--<li class="dropdown">-->
+                                <!--<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>-->
+                                <!--<ul class="dropdown-menu">-->
+                                    <!--<li><a href="javascript:void(0)">Action</a></li>-->
+                                    <!--<li><a href="javascript:void(0)">Another action</a></li>-->
+                                    <!--<li><a href="javascript:void(0)">Something else here</a></li>-->
+                                    <!--<li class="divider"></li>-->
+                                    <!--<li><a href="javascript:void(0)">Separated link</a></li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    </div>
+                </div>
+            </div>
+            <!--navBar end-->
+            <div class="container" id="main-panel">
+
+            </div>
+        </div>
+        <!-- Your site ends -->
+        <script src="js/pace.min.js"></script>
+
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+
+
+        <script src="js/ripples.min.js"></script>
+        <script src="js/material.min.js"></script>
+        <script src="js/handlebars-v1.3.0.js"></script>
+        <script src="js/pivot.min.js"></script>
+        <script src="js/d3_renderers.min.js"></script>
+        <script src="js/c3_renderers.min.js"></script>
+        <script lang="javascript" src="js/xlsx.core.min.js"></script>
+        <script src="js/d3pie.min.js"></script>
+
+        <!-- Handlebars templates -->
+        <script src="views/compiled/templates.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                // This command is used to initialize some elements and make them work properly
+                $.material.init();
+                loadHome();
+            });
+            function loadHome() {
+                $(".navbar-nav li").removeClass("active");
+                var context = {};
+                $("#main-panel").html(JST["views/home.hbs"](context));
+                drawHomePieChart();
+            }
+            function loadGeneralReleaseStatistics() {
+                $.get( "data/GENERAL_RELEASE_STATISTICS.csv", function( response ) {
+                    //console.log("Data loaded 1");
+                }).done(function(response) {
+                    response = response.replace(/[\r|\r\n]/g, "\n");
+                    var allTextLines = response.split(/\n/);
+                    //console.log(allTextLines);
+                    var entries = allTextLines.shift().split(',');
+                    var lines = [];
+                    var headings = entries.splice(0,7);
+                    while (allTextLines.length>0) {
+                        var textLine = allTextLines.shift();
+                        entries = textLine.split(',');
+                        while (entries.length>0) {
+                            var tarr = {};
+                            for (var j=0; j<7; j++) {
+                                tarr[headings[j]] = entries.shift();
+                            }
+                            if (typeof tarr[headings[0]] != "undefined") {
+                                lines.push(tarr);
+                            }
+                        }
+                    };
+                    var context = {
+                        rows: lines
+                    };
+                    $("#main-panel").html(JST["views/generalReleaseStatistics.hbs"](context));
+                });
+            }
+            function loadExistingConceptsCount() {
+                $.get( "data/STATISTICS_ON_EXISTING_CONCEPTS_count.csv", function( response ) {
+                }).done(function(response) {
+                    response = response.replace(/[\r|\r\n]/g, "\n");
+                    var allTextLines = response.split(/\n/);
+                    var entries = allTextLines.shift().split(',');
+                    var lines = [];
+                    var headings = entries.splice(0,9);
+                    while (allTextLines.length>0) {
+                        var textLine = allTextLines.shift();
+                        entries = textLine.split(',');
+                        while (entries.length>0) {
+                            var tarr = {};
+                            for (var j=0; j<9; j++) {
+                                tarr[headings[j]] = entries.shift();
+                            }
+                            if (typeof tarr[headings[0]] != "undefined") {
+                                lines.push(tarr);
+                            }
+                        }
+                    };
+                    var context = {
+                        rows: lines
+                    };
+                    $("#main-panel").html(JST["views/existingConceptsCount.hbs"](context));
+                });
+            }
+            function loadExistingConceptsPercent() {
+                $.get( "data/STATISTICS_ON_EXISTING_CONCEPTS_percent.csv", function( response ) {
+                }).done(function(response) {
+                    response = response.replace(/[\r|\r\n]/g, "\n");
+                    var allTextLines = response.split(/\n/);
+                    var entries = allTextLines.shift().split(',');
+                    var lines = [];
+                    var headings = entries.splice(0,9);
+                    while (allTextLines.length>0) {
+                        var textLine = allTextLines.shift();
+                        entries = textLine.split(',');
+                        while (entries.length>0) {
+                            var tarr = {};
+                            for (var j=0; j<9; j++) {
+                                tarr[headings[j]] = entries.shift();
+                            }
+                            if (typeof tarr[headings[0]] != "undefined") {
+                                lines.push(tarr);
+                            }
+                        }
+                    };
+                    var context = {
+                        rows: lines
+                    };
+                    $("#main-panel").html(JST["views/existingConceptsPercent.hbs"](context));
+                });
+            }
+            function loadNewConceptsStatistics() {
+                $.get( "data/STATISTICS_ON_NEW_CONCEPTS.csv", function( response ) {
+                }).done(function(response) {
+                    response = response.replace(/[\r|\r\n]/g, "\n");
+                    var allTextLines = response.split(/\n/);
+                    var entries = allTextLines.shift().split(',');
+                    var lines = [];
+                    var headings = entries.splice(0,7);
+                    while (allTextLines.length>0) {
+                        var textLine = allTextLines.shift();
+                        entries = textLine.split(',');
+                        while (entries.length>0) {
+                            var tarr = {};
+                            for (var j=0; j<7; j++) {
+                                tarr[headings[j]] = entries.shift();
+                            }
+                            if (typeof tarr[headings[0]] != "undefined") {
+                                lines.push(tarr);
+                            }
+                        }
+                    };
+                    var context = {
+                        rows: lines
+                    };
+                    $("#main-panel").html(JST["views/newConcepts.hbs"](context));
+                });
+            }
+            function loadRetiredConceptsStatistics() {
+                $.get( "data/STATISTICS_ON_RETIRED_CONCEPTS.csv", function( response ) {
+                }).done(function(response) {
+                    response = response.replace(/[\r|\r\n]/g, "\n");
+                    var allTextLines = response.split(/\n/);
+                    var entries = allTextLines.shift().split(',');
+                    var lines = [];
+                    var headings = entries.splice(0,12);
+                    while (allTextLines.length>0) {
+                        var textLine = allTextLines.shift();
+                        entries = textLine.split(',');
+                        while (entries.length>0) {
+                            var tarr = {};
+                            for (var j=0; j<12; j++) {
+                                tarr[headings[j]] = entries.shift();
+                            }
+                            if (typeof tarr[headings[0]] != "undefined") {
+                                lines.push(tarr);
+                            }
+                        }
+                    };
+                    var context = {
+                        rows: lines
+                    };
+                    $("#main-panel").html(JST["views/retiredConcepts.hbs"](context));
+                });
+            }
+            function loadTreemap() {
+                var context = {};
+                $("#main-panel").html(JST["views/treemap.hbs"](context));
+                initializeTreemap();
+            }
+            function loadPivot() {
+                $(".navbar-nav li").removeClass("active");
+                $("#tab-pivot").addClass("active");
+                var context = {};
+                $("#main-panel").html(JST["views/pivot.hbs"](context));
+                initializePivot();
+            }
+            function loadPivotChanges() {
+                $(".navbar-nav li").removeClass("active");
+                $("#tab-pivot").addClass("active");
+                var context = {
+                    title: "All concepts with changes in this release"
+                };
+                $("#main-panel").html(JST["views/pivot.hbs"](context));
+                initializePivot("data/ChangeList_20150731.json",["semtag"],["designationChange"],["Heatmap"]);
+            }
+            function loadPivotNew() {
+                $(".navbar-nav li").removeClass("active");
+                $("#tab-pivot").addClass("active");
+                var context = {
+                    title: "All new concepts in this release"
+                };
+                $("#main-panel").html(JST["views/pivot.hbs"](context));
+                initializePivot("data/newConceptsDetailed.csv",["semtag"],["DefStatus"],["Heatmap"]);
+            }
+            function loadPivotInactive() {
+                $(".navbar-nav li").removeClass("active");
+                $("#tab-pivot").addClass("active");
+                var context = {
+                    title: "All concepts inactivated in this release"
+                };
+                $("#main-panel").html(JST["views/pivot.hbs"](context));
+                initializePivot("data/retiredConceptsDetailed.csv",["semtag"],["reason"],["Heatmap"]);
+            }
+            function loadOverview() {
+                $(".navbar-nav li").removeClass("active");
+                $("#tab-overview").addClass("active");
+                var context = {};
+                $("#main-panel").html(JST["views/overview.hbs"](context));
+                $("#overview-body").load("docs/SNOMEDCT_Quality_Evaluation_P1_Descriptive_Release_Statistics_20151203v0_93.htm");
+            }
+
+            function setReportsActive() {
+                $(".navbar-nav li").removeClass("active");
+                $("#tab-reports").addClass("active");
+            }
+
+            function initializePivot(file, rows, columns, rendererName) {
+                if (file.substr(-4) == "json") {
+                    $.getJSON(file, function(response){
+                    }).error(function(err) {
+                        console.log("Error", err);
+                    }).complete(function(data) {
+                        var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.d3_renderers);
+                        renderers = $.extend(renderers, $.pivotUtilities.c3_renderers);
+                        var dataObject = JSON.parse(data.responseText);
+                        $("#pivot").pivotUI(dataObject,
+                                {
+                                    rows: rows,
+                                    cols: columns,
+                                    rendererName: rendererName,
+                                    renderers: renderers
+                                }
+                        );
+                    });
+                } else if (file.substr(-4) == ".csv") {
+                    $.get( file, function( response ) {
+                    }).done(function(response) {
+                        response = response.replace(/[\r|\r\n]/g, "\n");
+                        var allTextLines = response.split(/\n/);
+                        var entries = allTextLines.shift().split(',');
+                        var lines = [];
+                        var headings = entries.splice(0,12);
+                        while (allTextLines.length>0) {
+                            var textLine = allTextLines.shift();
+                            entries = textLine.split(',');
+                            while (entries.length>0) {
+                                var tarr = {};
+                                for (var j=0; j<12; j++) {
+                                    if (headings[j]) {
+                                        tarr[headings[j]] = entries.shift();
+                                    }
+                                }
+                                if (typeof tarr[headings[0]] != "undefined") {
+                                    lines.push(tarr);
+                                }
+                            }
+                        };
+                        var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.d3_renderers);
+                        renderers = $.extend(renderers, $.pivotUtilities.c3_renderers);
+                        var dataObject = lines;
+                        $("#pivot").pivotUI(dataObject,
+                                {
+                                    rows: rows,
+                                    cols: columns,
+                                    rendererName: rendererName,
+                                    renderers: renderers
+                                }
+                        );
+                    });
+                }
+            }
+        </script>
+
+        <script>
+            function initializeTreemap() {
+                var margin = {top: 20, right: 0, bottom: 0, left: 0},
+                    width = 960,
+                    height = 500 - margin.top - margin.bottom,
+                    formatNumber = d3.format(",d"),
+                    transitioning;
+
+                var x = d3.scale.linear()
+                    .domain([0, width])
+                    .range([0, width]);
+
+                var y = d3.scale.linear()
+                    .domain([0, height])
+                    .range([0, height]);
+
+                var treemap = d3.layout.treemap()
+                    .children(function(d, depth) { return depth ? null : d._children; })
+                    .sort(function(a, b) { return a.value - b.value; })
+                    .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
+                    .round(false);
+
+                var svg = d3.select("#chart").append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.bottom + margin.top)
+                    .style("margin-left", -margin.left + "px")
+                    .style("margin.right", -margin.right + "px")
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                    .style("shape-rendering", "crispEdges");
+
+                var grandparent = svg.append("g")
+                    .attr("class", "grandparent");
+
+                grandparent.append("rect")
+                    .attr("y", -margin.top)
+                    .attr("width", width)
+                    .attr("height", margin.top);
+
+                grandparent.append("text")
+                    .attr("x", 6)
+                    .attr("y", 6 - margin.top)
+                    .attr("dy", ".75em");
+
+                d3.json("data/Hierarchy_138875005.json", function(root) {
+                    initialize(root);
+                    accumulate(root, "descendantCount");
+                    layout(root);
+                    display(root);
+
+                    function initialize(root) {
+                        root.x = root.y = 0;
+                        root.dx = width;
+                        root.dy = height;
+                        root.depth = 0;
+                    }
+
+                    // Aggregate the values for internal nodes. This is normally done by the
+                    // treemap layout, but not here because of our custom implementation.
+                    // We also take a snapshot of the original children (_children) to avoid
+                    // the children being overwritten when when layout is computed.
+                    function accumulate(d, field) {
+                        //console.log(d);
+                        if (d._children) {
+                            d.children = d._children;
+                        }
+                        if (d.children) {
+                            d._children = d.children;
+                        }
+                        d.value = d[field];
+                        d.children.forEach(function(child) {
+                            accumulate(child, field)
+                        });
+                        //console.log(d.value);
+                        //console.log(d.children.reduce(function(p, v) { return p + accumulate(v, field);},0));
+//                return (d._children = d.children)
+//                    ? d.value = d.children.reduce(function(p, v) { return p + accumulate(v, field); }, 0)
+//                    : d.value;
+                    }
+
+                    // Compute the treemap layout recursively such that each group of siblings
+                    // uses the same size (1×1) rather than the dimensions of the parent cell.
+                    // This optimizes the layout for the current zoom state. Note that a wrapper
+                    // object is created for the parent node for each group of siblings so that
+                    // the parent’s dimensions are not discarded as we recurse. Since each group
+                    // of sibling was laid out in 1×1, we must rescale to fit using absolute
+                    // coordinates. This lets us use a viewport to zoom.
+                    function layout(d) {
+                        if (d._children) {
+                            treemap.nodes({_children: d._children});
+                            d._children.forEach(function(c) {
+                                c.x = d.x + c.x * d.dx;
+                                c.y = d.y + c.y * d.dy;
+                                c.dx *= d.dx;
+                                c.dy *= d.dy;
+                                c.parent = d;
+                                layout(c);
+                            });
+                        }
+                    }
+
+                    function display(d) {
+                        grandparent
+                            .datum(d.parent)
+                            .on("click", transition)
+                            .select("text")
+                            .text(name(d));
+
+                        var g1 = svg.insert("g", ".grandparent")
+                            .datum(d)
+                            .attr("class", "depth");
+
+                        var g = g1.selectAll("g")
+                            .data(d._children)
+                            .enter().append("g");
+
+                        g.filter(function(d) { return d._children; })
+                            .classed("children", true)
+                            .on("click", transition);
+
+                        g.selectAll(".child")
+                            .data(function(d) { return d._children || [d]; })
+                            .enter().append("rect")
+                            .attr("class", "child")
+                            .call(rect);
+
+                        g.append("rect")
+                            .attr("class", "parent")
+                            .call(rect)
+                            .append("title")
+                            .text(function(d) { return formatNumber(d.value); });
+
+                        g.append("text")
+                            .attr("dy", ".75em")
+                            .text(function(d) { return d.name + ": " + d.value; })
+                            .call(text);
+
+                        d3.select(window).on("click", function() { transition(root); });
+
+                        d3.select("select").on("change", function() {
+                            //initialize(root);
+                            accumulate(root, this.value);
+                            layout(root);
+                            transition(root);
+                            //layout(root);
+                            //display(root);
+                        });
+
+                        function transition(d) {
+                            if (transitioning || !d) return;
+                            transitioning = true;
+
+                            var g2 = display(d),
+                                t1 = g1.transition().duration(750),
+                                t2 = g2.transition().duration(750);
+
+                            // Update the domain only after entering new elements.
+                            x.domain([d.x, d.x + d.dx]);
+                            y.domain([d.y, d.y + d.dy]);
+
+                            // Enable anti-aliasing during the transition.
+                            svg.style("shape-rendering", null);
+
+                            // Draw child nodes on top of parent nodes.
+                            svg.selectAll(".depth").sort(function(a, b) { return a.depth - b.depth; });
+
+                            // Fade-in entering text.
+                            g2.selectAll("text").style("fill-opacity", 0);
+
+                            // Transition to the new view.
+                            t1.selectAll("text").call(text).style("fill-opacity", 0);
+                            t2.selectAll("text").call(text).style("fill-opacity", 1);
+                            t1.selectAll("rect").call(rect);
+                            t2.selectAll("rect").call(rect);
+
+                            // Remove the old node when the transition is finished.
+                            t1.remove().each("end", function() {
+                                svg.style("shape-rendering", "crispEdges");
+                                transitioning = false;
+                            });
+                        }
+
+                        return g;
+                    }
+
+                    function text(text) {
+                        text.attr("x", function(d) { return x(d.x) + 6; })
+                            .attr("y", function(d) { return y(d.y) + 6; });
+                    }
+
+                    function rect(rect) {
+                        rect.attr("x", function(d) { return x(d.x); })
+                            .attr("y", function(d) { return y(d.y); })
+                            .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
+                            .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
+                    }
+
+                    function name(d) {
+                        return d.parent
+                            ? name(d.parent) + "." + d.name + " (" + d.value + ")"
+                            : d.name + " (" + d.value + ")";
+                    }
+                });
+            };
+
+            function drawHomePieChart() {
+                $.get("data/GENERAL_RELEASE_STATISTICS.csv", function (response) {
+                    //console.log("Data loaded 1");
+                }).done(function (response) {
+                    response = response.replace(/[\r|\r\n]/g, "\n");
+                    var allTextLines = response.split(/\n/);
+                    //console.log(allTextLines);
+                    var entries = allTextLines.shift().split(',');
+                    var lines = [];
+                    var headings = entries.splice(0, 7);
+                    while (allTextLines.length > 0) {
+                        var textLine = allTextLines.shift();
+                        entries = textLine.split(',');
+                        while (entries.length > 0) {
+                            var tarr = {};
+                            for (var j = 0; j < 7; j++) {
+                                tarr[headings[j]] = entries.shift();
+                            }
+                            if (typeof tarr[headings[0]] != "undefined") {
+                                lines.push(tarr);
+                            }
+                        }
+                    }
+                    ;
+                    var generalContent = [];
+                    $.each(lines, function (index, line) {
+                        if (line.id != "138875005") {
+                            generalContent.push({label: line.term, value: parseInt(line.Concepts)});
+                        }
+                    });
+
+                    var pie = new d3pie("#pieChart", {
+                        "header": {
+                            "title": {
+                                "text": "SNOMED CT Hierarchies",
+                                "fontSize": 24,
+                                "font": "sans-serif"
+                            },
+                            "subtitle": {
+                                "text": "The distribution of active concepts in SNOMED CT among all first level hierarchies.",
+                                "color": "#999999",
+                                "fontSize": 12,
+                                "font": "sans-serif"
+                            },
+                            "titleSubtitlePadding": 9
+                        },
+                        "footer": {
+                            "color": "#999999",
+                            "fontSize": 10,
+                            "font": "sans-serif",
+                            "location": "bottom-left"
+                        },
+                        "size": {
+                            "canvasWidth": 1000,
+                            "pieOuterRadius": "90%"
+                        },
+                        "data": {
+                            "sortOrder": "value-desc",
+                            "content": generalContent
+                        },
+                        "labels": {
+                            "outer": {
+                                "pieDistance": 32
+                            },
+                            "inner": {
+                                "hideWhenLessThanPercentage": 3
+                            },
+                            "mainLabel": {
+                                "fontSize": 11
+                            },
+                            "percentage": {
+                                "color": "#ffffff",
+                                "decimalPlaces": 0
+                            },
+                            "value": {
+                                "color": "#adadad",
+                                "fontSize": 11
+                            },
+                            "lines": {
+                                "enabled": true
+                            },
+                            "truncation": {
+                                "enabled": true
+                            }
+                        },
+                        "effects": {
+                            "pullOutSegmentOnClick": {
+                                "effect": "linear",
+                                "speed": 400,
+                                "size": 8
+                            }
+                        },
+                        "misc": {
+                            "gradient": {
+                                "enabled": true,
+                                "percentage": 100
+                            }
+                        }
+                    });
+                });
+
+                $.get("data/STATISTICS_ON_NEW_CONCEPTS.csv", function (response) {
+                }).done(function (response) {
+                    response = response.replace(/[\r|\r\n]/g, "\n");
+                    var allTextLines = response.split(/\n/);
+                    var entries = allTextLines.shift().split(',');
+                    var lines = [];
+                    var headings = entries.splice(0, 7);
+                    while (allTextLines.length > 0) {
+                        var textLine = allTextLines.shift();
+                        entries = textLine.split(',');
+                        while (entries.length > 0) {
+                            var tarr = {};
+                            for (var j = 0; j < 7; j++) {
+                                tarr[headings[j]] = entries.shift();
+                            }
+                            if (typeof tarr[headings[0]] != "undefined") {
+                                lines.push(tarr);
+                            }
+                        }
+                    }
+                    ;
+
+                    var data = [];
+                    $.each(lines, function (index, line) {
+                        if (line.id != "138875005" && parseInt(line.NewConcepts) > 0) {
+                            data.push({label: line.term, value: parseInt(line.NewConcepts)});
+                        }
+                    });
+                    var pie2 = new d3pie("pieChart2", {
+                        "header": {
+                            "title": {
+                                "text": "New concepts",
+                                "fontSize": 34,
+                                "font": "helvetica"
+                            },
+                            "subtitle": {
+                                "text": "Distribution in hierarchies",
+                                "color": "#999999",
+                                "fontSize": 12,
+                                "font": "helvetica"
+                            },
+                            "location": "pie-center",
+                            "titleSubtitlePadding": 10
+                        },
+                        "footer": {
+                            "text": "* Summary data extracted from the reports available in the site.",
+                            "color": "#999999",
+                            "fontSize": 10,
+                            "font": "open sans",
+                            "location": "bottom-left"
+                        },
+                        "size": {
+                            "canvasWidth": 1000,
+                            "pieInnerRadius": "80%",
+                            "pieOuterRadius": "74%"
+                        },
+                        "data": {
+                            "sortOrder": "label-desc",
+                            "content": data
+                        },
+                        "labels": {
+                            "outer": {
+                                "format": "label-value1",
+                                "pieDistance": 20
+                            },
+                            "inner": {
+                                "format": "none"
+                            },
+                            "mainLabel": {
+                                "fontSize": 11
+                            },
+                            "percentage": {
+                                "color": "#999999",
+                                "fontSize": 11,
+                                "decimalPlaces": 0
+                            },
+                            "value": {
+                                "color": "#cccc43",
+                                "fontSize": 11
+                            },
+                            "lines": {
+                                "enabled": true,
+                                "color": "#777777"
+                            },
+                            "truncation": {
+                                "enabled": true
+                            }
+                        },
+                        "effects": {
+                            "pullOutSegmentOnClick": {
+                                "effect": "linear",
+                                "speed": 400,
+                                "size": 8
+                            }
+                        },
+                        "misc": {
+                            "colors": {
+                                "segmentStroke": "#000000"
+                            }
+                        }
+                    });
+                });
+            }
+        </script>
+
+    </body>
+
+</html>

@@ -1,0 +1,54 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-height-indicator"></div>
+        <div class="card-content">
+            <div class="card-body">
+                <h2>Changes to Existing Concepts - Percentage of Concepts with each Change Type (*)</h2>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="bs-component">
+                            <table class="table table-striped table-hover ">
+                                <thead>
+                                <tr>
+                                    <th>Hierarchy</th>
+                                    <th class="text-right">Any</th>
+                                    <th class="text-right">Stated Defn</th>
+                                    <th class="text-right">Inferred Defn</th>
+                                    <th class="text-right">P to SD </th>
+                                    <th class="text-right">SD to P</th>
+                                    <th class="text-right">Description Change</th>
+                                    <th class="text-right">FSN Change</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each rows}}
+                                    <tr class="small">
+                                        <td>{{term}}</td>
+                                        <td class="text-right">{{PercOfAnyChange}}%</td>
+                                        <td class="text-right">{{PercOfStatedDefChange}}%</td>
+                                        <td class="text-right">{{PercOfInferredDefChange}}%</td>
+                                        <td class="text-right">{{PercOfPrimitive2SD}}%</td>
+                                        <td class="text-right">{{PercOfSD2Primitive}}%</td>
+                                        <td class="text-right">{{PercOfDescriptionChange}}%</td>
+                                        <td class="text-right">{{PercOfFSNChange}}%</td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                                <tfoot>
+                                <tr class="small"><td colspan="8">(*) Stated Defn = Change to stated concept definition<br>
+                                    Inferred Defn = Change to inferred concept definition<br>
+                                    P to SD = Change in concept definition status from Primitive to Sufficiently Defined<br>
+                                    SD to P = Change in concept definition status Sufficiently Defined to Primitive</td></tr>
+                                </tfoot>
+                            </table>
+                        </div><!-- /example -->
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <!--<button class="btn btn-flat">Share</button>-->
+                <!--<button class="btn btn-flat btn-warning">Learn More</button>-->
+            </footer>
+        </div>
+    </div>
+</div>

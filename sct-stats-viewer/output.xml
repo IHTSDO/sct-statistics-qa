@@ -1,0 +1,25 @@
+<assembly>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>./</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>css/**.*</include>
+        <include>data/**.*</include>
+        <include>docs/**.*</include>
+        <include>fonts/**.*</include>
+        <include>js/**.*</include>
+        <include>views/**.*</include>
+        <include>Gruntfile.js</include>
+        <include>index.html</include>
+        <include>LICENSE</include>
+        <include>package.json</include>
+        <include>README.md</include>
+      </includes>
+    </fileSet>  
+  </fileSets>
+  <includeBaseDirectory>true</includeBaseDirectory>
+</assembly>
