@@ -1,0 +1,82 @@
+<div class="col-md-12">
+    <div class="card" style="overflow: auto;">
+        <div class="card-height-indicator"></div>
+        <div class="card-content">
+            <div class="card-body">
+                <h2>Patterns</h2>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="bs-component">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-1">Id</th>
+                                    <th class="col-md-7">Description</th>
+                                    <th class="col-md-1 text-right">Severity</th>
+                                    <th class="col-md-1 text-right">Count</th>
+                                    <th class="col-md-2"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each report.patternProcess.patterns}}
+                                    <tr class="small">
+                                        <td class="">{{patternId}}</td>
+                                        <td class="">{{description}}</td>
+                                        <td class="text-right">{{severity}}</td>
+                                        <td class="text-right">{{resultCount}}</td>
+                                        <td class=""><a class="btn btn-material-light-blue btn-sm load-sample-button" style="margin: 0px;" href="javascript:showSample({{patternId}});" role="button">Results</a></td>
+                                    </tr>
+                                    <tr class="small" style="display: none;" id="sample-row-{{patternId}}">
+                                        <td class=""></td>
+                                        <td colspan=3 class="">
+                                            <table class="table table-striped">
+                                                {{#each resultSample}}
+                                                    <tr>
+                                                        <td class="">{{conceptId}}</td>
+                                                        <td class="">{{term}}</td>
+                                                        <td class="small">{{matchDescription}}</td>
+                                                    </tr>
+                                                {{/each}}
+                                            </table>
+                                            <!--<div class="bs-component">-->
+                                                <!--<div class="list-group">-->
+                                                    <!--{{#each resultSample}}-->
+                                                        <!--<div class="list-group-item">-->
+                                                            <!--<div class="row-action-primary">-->
+                                                                <!--<i class="material-icons"></i>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="row-content">-->
+                                                                <!--<div class="least-content">CID: {{conceptId}}</div>-->
+                                                                <!--<h4 class="list-group-item-heading">{{term}}Placeholder term</h4>-->
+
+                                                                <!--<p class="list-group-item-text">{{matchDescription}}</p>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                        <!--<div class="list-group-separator"></div>-->
+                                                    <!--{{/each}}-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                            <p class="text-center"><a href="javascript:loadFullResult('{{resultFileName}}','{{description}}');">Load all {{resultCount}} results</a></p>
+                                        </td>
+                                        <td class=""></td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <!--<td colspan="6">(*) Percentage of existing concepts in hierarchy which are Sufficiently Defined (SD). For the root concept the value includes all SNOMED CT.<br>-->
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div><!-- /example -->
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <!--<button class="btn btn-flat">Share</button>-->
+                <!--<button class="btn btn-flat btn-warning">Learn More</button>-->
+            </footer>
+        </div>
+    </div>
+</div>

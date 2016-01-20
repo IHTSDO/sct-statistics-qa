@@ -152,7 +152,7 @@
         <link href="css/material.min.css" rel="stylesheet">
         <link href="css/ripples.min.css" rel="stylesheet">
         <link href="css/pivot.css" rel="stylesheet">
-
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
 
     <body>
@@ -197,6 +197,7 @@
                                     <!--<li class="divider"></li>-->
                                 </ul>
                             </li>
+                            <li id="tab-patterns"><a href="javascript:loadAnalyticsResultsIndex()">Patterns</a></li>
                         </ul>
                         <!--<ul class="nav navbar-nav navbar-right">-->
                             <!--<li><a href="javascript:void(0)">Link</a></li>-->
@@ -252,6 +253,42 @@
                 var context = {};
                 $("#main-panel").html(JST["views/home.hbs"](context));
                 drawHomePieChart();
+            }
+            function loadAnalyticsResultsIndex() {
+                $.getJSON("data/analyticsResults.json", function(response){
+                }).error(function(err) {
+                    console.log("Error", err);
+                }).complete(function(data) {
+                    var dataObject = JSON.parse(data.responseText);
+                    //console.log(dataObject);
+                    dataObject.patternProcess.patterns.sort(function(a, b) {
+                        return parseInt(a.patternId) - parseInt(b.patternId);
+                    });
+                    var context = {
+                        report: dataObject
+                    };
+                    $("#main-panel").html(JST["views/analyticsResultsIndex.hbs"](context));
+                });
+            }
+            function showSample(patternId) {
+                $("#sample-row-" + patternId).toggle();
+            }
+            function loadFullResult(fileName, patternName) {
+                $.getJSON("data/"+fileName, function(response){
+                }).error(function(err) {
+                    console.log("Error", err);
+                }).complete(function(data) {
+                    var dataObject = JSON.parse(data.responseText);
+                    //console.log(dataObject);
+                    var context = {
+                        results: dataObject,
+                        count: dataObject.length,
+                        pattern: patternName
+                    };
+                    $("#main-panel").html(JST["views/patternResults.hbs"](context));
+                    window.scrollTo(0,0);
+
+                });
             }
             function loadGeneralReleaseStatistics() {
                 $.get( "data/GENERAL_RELEASE_STATISTICS.csv", function( response ) {
