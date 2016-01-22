@@ -21,7 +21,7 @@
 	</outputFile>
 	<outputDetailFile>
 	<file>LocalizedConceptDetails.csv</file>
-	<reportHeader>Hierarchy,Id,Term</reportHeader>
+	<reportHeader>Hierarchy,Id,Term,Condition</reportHeader>
 	<storedProcedure>
 	<name>getLocalizedConceptDetails()</name>
 	</storedProcedure>

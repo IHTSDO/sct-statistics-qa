@@ -10,7 +10,7 @@ CREATE PROCEDURE getLocalizedConceptDetails()
 truncate table cpttable6_details;
 
 insert into cpttable6_details
-select distinct d2.term, r.id, d.term
+select distinct d2.term, r.id, d.term,'Existing localized concept'
 from actConcepts r
 inner join s_tclosure_stated t on t.descendant=r.id 
 inner join s_statedrootdesc d2 on d2.sourceId=t.ancestor
@@ -23,6 +23,11 @@ set TERM= (select top 1 d.term from s_descriptions d
 			where d.conceptid=cpttable6_details.id
 			and d.active=1)
 			where cpttable6_details.term is null ;
+
+
+update cpttable6_details
+set CONDITION= 'New localized concept' 
+where exists(select 0 from newConcepts c where c.id=cpttable6_details.id);
 
 open result;
 
