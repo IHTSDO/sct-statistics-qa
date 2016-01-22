@@ -1,4 +1,5 @@
 <assembly>
+<id>viewer</id>
   <formats>
     <format>zip</format>
   </formats>
@@ -8,17 +9,20 @@
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>css/**.*</include>
-        <include>data/**.*</include>
-        <include>docs/**.*</include>
+        <include>data/</include>
+        <include>docs/**/*.*</include>
         <include>fonts/**.*</include>
         <include>js/**.*</include>
-        <include>views/**.*</include>
+        <include>views/**/*.*</include>
         <include>Gruntfile.js</include>
         <include>index.html</include>
         <include>LICENSE</include>
         <include>package.json</include>
         <include>README.md</include>
       </includes>
+      <excludes>
+      <exclude>data/**.*</exclude>
+      </excludes>
     </fileSet>  
   </fileSets>
   <includeBaseDirectory>true</includeBaseDirectory>

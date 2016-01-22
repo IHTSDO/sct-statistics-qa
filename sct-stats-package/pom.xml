@@ -6,4 +6,52 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>sct-stats-package</artifactId>
+   <properties>
+  <nano_webserver_version>2.2.1-SNAPSHOT</nano_webserver_version>
+  </properties>
+  	<dependencies>
+		<dependency>
+			<groupId>org.nanohttpd</groupId>
+			<artifactId>nanohttpd-webserver</artifactId>
+			<version>${nano_webserver_version}</version>
+			<classifier>jar-with-dependencies</classifier>
+			<exclusions>
+				<exclusion>
+					<artifactId>nanohttpd</artifactId>
+					<groupId>org.nanohttpd</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>*.*</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>package-assembly</id>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/assembly/output.xml</descriptor>
+							</descriptors>
+						</configuration>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

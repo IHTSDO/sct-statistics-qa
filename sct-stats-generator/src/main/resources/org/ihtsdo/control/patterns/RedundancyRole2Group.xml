@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<patternConfig>
+<patternId>2</patternId>
+<name>Redundancy role to rolegroup</name>
+<description>Redundancy role to rolegroup</description>
+<severity>low</severity>
+<resultFileName>Redundancy_role_to_rolegroup.json</resultFileName>
+<executionClass>org.ihtsdo.control.patterns.RedundancyRole2Group</executionClass>
+</patternConfig>

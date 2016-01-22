@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<patternConfig>
+<patternId>5</patternId>
+<name>Crossover between ungrouped relationshipType-target pair and grouped one</name>
+<description>Crossover between ungrouped relationshipType-target pair and grouped one</description>
+<severity>low</severity>
+<resultFileName>crossover_role_to_group.json</resultFileName>
+<executionClass>org.ihtsdo.control.patterns.CrossoverRole2Group</executionClass>
+</patternConfig>

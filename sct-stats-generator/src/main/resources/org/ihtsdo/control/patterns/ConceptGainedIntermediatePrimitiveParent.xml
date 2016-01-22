@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<patternConfig>
+<patternId>11</patternId>
+<name>Concepts that gained an intermediate primitive stated parent and have lost or gained inferred subtypes</name>
+<description>Concepts that gained an intermediate primitive stated parent and have lost or gained inferred subtypes</description>
+<severity>low</severity>
+<resultFileName>concepts_gain_intermediate_primitives_parent_lost_or_gain_subtypes.json</resultFileName>
+<executionClass>org.ihtsdo.control.patterns.ConceptsGainIntermediatePrimitiveParent</executionClass>
+</patternConfig>

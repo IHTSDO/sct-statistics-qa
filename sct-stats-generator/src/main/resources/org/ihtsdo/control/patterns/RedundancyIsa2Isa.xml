@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<patternConfig>
+<patternId>1</patternId>
+<name>Redundancy isa to isa</name>
+<description>Redundancy isa to isa</description>
+<severity>low</severity>
+<resultFileName>redundant_isas.json</resultFileName>
+<executionClass>org.ihtsdo.control.patterns.RedundancyIsa2Isa</executionClass>
+</patternConfig>

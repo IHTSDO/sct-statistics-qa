@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<patternConfig>
+<patternId>4</patternId>
+<name>Crossovers between two relationshiptype-target pairs in different role groups</name>
+<description>Crossovers between two relationshiptype-target pairs in different role groups</description>
+<severity>low</severity>
+<resultFileName>crossover_group_to_group.json</resultFileName>
+<executionClass>org.ihtsdo.control.patterns.CrossoverGroup2Group</executionClass>
+</patternConfig>

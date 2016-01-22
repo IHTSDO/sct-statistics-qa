@@ -1,0 +1,6 @@
+org.ihtsdo.statistics
+org.ihtsdo.statistics.db.importer
+org.ihtsdo.statistics.db.setup
+org.ihtsdo.statistics.model
+org.ihtsdo.statistics.runner
+org.ihtsdo.utils

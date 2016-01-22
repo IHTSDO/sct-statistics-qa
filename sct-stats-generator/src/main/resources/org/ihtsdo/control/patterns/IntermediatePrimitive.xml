@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<patternConfig>
+<patternId>7</patternId>
+<name>Intermediate primitives</name>
+<description>Intermediate primitives</description>
+<severity>low</severity>
+<resultFileName>intermediate_primitives.json</resultFileName>
+<executionClass>org.ihtsdo.control.patterns.IntermediatePrimitive</executionClass>
+</patternConfig>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<patternConfig>
+<patternId>19</patternId>
+<name>RelationshipType-target pairs that are stated but not inferred</name>
+<description>RelationshipType-target pairs that are stated but not inferred</description>
+<severity>low</severity>
+<resultFileName>relationships_type_target_not_in_inferred.json</resultFileName>
+<executionClass>org.ihtsdo.control.patterns.RelationshipTypeTargetPairsNotInferredView</executionClass>
+</patternConfig>
