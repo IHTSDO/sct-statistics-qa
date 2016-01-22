@@ -446,7 +446,7 @@
                     title: "All concepts with changes in this release"
                 };
                 $("#main-panel").html(JST["views/pivot.hbs"](context));
-                initializePivot("data/ChangeList_20150731.json",["semtag"],["designationChange"],["Heatmap"]);
+                initializePivot("data/changedConceptDetails.csv",["semtag"],["designationChange"],["Heatmap"]);
             }
             function loadPivotNew() {
                 $(".navbar-nav li").removeClass("active");
