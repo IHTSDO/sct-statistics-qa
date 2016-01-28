@@ -76,7 +76,7 @@ set TotalLocalized=(select count(*)
 
 
 Update cptFirstLevel_table6
-set PercentOfHTotal=(100 * TotalLocalized/(select count(*) + 1 
+set PercentOfHTotal=(convert(100, decimal(16,2)) * TotalLocalized/(select count(*) + 1 
 				from s_tclosure_stated t 
 				where t.ancestor=cptFirstLevel_table6.id));
 
@@ -91,7 +91,7 @@ set NewLocConcepts=(select count(*)
 
 
 Update cptFirstLevel_table6 
-set PercentOfNewLocTotal=(100 * NewLocConcepts/newCpts);
+set PercentOfNewLocTotal=(convert(100, decimal(16,2)) * NewLocConcepts/newCpts);
 
 end if;
 

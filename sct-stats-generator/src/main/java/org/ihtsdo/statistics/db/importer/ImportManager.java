@@ -484,6 +484,7 @@ public class ImportManager {
 
 				isasFullFile=CurrentFile.get().getStatedRelationshipFile();
 			}
+			File isasTmpSnapshot=new File(targetFolder,"tmp_" + ((table.getFileNameMustHave()==null)? "":table.getFileNameMustHave()) + "relationships" + (table.isPrevious()?"_pre":"") + ".txt");
 			File isasSnapshot=new File(targetFolder,((table.getFileNameMustHave()==null)? "":table.getFileNameMustHave()) + "relationships" + (table.isPrevious()?"_pre":"") + ".txt");
 			logger.info("Getting snapshot from file " + isasFullFile);
 
@@ -494,7 +495,8 @@ public class ImportManager {
 				outputFields[2]="relationshipGroup";
 				outputFields[3]="typeId";
 			}
-			ConversionSnapshotDelta.snapshotFile(new File(isasFullFile), sortFolderTmp, sortedFolderTmp, isasSnapshot, snapshotDate, new int[]{0,1}, 0, 1,new Integer[]{2},new String[]{"1"},outputFields);
+			ConversionSnapshotDelta.snapshotFile(new File(isasFullFile), sortFolderTmp, sortedFolderTmp, isasTmpSnapshot, snapshotDate, new int[]{0,1}, 0, 1,null,null,null);
+			ConversionSnapshotDelta.snapshotFile(isasTmpSnapshot, sortFolderTmp, sortedFolderTmp, isasSnapshot, snapshotDate, new int[]{0,1}, 0, 1,new Integer[]{2},new String[]{"1"},outputFields);
 			isasFile=isasSnapshot.getAbsolutePath();
 			TClosure tcf=new TClosure(isasFile,0,1,3,null);
 
@@ -502,7 +504,9 @@ public class ImportManager {
 			File tmpFile=new File(isasFile);
 			txtTClos= tmpFile.getParent() + "/" + txtTClos;
 			tcf.toFileFirstLevelHierarchy(txtTClos);
-
+			
+//			isasSnapshot.delete();
+			isasTmpSnapshot.delete();
 			tcf=null;
 			return txtTClos;
 		} 
@@ -528,8 +532,15 @@ public class ImportManager {
 				outputFields[i]=outputFields[i].trim();
 			}
 		}
-		ConversionSnapshotDelta.snapshotFile(new File(txt), sortFolderTmp, sortedFolderTmp, txtFile, snapshotDate, new int[]{0,1}, 0, 1,table.getFieldFilter(),table.getFieldFilterValue(),outputFields);
-
+		if (table.getFieldFilter()!=null){
+			File fileTxt=new File(txt);
+			File txtTmpFile=new File(fileTxt.getParentFile(),"tmp_"+ fileTxt.getName());
+			ConversionSnapshotDelta.snapshotFile(fileTxt, sortFolderTmp, sortedFolderTmp, txtTmpFile, snapshotDate, new int[]{0,1}, 0, 1, null, null, null);
+			ConversionSnapshotDelta.snapshotFile(txtTmpFile, sortFolderTmp, sortedFolderTmp, txtFile, snapshotDate, new int[]{0,1}, 0, 1,table.getFieldFilter(),table.getFieldFilterValue(),outputFields);
+			txtTmpFile.delete();
+		}else{
+			ConversionSnapshotDelta.snapshotFile(new File(txt), sortFolderTmp, sortedFolderTmp, txtFile, snapshotDate, new int[]{0,1}, 0, 1,null,null,outputFields);
+		}
 		if (table.getPatternTag().equals("rf2-statedrootdesc")){
 			logger.info("Getting Top Level terms");
 			getDescriptionsForTopLevel(txtFile);

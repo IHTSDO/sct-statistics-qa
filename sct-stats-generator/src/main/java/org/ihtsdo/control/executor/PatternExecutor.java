@@ -53,7 +53,7 @@ public class PatternExecutor {
 
 
 	public void execute() throws IOException, Exception {
-		logger.logInfo("Starting report execution");
+		logger.logInfo("Starting patterns execution");
 		XMLConfiguration xmlConfig;
 		try {
 			xmlConfig=new XMLConfiguration(configFile);
