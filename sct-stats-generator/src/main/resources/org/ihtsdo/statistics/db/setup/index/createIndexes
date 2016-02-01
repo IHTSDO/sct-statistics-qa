@@ -35,6 +35,5 @@ CREATE INDEX CPTROOTLEVEL_TABLE6_ix1 on CPTROOTLEVEL_TABLE6 (id ASC);
 CREATE INDEX CPTFIRSTLEVEL_TABLE6_ix1 on CPTFIRSTLEVEL_TABLE6 (id ASC);
 CREATE INDEX cpttable2_details_ix1 on cpttable2_details (id ASC);
 CREATE INDEX cpttable3_details_ix1 on cpttable3_details (id ASC);
-CREATE INDEX cpttable4_details_ix1 on cpttable4_details (id ASC);
 CREATE INDEX cpttable6_details_ix1 on cpttable6_details (id ASC);
 CREATE INDEX statedrootdesc_ix1 on s_statedrootdesc (sourceid ASC);

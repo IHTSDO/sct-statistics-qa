@@ -449,7 +449,7 @@
                     title: "All concepts with changes in this release"
                 };
                 $("#main-panel").html(JST["views/pivot.hbs"](context));
-                initializePivot("data/changedConceptDetails.csv",["semtag"],["designationChange"],["Heatmap"]);
+                initializePivot("data/changedConceptDetails.csv",["Hierarchy"],["ChangeType"],["Heatmap"]);
             }
             function loadPivotNew() {
                 $(".navbar-nav li").removeClass("active");
@@ -458,7 +458,7 @@
                     title: "All new concepts in this release"
                 };
                 $("#main-panel").html(JST["views/pivot.hbs"](context));
-                initializePivot("data/newConceptsDetailed.csv",["semtag"],["DefStatus"],["Heatmap"]);
+                initializePivot("data/newConceptsDetailed.csv",["Hierarchy"],["DefinitionStatus"],["Heatmap"]);
             }
             function loadPivotInactive() {
                 $(".navbar-nav li").removeClass("active");
@@ -467,7 +467,7 @@
                     title: "All concepts inactivated in this release"
                 };
                 $("#main-panel").html(JST["views/pivot.hbs"](context));
-                initializePivot("data/retiredConceptsDetailed.csv",["semtag"],["reason"],["Heatmap"]);
+                initializePivot("data/retiredConceptsDetailed.csv",["Hierarchy"],["Reason"],["Heatmap"]);
             }
             function loadOverview() {
                 $(".navbar-nav li").removeClass("active");

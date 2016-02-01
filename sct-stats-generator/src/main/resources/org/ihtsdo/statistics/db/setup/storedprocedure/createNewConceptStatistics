@@ -39,7 +39,7 @@ set NewConcepts=newCpts ;
 
 
 Update cptRootLevel_table2 
-set PercentOfTotal=(100 * newCpts/totCpt);
+set PercentOfTotal=(convert(100, decimal(16,2)) * newCpts/totCpt);
 
 
 Update cptRootLevel_table2 
@@ -48,14 +48,14 @@ set PercentOfAllNew=100;
 if newCpts>0 then
 
 Update cptRootLevel_table2 
-set PercentOfNewSD=100 *(select count(*)
+set PercentOfNewSD=convert(100, decimal(16,2)) *(select count(*)
 					from newConcepts c 
 					where c.definitionStatusId=900000000000073002)/newCpts ;
 
 
 
 Update cptRootLevel_table2 
-set PercentOfNewP=100 *(select count(*)
+set PercentOfNewP=convert(100, decimal(16,2)) *(select count(*)
 					from newConcepts c
 					where c.definitionStatusId=900000000000074008)/newCpts ;
 
@@ -81,36 +81,34 @@ set NewConcepts=(select count(*)
 if newCpts>0 then
 
 Update cptFirstLevel_table2 
-set PercentOfHierarchy=(100 * NewConcepts/(select count(*) + 1 
+set PercentOfHierarchy=(convert(100, decimal(16,2)) * NewConcepts/(select count(*) + 1 
 				from s_tclosure_stated t 
 				where t.ancestor=cptFirstLevel_table2.id));
 
 
 
 Update cptFirstLevel_table2 
-set PercentOfAllNew=(100 * NewConcepts/newCpts);
+set PercentOfAllNew=(convert(100, decimal(16,2)) * NewConcepts/newCpts);
 
 Update cptFirstLevel_table2 
-set PercentOfNewSD=(100 *(select count(*) 
+set PercentOfNewSD=(convert(100, decimal(16,2)) *(select count(*) 
 					from newConcepts c
 					inner join s_tclosure_stated t 
 					on t.descendant=c.id
 					where t.ancestor=cptFirstLevel_table2.id
-					and c.definitionStatusId=900000000000073002)/(select count(*) + 1 
-					from s_tclosure_stated t 
-					where t.ancestor=cptFirstLevel_table2.id));
+					and c.definitionStatusId=900000000000073002)/NewConcepts)
+					where NewConcepts>0;
 
 
 
 Update cptFirstLevel_table2 
-set PercentOfNewP=(100 *(select count(*) 
+set PercentOfNewP=(convert(100, decimal(16,2)) *(select count(*) 
 					from newConcepts c
 					inner join s_tclosure_stated t 
 					on t.descendant=c.id
 					where t.ancestor=cptFirstLevel_table2.id
-					and c.definitionStatusId=900000000000074008)/(select count(*) + 1 
-					from s_tclosure_stated t 
-					where t.ancestor=cptFirstLevel_table2.id));
+					and c.definitionStatusId=900000000000074008)/NewConcepts)
+					where NewConcepts>0;
 					
 
 end if;

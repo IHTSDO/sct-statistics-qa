@@ -174,7 +174,7 @@ public class Runner {
 	}
 
 	private static void initFileProviders(File file) throws Exception {
-		logger.logInfo("Starting report execution");
+		logger.logInfo("Initializing file providers");
 		XMLConfiguration xmlConfig;
 		try {
 			xmlConfig=new XMLConfiguration(file);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <patternConfig>
 <patternId>18</patternId>
-<name>Suffiently defined Concepts with no stated attributes</name>
-<description>Suffiently defined Concepts with no stated attributes</description>
+<name>Sufficiently defined Concepts with no stated attributes</name>
+<description>Sufficiently defined Concepts with no stated attributes</description>
 <severity>high</severity>
 <resultFileName>suffdefined_wo_stated_attr.json</resultFileName>
 <executionClass>org.ihtsdo.control.patterns.SuffDefinedConceptWithoutStatedAttr</executionClass>

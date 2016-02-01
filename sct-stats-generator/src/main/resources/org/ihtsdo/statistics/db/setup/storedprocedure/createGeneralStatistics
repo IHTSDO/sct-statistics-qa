@@ -23,7 +23,7 @@ set PercentOfTotal=100 ;
 
 
 Update cptRootLevel 
-set PercentOfSD=(100 * (select count(*) 
+set PercentOfSD=(convert(100, decimal(16,2)) * (select count(*) 
 						from s_concepts c
 						where c.active=1
 						and c.definitionStatusId=900000000000073002) / totCpt);
@@ -59,11 +59,11 @@ set Concepts=(select count(*)
 
 
 Update cptFirstLevel 
-set PercentOfTotal=(100 * Concepts/ totCpt );
+set PercentOfTotal=(convert(100, decimal(16,2)) * Concepts/ totCpt );
 
 
 Update cptFirstLevel 
-set PercentOfSD=(100 * (select count(*) 
+set PercentOfSD=(convert(100, decimal(16,2)) * (select count(*) 
 				from s_concepts c 
 				inner join s_tclosure_stated t 
 				on t.descendant=c.id

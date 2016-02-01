@@ -51,7 +51,7 @@ Update cptRootLevel_table3
 set RetiredConcepts=retCpts;
 
 Update cptRootLevel_table3
-set PercentOfTotal =100 * retCpts/totCpt;
+set PercentOfTotal =convert(100, decimal(16,2)) * retCpts/totCpt;
 
 Update cptRootLevel_table3
 set PercentOfAllRetired =100;
@@ -59,62 +59,62 @@ set PercentOfAllRetired =100;
 if retCpts>0 then
 
 Update cptRootLevel_table3
-set PercentOfAmbiguous = 100 * (select count(*) 
+set PercentOfAmbiguous = convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
 								where a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=AMBIGUOUS)/totCpt;
+								and a.valueId=AMBIGUOUS)/retCpts;
 								
 
 Update cptRootLevel_table3
-set PercentOfDuplicated =100 * (select count(*) 
+set PercentOfDuplicated =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
 								where a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=DUPLICATE)/totCpt;
+								and a.valueId=DUPLICATE)/retCpts;
 
 Update cptRootLevel_table3
-set PercentOfErroneous =100 * (select count(*) 
+set PercentOfErroneous =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
 								where a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=ERRONEOUS)/totCpt;
+								and a.valueId=ERRONEOUS)/retCpts;
 
 Update cptRootLevel_table3
-set PercentOfNotStated =100 * (select count(*) 
+set PercentOfNotStated =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								where not exists(
 									select 0 
 									from s_attributevalues a
 									where a.referencedComponentId=c.id
-									and a.refsetId=900000000000489007))/totCpt;
+									and a.refsetId=900000000000489007))/retCpts;
 
 Update cptRootLevel_table3
-set PercentOfOutdated =100 * (select count(*) 
+set PercentOfOutdated =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
 								where a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=OUTDATED)/totCpt;
+								and a.valueId=OUTDATED)/retCpts;
 
 Update cptRootLevel_table3
-set PercentOfMoved =100 * (select count(*) 
+set PercentOfMoved =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
 								where a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=MOVED_ELSE_WHERE)/totCpt;
+								and a.valueId=MOVED_ELSE_WHERE)/retCpts;
 
 Update cptRootLevel_table3
-set PercentOfLimited =100 * (select count(*) 
+set PercentOfLimited =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
 								where a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=LIMITED)/totCpt;
+								and a.valueId=LIMITED)/retCpts;
 
 end if;
 
@@ -135,17 +135,17 @@ set RetiredConcepts=(select count(*)
 					where t.ancestor=cptFirstLevel_table3.id);
 
 Update cptFirstLevel_table3
-set PercentOfHierarchy =100 * RetiredConcepts/(select count(*) + 1 
+set PercentOfHierarchy =convert(100, decimal(16,2)) * RetiredConcepts/(select count(*) + 1 
 				from s_tclosure_stated t 
 				where t.ancestor=cptFirstLevel_table3.id);
 
 if retCpts>0 then
 
 Update cptFirstLevel_table3
-set PercentOfAllRetired =100 * RetiredConcepts/retCpts;
+set PercentOfAllRetired =convert(100, decimal(16,2)) * RetiredConcepts/retCpts;
 
 Update cptFirstLevel_table3
-set PercentOfAmbiguous = 100 * (select count(*) 
+set PercentOfAmbiguous = convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
@@ -153,13 +153,12 @@ set PercentOfAmbiguous = 100 * (select count(*)
 								on t.descendant=c.id
 								where t.ancestor=cptFirstLevel_table3.id
 								and a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=AMBIGUOUS)/(select count(*) + 1 
-								from s_tclosure_stated t 
-								where t.ancestor=cptFirstLevel_table3.id);
+								and a.valueId=AMBIGUOUS)/RetiredConcepts
+								where RetiredConcepts>0;
 								
 
 Update cptFirstLevel_table3
-set PercentOfDuplicated =100 * (select count(*) 
+set PercentOfDuplicated =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
@@ -167,12 +166,11 @@ set PercentOfDuplicated =100 * (select count(*)
 								on t.descendant=c.id
 								where t.ancestor=cptFirstLevel_table3.id
 								and a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=DUPLICATE)/(select count(*) + 1 
-								from s_tclosure_stated t 
-								where t.ancestor=cptFirstLevel_table3.id);
+								and a.valueId=DUPLICATE)/RetiredConcepts
+								where RetiredConcepts>0;
 
 Update cptFirstLevel_table3
-set PercentOfErroneous =100 * (select count(*) 
+set PercentOfErroneous =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
@@ -180,12 +178,11 @@ set PercentOfErroneous =100 * (select count(*)
 								on t.descendant=c.id
 								where t.ancestor=cptFirstLevel_table3.id
 								and a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=ERRONEOUS)/(select count(*) + 1 
-								from s_tclosure_stated t 
-								where t.ancestor=cptFirstLevel_table3.id);
+								and a.valueId=ERRONEOUS)/RetiredConcepts
+								where RetiredConcepts>0;
 
 Update cptFirstLevel_table3
-set PercentOfNotStated =100 * (select count(*) 
+set PercentOfNotStated =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_tclosure_stated_pre t 
 								on t.descendant=c.id
@@ -194,12 +191,11 @@ set PercentOfNotStated =100 * (select count(*)
 									select 0 
 									from s_attributevalues a
 									where a.referencedComponentId=c.id
-									and a.refsetId=900000000000489007))/(select count(*) + 1 
-								from s_tclosure_stated t 
-								where t.ancestor=cptFirstLevel_table3.id);
+									and a.refsetId=900000000000489007))/RetiredConcepts
+								where RetiredConcepts>0;
 
 Update cptFirstLevel_table3
-set PercentOfOutdated =100 * (select count(*) 
+set PercentOfOutdated =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
@@ -207,12 +203,11 @@ set PercentOfOutdated =100 * (select count(*)
 								on t.descendant=c.id
 								where t.ancestor=cptFirstLevel_table3.id
 								and a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=OUTDATED)/(select count(*) + 1 
-								from s_tclosure_stated t 
-								where t.ancestor=cptFirstLevel_table3.id);
+								and a.valueId=OUTDATED)/RetiredConcepts
+								where RetiredConcepts>0;
 
 Update cptFirstLevel_table3
-set PercentOfMoved =100 * (select count(*) 
+set PercentOfMoved =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
@@ -220,12 +215,11 @@ set PercentOfMoved =100 * (select count(*)
 								on t.descendant=c.id
 								where t.ancestor=cptFirstLevel_table3.id
 								and a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=MOVED_ELSE_WHERE)/(select count(*) + 1 
-								from s_tclosure_stated t 
-								where t.ancestor=cptFirstLevel_table3.id);
+								and a.valueId=MOVED_ELSE_WHERE)/RetiredConcepts
+								where RetiredConcepts>0;
 
 Update cptFirstLevel_table3
-set PercentOfLimited =100 * (select count(*) 
+set PercentOfLimited =convert(100, decimal(16,2)) * (select count(*) 
 								from retConcepts c
 								inner join s_attributevalues a
 								on a.referencedComponentId=c.id
@@ -233,9 +227,8 @@ set PercentOfLimited =100 * (select count(*)
 								on t.descendant=c.id
 								where t.ancestor=cptFirstLevel_table3.id
 								and a.referencedComponentId=c.id and a.refsetId=900000000000489007
-								and a.valueId=LIMITED)/(select count(*) + 1 
-								from s_tclosure_stated t 
-								where t.ancestor=cptFirstLevel_table3.id);
+								and a.valueId=LIMITED)/RetiredConcepts
+								where RetiredConcepts>0;
 				
 end if;
 				
