@@ -25,13 +25,14 @@ import java.util.UUID;
 import org.ihtdso.fileprovider.CurrentFile;
 import org.ihtdso.fileprovider.PreviousFile;
 import org.ihtsdo.control.concept.TestConcepts;
+import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.ControlResultLine;
 import org.ihtsdo.control.model.IControlPattern;
 import org.ihtsdo.utils.FileHelper;
 
 import com.google.gson.Gson;
 
-public class IntermediatePrimitiveLostSubtypes implements IControlPattern {
+public class IntermediatePrimitiveLostSubtypes extends AControlPattern  {
 
 	private File resultFile;
 	private HashSet<String> newConcepts;
@@ -132,6 +133,17 @@ public class IntermediatePrimitiveLostSubtypes implements IControlPattern {
 		}
 		br.close();
 
+		br = FileHelper.getReader(CurrentFile.get().getSnapshotConceptFile());
+		HashSet<Long> retired=new HashSet<Long>();
+		br.readLine();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (spl[2].compareTo("0")==0){
+				retired.add(Long.parseLong(spl[0]));
+			}
+		}
+		br.close();
+		
 		String tClos_file=PreviousFile.get().getTransitiveClosureInferredFile();
 		br=FileHelper.getReader(tClos_file);
 		br.readLine();
@@ -140,6 +152,10 @@ public class IntermediatePrimitiveLostSubtypes implements IControlPattern {
 			spl=line.split("\t",-1);
 			if (prev.contains(spl[1]) && curr.contains(spl[1])){
 				Long cid=Long.parseLong(spl[1]);
+				Long descId=Long.parseLong(spl[0]);
+				if (retired.contains(descId)){
+					continue;
+				}
 				Integer count=prevSubTypes.get(cid);
 				if (count==null){
 					count=1;
@@ -151,7 +167,7 @@ public class IntermediatePrimitiveLostSubtypes implements IControlPattern {
 		}
 		br.close();
 
-
+		retired=null;
 		tClos_file=CurrentFile.get().getTransitiveClosureInferredFile();
 		br=FileHelper.getReader(tClos_file);
 		br.readLine();
@@ -186,6 +202,7 @@ public class IntermediatePrimitiveLostSubtypes implements IControlPattern {
 				crl.setNew(newConcepts.contains(prevCid.toString()));
 				crl.setConceptId(prevCid.toString());
 				crl.setTerm(conceptTerms.get(prevCid));
+				crl.setSemtag(getSemTag(crl.getTerm()));
 				crl.setCurrentEffectiveTime(currentEffTime);
 				crl.setPreviousEffectiveTime(previousEffTime);
 				crl.setForm("stated");
@@ -194,7 +211,7 @@ public class IntermediatePrimitiveLostSubtypes implements IControlPattern {
 				crl.setPreexisting(prev.contains(prevCid.toString()));
 				crl.setResultId(UUID.randomUUID().toString());
 				crl.setCurrent(true);
-				crl.setMatchDescription("Intermediate primitive have lost substype.");
+				crl.setMatchDescription("Intermediate primitive have lost subtype.");
 				if (first){
 					first=false;
 				}else{

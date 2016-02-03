@@ -25,13 +25,14 @@ import java.util.UUID;
 import org.ihtdso.fileprovider.CurrentFile;
 import org.ihtdso.fileprovider.PreviousFile;
 import org.ihtsdo.control.concept.TestConcepts;
+import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.ControlResultLine;
 import org.ihtsdo.control.model.IControlPattern;
 import org.ihtsdo.utils.FileHelper;
 
 import com.google.gson.Gson;
 
-public class SuffDefinedConceptWithoutStatedAttr implements IControlPattern {
+public class SuffDefinedConceptWithoutStatedAttr extends AControlPattern {
 
 	private File resultFile;
 	private HashSet<String> newConcepts;
@@ -106,6 +107,7 @@ public class SuffDefinedConceptWithoutStatedAttr implements IControlPattern {
 			crl.setNew(newConcepts.contains(spl[0]));
 			crl.setConceptId(spl[0]);
 			crl.setTerm(conceptTerms.get(Long.parseLong(spl[0])));
+			crl.setSemtag(getSemTag(crl.getTerm()));
 			crl.setCurrentEffectiveTime(currentEffTime);
 			crl.setPreviousEffectiveTime(previousEffTime);
 			crl.setForm("stated");
@@ -114,7 +116,7 @@ public class SuffDefinedConceptWithoutStatedAttr implements IControlPattern {
 			crl.setPreexisting(prev.contains(spl[0]));
 			crl.setResultId(UUID.randomUUID().toString());
 			crl.setCurrent(true);
-			crl.setMatchDescription("Suffiently defined Concepts with no stated attributes.");
+			crl.setMatchDescription("Sufficiently defined Concepts with no stated attributes.");
 			if (first){
 				first=false;
 			}else{

@@ -46,7 +46,7 @@ function program1(depth0,data) {
   if (helper = helpers.description) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.description); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "');\">Load all ";
+    + "','term','','','');\">Load all ";
   if (helper = helpers.resultCount) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.resultCount); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -324,7 +324,52 @@ function program1(depth0,data) {
   if (helper = helpers.matchDescription) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.matchDescription); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td>\n                                    </tr>\n                                ";
+    + "</td>\n                                        <td class=\"\">\n                                        	pre-existing: ";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.preexisting), {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " <br>\n                                        	";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.matchObject), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n                                        	new concept: ";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.isNew), {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "<br>\n                                        	modified concept: ";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.changed), {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "<br>\n                                        	tag: ";
+  if (helper = helpers.semtag) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.semtag); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\n                                    	</td>\n                                    </tr>\n                                ";
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  
+  return " yes ";
+  }
+
+function program4(depth0,data) {
+  
+  
+  return " no";
+  }
+
+function program6(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n                                        		";
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.matchObject)),stack1 == null || stack1 === false ? stack1 : stack1.Group1), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n                                        	";
+  return buffer;
+  }
+function program7(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n    												def.status: "
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.matchObject)),stack1 == null || stack1 === false ? stack1 : stack1.Group1)),stack1 == null || stack1 === false ? stack1 : stack1[0])),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "<br>	                                    		\n	                                        	";
   return buffer;
   }
 
@@ -336,7 +381,267 @@ function program1(depth0,data) {
   if (helper = helpers.count) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.count); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + " concepts</p>\n                <a class=\"btn btn-material-light-blue pull-right\" style=\"margin: 0px;\" href=\"javascript:loadAnalyticsResultsIndex();\" role=\"button\">Back to Patterns</a>\n                <div class=\"row\">\n                    <div class=\"col-lg-12\">\n                        <div class=\"bs-component\">\n                            <table class=\"table table-striped\">\n                                <thead>\n                                <tr>\n                                    <th class=\"col-md-3\">ConceptId</th>\n                                    <th class=\"col-md-4\">Term</th>\n                                    <th class=\"col-md-5\">Explanation</th>\n                                </tr>\n                                </thead>\n                                <tbody>\n                                ";
+    + " concepts</p>\n                \n                <div class=\"navbar-collapse collapse navbar-responsive-collapse\">\n                	<ul class=\"nav navbar-nav\">\n                		<li id=\"tab-pattern-sort\" class=\"dropdown\">\n                                <a href=\"\" data-target=\"#\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">Sort by <b class=\"caret\"></b></a>\n                                <ul class=\"dropdown-menu\">\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','conceptId','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">Concept ID</a></li>\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','term','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">Term</a></li>\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','matchDescription','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">Explanation</a></li>\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','semtag','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">Semantic tag</a></li>\n                                </ul>\n                            </li>\n                 		<li id=\"tab-pattern-preexist-filter\" class=\"dropdown\">\n                                <a href=\"\" data-target=\"#\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">Filter by Pre-existing: <b class=\"caret\"></b></a>\n                                <ul class=\"dropdown-menu\">\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.sortBy) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.sortBy); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','true','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">Yes</a></li>\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.sortBy) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.sortBy); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','false','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">No</a></li>\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.sortBy) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.sortBy); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">All</a></li>\n                                </ul>\n                            </li>\n                 		<li id=\"tab-pattern-newcpt-filter\" class=\"dropdown\">\n                                <a href=\"\" data-target=\"#\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">Filter by New concept: <b class=\"caret\"></b></a>\n                                <ul class=\"dropdown-menu\">\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.sortBy) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.sortBy); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','true','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">Yes</a></li>\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.sortBy) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.sortBy); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','false','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">No</a></li>\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.sortBy) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.sortBy); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','','";
+  if (helper = helpers.filterModCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterModCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\">All</a></li>\n                                </ul>\n                            </li>\n                 		<li id=\"tab-pattern-modcpt-filter\" class=\"dropdown\">\n                                <a href=\"\" data-target=\"#\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">Filter by Modified concept: <b class=\"caret\"></b></a>\n                                <ul class=\"dropdown-menu\">\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.sortBy) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.sortBy); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','true')\">Yes</a></li>\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.sortBy) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.sortBy); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','false')\">No</a></li>\n                                    <li><a href=\"javascript:loadFullResult('";
+  if (helper = helpers.file) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.file); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.pattern) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.pattern); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.sortBy) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.sortBy); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterPreexist) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterPreexist); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','";
+  if (helper = helpers.filterNewCpt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.filterNewCpt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "','')\">All</a></li>\n                                </ul>\n                            </li>\n                  	</ul>\n                </div>\n                <a class=\"btn btn-material-light-blue pull-right\" style=\"margin: 0px;\" href=\"javascript:loadAnalyticsResultsIndex();\" role=\"button\">Back to Patterns</a>\n                <div class=\"row\">\n                    <div class=\"col-lg-12\">\n                        <div class=\"bs-component\">\n                            <table class=\"table table-striped\">\n                                <thead>\n                                <tr>\n                                    <th class=\"col-md-1\">ConceptId</th>\n                                    <th class=\"col-md-4\">Term</th>\n                                    <th class=\"col-md-4\">Explanation</th>\n                                    <th class=\"col-md-3\"></th>\n                                </tr>\n                                </thead>\n                                <tbody>\n                                ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.results), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                                </tbody>\n                                <tfoot>\n                                    <tr>\n                                        <!--<td colspan=\"6\">(*) Percentage of existing concepts in hierarchy which are Sufficiently Defined (SD). For the root concept the value includes all SNOMED CT.<br>-->\n                                        </td>\n                                    </tr>\n                                </tfoot>\n                            </table>\n                        </div><!-- /example -->\n                    </div>\n                </div>\n            </div>\n            <footer class=\"card-footer\">\n                <!--<button class=\"btn btn-flat\">Share</button>-->\n                <!--<button class=\"btn btn-flat btn-warning\">Learn More</button>-->\n            </footer>\n        </div>\n    </div>\n</div>\n";
@@ -413,7 +718,7 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div class=\"col-md-12\">\n    <div class=\"card\">\n        <div class=\"card-height-indicator\"></div>\n        <div class=\"card-content\">\n            <div class=\"card-body\">\n                <h2>Statistics on Concepts Inactivated During the Release</h2>\n                <div class=\"row\">\n                    <div class=\"col-lg-12\">\n                        <div class=\"bs-component\">\n                            <table class=\"table table-striped table-hover \">\n                                <thead>\n                                <tr>\n                                    <th>Hierarchy</th>\n                                    <th class=\"text-right\">Inactivated Concepts</th>\n                                    <th class=\"text-right\">% of SCT Inactivated</th>\n                                    <th class=\"text-right\">% of All Inactivated</th>\n                                    <th class=\"text-right\">% as Ambiguous</th>\n                                    <th class=\"text-right\">% as Duplicate</th>\n                                    <th class=\"text-right\">% as Erroneous</th>\n                                    <th class=\"text-right\">% as Not Stated</th>\n                                    <th class=\"text-right\">% as Outdated</th>\n                                    <th class=\"text-right\">% as Moved</th>\n                                    <th class=\"text-right\">% as Limited</th>\n                                </tr>\n                                </thead>\n                                <tbody>\n                                ";
+  buffer += "<div class=\"col-md-12\">\n    <div class=\"card\">\n        <div class=\"card-height-indicator\"></div>\n        <div class=\"card-content\">\n            <div class=\"card-body\">\n                <h2>Statistics on Concepts Inactivated During the Release</h2>\n                <div class=\"row\">\n                    <div class=\"col-lg-12\">\n                        <div class=\"bs-component\">\n                            <table class=\"table table-striped table-hover \">\n                                <thead>\n                                <tr>\n                                    <th>Hierarchy</th>\n                                    <th class=\"text-right\">Inactivated Concepts</th>\n                                    <th class=\"text-right\">% of Hierarchy Inactivated</th>\n                                    <th class=\"text-right\">% of All Inactivated</th>\n                                    <th class=\"text-right\">% as Ambiguous</th>\n                                    <th class=\"text-right\">% as Duplicate</th>\n                                    <th class=\"text-right\">% as Erroneous</th>\n                                    <th class=\"text-right\">% as Not Stated</th>\n                                    <th class=\"text-right\">% as Outdated</th>\n                                    <th class=\"text-right\">% as Moved</th>\n                                    <th class=\"text-right\">% as Limited</th>\n                                </tr>\n                                </thead>\n                                <tbody>\n                                ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.rows), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                                </tbody>\n                            </table>\n                        </div><!-- /example -->\n                    </div>\n                </div>\n            </div>\n            <footer class=\"card-footer\">\n                <!--<button class=\"btn btn-flat\">Share</button>-->\n                <!--<button class=\"btn btn-flat btn-warning\">Learn More</button>-->\n            </footer>\n        </div>\n    </div>\n</div>\n";

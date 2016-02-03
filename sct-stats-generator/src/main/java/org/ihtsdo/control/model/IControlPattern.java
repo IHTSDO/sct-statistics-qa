@@ -40,4 +40,5 @@ public interface IControlPattern {
 	public int getResultCount();
 	
 	public void setConceptTerms(HashMap<Long,String> conceptTerms);
+	
 }

@@ -25,13 +25,14 @@ import java.util.UUID;
 import org.ihtdso.fileprovider.CurrentFile;
 import org.ihtdso.fileprovider.PreviousFile;
 import org.ihtsdo.control.concept.TestConcepts;
+import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.ControlResultLine;
 import org.ihtsdo.control.model.IControlPattern;
 import org.ihtsdo.utils.FileHelper;
 
 import com.google.gson.Gson;
 
-public class IntermediatePrimitiveGainedSubtypes implements IControlPattern {
+public class IntermediatePrimitiveGainedSubtypes extends AControlPattern {
 
 	private File resultFile;
 	private HashSet<String> newConcepts;
@@ -188,6 +189,7 @@ public class IntermediatePrimitiveGainedSubtypes implements IControlPattern {
 				crl.setNew(newConcepts.contains(currCid.toString()));
 				crl.setConceptId(currCid.toString());
 				crl.setTerm(conceptTerms.get(currCid));
+				crl.setSemtag(getSemTag(crl.getTerm()));
 				crl.setCurrentEffectiveTime(currentEffTime);
 				crl.setPreviousEffectiveTime(previousEffTime);
 				crl.setForm("stated");
@@ -196,7 +198,7 @@ public class IntermediatePrimitiveGainedSubtypes implements IControlPattern {
 				crl.setPreexisting(prev.contains(currCid.toString()));
 				crl.setResultId(UUID.randomUUID().toString());
 				crl.setCurrent(true);
-				crl.setMatchDescription("Intermediate primitive have gained substype.");
+				crl.setMatchDescription("Intermediate primitive have gained subtype.");
 				if (first){
 					first=false;
 				}else{

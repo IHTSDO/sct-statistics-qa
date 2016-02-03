@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import org.ihtdso.fileprovider.CurrentFile;
 import org.ihtdso.fileprovider.PreviousFile;
+import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.ControlResultLine;
 import org.ihtsdo.control.model.IControlPattern;
 import org.ihtsdo.utils.FileHelper;
@@ -31,7 +32,7 @@ import org.ihtsdo.utils.I_Constants;
 
 import com.google.gson.Gson;
 
-public class RelationshipTypeTargetPairsNotInferredView implements IControlPattern {
+public class RelationshipTypeTargetPairsNotInferredView extends AControlPattern {
 
 	private File resultFile;
 	private HashSet<String> newConcepts;
@@ -127,6 +128,7 @@ public class RelationshipTypeTargetPairsNotInferredView implements IControlPatte
 					crl.setNew(newConcepts.contains(spl[4]));
 					crl.setConceptId(spl[4]);
 					crl.setTerm(conceptTerms.get(Long.parseLong(spl[4])));
+					crl.setSemtag(getSemTag(crl.getTerm()));
 					crl.setCurrentEffectiveTime(currentEffTime);
 					crl.setPreviousEffectiveTime(previousEffTime);
 					crl.setForm("inferred");

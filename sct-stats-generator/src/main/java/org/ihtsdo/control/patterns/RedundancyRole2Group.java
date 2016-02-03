@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import org.ihtdso.fileprovider.CurrentFile;
 import org.ihtdso.fileprovider.PreviousFile;
+import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.ControlResultLine;
 import org.ihtsdo.control.model.IControlPattern;
 import org.ihtsdo.control.model.MatchObjectRedundantRel;
@@ -33,7 +34,7 @@ import org.ihtsdo.utils.FileHelper;
 
 import com.google.gson.Gson;
 
-public class RedundancyRole2Group implements IControlPattern {
+public class RedundancyRole2Group extends AControlPattern {
 
 	private File resultFile;
 	private HashSet<String> newConcepts;
@@ -149,6 +150,7 @@ public class RedundancyRole2Group implements IControlPattern {
 						crl.setNew(newConcepts.contains(spl[1]));
 						crl.setConceptId(spl[1]);
 						crl.setTerm(conceptTerms.get(Long.parseLong(spl[1])));
+						crl.setSemtag(getSemTag(crl.getTerm()));
 						crl.setCurrentEffectiveTime(currentEffTime);
 						crl.setPreviousEffectiveTime(previousEffTime);
 						crl.setForm("stated");

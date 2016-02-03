@@ -27,6 +27,7 @@ public class ControlResultLine {
 	String patternId;
 	String conceptId;
 	String term;
+	String semtag;
 	String matchDescription;
 	Object matchObject;
 	String form;
@@ -117,6 +118,12 @@ public class ControlResultLine {
 	}
 	public void setTerm(String term) {
 		this.term = term;
+	}
+	public String getSemtag() {
+		return semtag;
+	}
+	public void setSemtag(String semtag) {
+		this.semtag = semtag;
 	}
 	
 }

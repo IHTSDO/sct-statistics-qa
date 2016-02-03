@@ -23,13 +23,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.ihtdso.fileprovider.CurrentFile;
+import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.ControlResultLine;
 import org.ihtsdo.control.model.IControlPattern;
 import org.ihtsdo.utils.FileHelper;
 
 import com.google.gson.Gson;
 
-public class SingleRoleInGroup implements IControlPattern {
+public class SingleRoleInGroup extends AControlPattern {
 
 	private File resultFile;
 	private HashSet<String> newConcepts;
@@ -90,6 +91,7 @@ public class SingleRoleInGroup implements IControlPattern {
 				crl.setNew(newConcepts.contains(currCid));
 				crl.setConceptId(currCid);
 				crl.setTerm(conceptTerms.get(currCid));
+				crl.setSemtag(getSemTag(crl.getTerm()));
 				crl.setCurrentEffectiveTime(currentEffTime);
 				crl.setPreviousEffectiveTime(previousEffTime);
 				crl.setForm("inferred");

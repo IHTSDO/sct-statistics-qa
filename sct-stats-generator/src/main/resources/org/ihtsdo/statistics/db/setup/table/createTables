@@ -64,6 +64,11 @@ drop table if exists s_attributevalues  ;
 CREATE text TABLE s_attributevalues ( refSetId bigint NOT NULL,
   referencedComponentId bigint NOT NULL ,
   valueId bigint NOT NULL);
+
+drop table if exists s_same_associations  ;
+CREATE text TABLE s_same_associations (
+  referencedComponentId bigint NOT NULL ,
+  targetComponentId bigint NOT NULL);
  
 drop table if exists s_tclosure_stated ;
 create text table s_tclosure_stated (
@@ -251,7 +256,7 @@ CREATE TABLE cpttable2_details (
 CREATE TABLE cpttable3_details (
 		ANCESTOR VARCHAR(255),
 		ID BIGINT,
-		TERM VARCHAR(255),
+		TERM VARCHAR(520),
 		REASON VARCHAR(18)
 	);
 	

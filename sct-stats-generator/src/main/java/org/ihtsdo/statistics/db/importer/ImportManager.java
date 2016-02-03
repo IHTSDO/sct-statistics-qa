@@ -24,7 +24,6 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -52,6 +51,7 @@ public class ImportManager {
 	boolean textDefins;
 	boolean attributeValues;
 	boolean associations;
+	boolean same_associations;
 	boolean simpleRefset;
 	boolean simpleMaps;
 	boolean language;
@@ -75,6 +75,7 @@ public class ImportManager {
 		TEXTDEFINS("s_textdefin",null,null,null,null,false,null,null,null),
 		ATTRIBUTEVALUES("s_attributevalues","rf2-attributevalue",null,null,null,false,"refsetId,referencedComponentId,valueId",new Integer[]{2,4},new String[]{"1","900000000000489007"}),
 		ASSOCIATIONS("s_associations",null,null,null,null,false,null,null,null),
+		SAME_AS_ASSOCIATIONS("s_same_associations","rf2-association",null,null,null,false,"referencedComponentId,targetComponentId",new Integer[]{2,4},new String[]{"1","900000000000527005"}),
 		SIMPLEREFSET("s_simplerefsets",null,null,null,null,false,null,null,null),
 		SIMPLEMAPS("s_simplemaps",null,null,null,null,false,null,null,null),
 		LANGUAGE("s_languages",null,null,null,null,false,null,null,null),
@@ -346,6 +347,12 @@ public class ImportManager {
 								continue;
 							}
 							tClosureStated_pre=true;
+							break;
+						case SAME_AS_ASSOCIATIONS :
+							if (same_associations){
+								continue;
+							}
+							same_associations=true;
 							break;
 						}
 						ImportRf2Table(table);

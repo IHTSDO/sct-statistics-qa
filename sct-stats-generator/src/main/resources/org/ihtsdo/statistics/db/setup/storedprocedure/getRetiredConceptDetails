@@ -12,7 +12,7 @@ truncate table cpttable3_details;
 insert into cpttable3_details
 select distinct d2.term, r.id, d.term ,
 case a.valueid
-when 900000000000482003 then 'Dulicated'
+when 900000000000482003 then 'Duplicate'
 when 900000000000483008 then 'Outdated'
 when 900000000000485001 then 'Erroneous'
 when 900000000000486000 then 'Limited'
@@ -34,6 +34,15 @@ set TERM= (select top 1 d.term from s_descriptions d
 			and d.active=1)
 			where cpttable3_details.term is null ;
 
+
+update cpttable3_details
+set TERM= TERM + ' SAME AS ' + (select top 1 d.term from 
+			s_same_associations a inner join s_descriptions d 
+			on d.conceptid=a.targetComponentId
+			where d.active=1 and d.typeId=900000000000003001
+			and a.referencedComponentId=cpttable3_details.id)
+			where cpttable3_details.REASON= 'Duplicate' ;
+			
 open result;
 
 END

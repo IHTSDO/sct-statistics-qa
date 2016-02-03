@@ -55,9 +55,7 @@ set PercentOfNewSD=convert(100, decimal(16,2)) *(select count(*)
 
 
 Update cptRootLevel_table2 
-set PercentOfNewP=convert(100, decimal(16,2)) *(select count(*)
-					from newConcepts c
-					where c.definitionStatusId=900000000000074008)/newCpts ;
+set PercentOfNewP=convert(100, decimal(16,2)) - PercentOfNewSD ;
 
 end if;
 
@@ -102,13 +100,7 @@ set PercentOfNewSD=(convert(100, decimal(16,2)) *(select count(*)
 
 
 Update cptFirstLevel_table2 
-set PercentOfNewP=(convert(100, decimal(16,2)) *(select count(*) 
-					from newConcepts c
-					inner join s_tclosure_stated t 
-					on t.descendant=c.id
-					where t.ancestor=cptFirstLevel_table2.id
-					and c.definitionStatusId=900000000000074008)/NewConcepts)
-					where NewConcepts>0;
+set PercentOfNewP=convert(100, decimal(16,2)) - PercentOfNewSD;
 					
 
 end if;
