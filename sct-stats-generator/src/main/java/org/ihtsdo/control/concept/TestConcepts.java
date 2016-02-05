@@ -190,4 +190,67 @@ public class TestConcepts {
 		bw.close();
 		br.close();
 	}
+
+	public HashSet<Long> getConceptsWithEntireInFSN(String descriptionFile, String tClos_file) throws IOException {
+		HashSet<Long> cpts=new HashSet<Long>();
+		HashSet<Long> bscpts=new HashSet<Long>();
+		HashSet<Long> excpts=new HashSet<Long>();
+
+		BufferedReader br=FileHelper.getReader(tClos_file);
+		br.readLine();
+		String line;
+		String[] spl;
+		Long desc;
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			desc=Long.parseLong(spl[0]);
+			
+			if (spl[1].equals("91723000") ){
+				bscpts.add(desc);
+			}else if (spl[1].equals("4421005") ){
+				excpts.add(desc);
+			}
+		}
+		br.close();
+		br=FileHelper.getReader(descriptionFile);
+		br.readLine();
+		Long cid;
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			cid=Long.parseLong(spl[4]);
+			if (bscpts.contains(cid) && !excpts.contains(cid) && spl[2].equals("1") && spl[6].equals("900000000000003001") && spl[7].toLowerCase().contains("entire")){
+				cpts.add(Long.parseLong(spl[4]));
+			}
+		}
+		br.close();
+		br=null;
+		bscpts=null;
+		excpts=null;
+		return cpts;
+	}
+
+	public HashSet<Long> getCptsWithoutEntire(HashSet<Long> entireCpt,
+			String tClos_file) throws IOException {
+		HashSet<Long> cpts=new HashSet<Long>();
+		
+		BufferedReader br=FileHelper.getReader(tClos_file);
+		br.readLine();
+		String line;
+		String[] spl;
+		Long desc;
+		Long asc;
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			desc=Long.parseLong(spl[0]);
+			asc=Long.parseLong(spl[1]);
+			
+			if (entireCpt.contains(asc) & !entireCpt.contains(desc)){
+				cpts.add(desc);
+			}
+		}
+		br.close();
+		br=null;
+		return cpts;
+	}
+
 }

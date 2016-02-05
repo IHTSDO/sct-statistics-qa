@@ -46,14 +46,18 @@ truncate table statedChanges;
 truncate table inferredChanges ;
 
 insert into statedChanges 
-				select distinct a.id
+				select distinct a.id,case a.definitionStatusId 
+					when 900000000000074008 then 1
+					else 0 end case
 				from actConcepts a inner join s_statedrels r
 				on r.sourceId=a.id
 				where r.effectiveTime=releaseDate;
 				
 				
 insert into inferredChanges 
-				select distinct a.id
+				select distinct a.id,case a.definitionStatusId 
+					when 900000000000074008 then 1
+					else 0 end case
 				from actConcepts a inner join s_relationships r
 				on r.sourceId=a.id
 				where r.effectiveTime=releaseDate;
@@ -79,7 +83,7 @@ truncate table prim2SD ;
 -- insert into testtime values (2,'statedCh and inferredCh' , CURRENT_TIMESTAMP);
 -- insert into testtime values (1,'prim2SD' , CURRENT_TIMESTAMP);
 insert into prim2SD
-select pc.id 
+select pc.id ,0
 from s_concepts_pre pc
 where pc.definitionStatusId=900000000000074008
 and exists(select 0 
@@ -99,7 +103,7 @@ set Primitive2SD =vprim2SD;
 truncate table SD2prim ;
 -- insert into testtime values (1,'SD2prim' , CURRENT_TIMESTAMP);
 insert into SD2prim 
-select pc.id
+select pc.id, 1
 from s_concepts_pre pc
 where pc.definitionStatusId=900000000000073002
 and exists(select 0 
@@ -118,7 +122,9 @@ truncate table descCh ;
 
 -- insert into testtime values (1,'descCh' , CURRENT_TIMESTAMP);
 insert into descCh
-select distinct c.id
+select distinct c.id,case c.definitionStatusId 
+		when 900000000000074008 then 1
+		else 0 end case
 	from actConcepts c
 	inner join s_descriptions d
 	on d.conceptId=c.id
@@ -136,7 +142,9 @@ truncate table fsnCh ;
 
 -- insert into testtime values (1,'fsnCh' , CURRENT_TIMESTAMP);
 insert into fsnCh 				
-select distinct c.id,d.term + ' -Prev.FSN: ' + d2.term
+select distinct c.id,d.term + ' -Prev.FSN: ' + d2.term,case c.definitionStatusId 
+		when 900000000000074008 then 1
+		else 0 end case
 	from actConcepts c
 	inner join s_descriptions d
 	on d.conceptId=c.id

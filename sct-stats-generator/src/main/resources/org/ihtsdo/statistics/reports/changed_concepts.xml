@@ -34,7 +34,7 @@
 	</outputFile>
 	<outputDetailFile>
 	<file>changedConceptDetails.csv</file>
-	<reportHeader>Hierarchy,Id,Term,ChangeType</reportHeader>
+	<reportHeader>Hierarchy,Id,Term,ChangeType,DefinitionStatus</reportHeader>
 	<storedProcedure>
 	<name>getChangedConceptDetails()</name>
 	</storedProcedure>

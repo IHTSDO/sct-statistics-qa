@@ -3,7 +3,7 @@
 <patternId>13</patternId>
 <name>Role groups with a single role</name>
 <description>Role groups with a single role</description>
-<severity>high</severity>
+<severity>low</severity>
 <resultFileName>rolegroup_with_single_role.json</resultFileName>
 <executionClass>org.ihtsdo.control.patterns.SingleRoleInGroup</executionClass>
 </patternConfig>

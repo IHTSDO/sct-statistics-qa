@@ -25,7 +25,6 @@ import java.util.HashSet;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.ihtdso.fileprovider.CurrentFile;
-import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.IControlPattern;
 import org.ihtsdo.control.model.PatternConfig;
 import org.ihtsdo.statistics.model.OutputInfoFactory;

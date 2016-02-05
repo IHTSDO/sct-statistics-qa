@@ -3,7 +3,7 @@
 <patternId>18</patternId>
 <name>Sufficiently defined Concepts with no stated attributes</name>
 <description>Sufficiently defined Concepts with no stated attributes</description>
-<severity>high</severity>
+<severity>low</severity>
 <resultFileName>suffdefined_wo_stated_attr.json</resultFileName>
 <executionClass>org.ihtsdo.control.patterns.SuffDefinedConceptWithoutStatedAttr</executionClass>
 </patternConfig>

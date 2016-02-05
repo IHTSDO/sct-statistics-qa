@@ -8,12 +8,12 @@ drop PROCEDURE if exists getRetiredConceptDetails;
 drop PROCEDURE if exists getChangedConceptDetails;
 drop PROCEDURE if exists getLocalizedConceptDetails;
 
-DROP TABLE IF EXISTS testtime;
+-- DROP TABLE IF EXISTS testtime;
 
-CREATE TABLE testtime (  
-	ID tinyint,  
-	indicator varchar(100), 
-	eventDate TIMESTAMP);
+-- CREATE TABLE testtime (  
+--	ID tinyint,  
+--	indicator varchar(100), 
+--	eventDate TIMESTAMP);
 	
 drop table if exists s_statedrootdesc;
 create text table s_statedrootdesc(
@@ -182,23 +182,29 @@ CREATE TABLE CPTROOTLEVEL_TABLE4 (
 	);
 
 drop table if exists STATEDCHANGES ;
-create table STATEDCHANGES (id bigint  );
+create table STATEDCHANGES (id bigint ,
+defStatus tinyint);
 
 drop table if exists  INFERREDCHANGES;
-create table INFERREDCHANGES (id bigint  );
+create table INFERREDCHANGES (id bigint ,
+defStatus tinyint );
 
 drop table if exists SD2PRIM ;
-create table SD2PRIM (id bigint  );
+create table SD2PRIM (id bigint  ,
+defStatus tinyint);
   
 drop table if exists  PRIM2SD;
-create table PRIM2SD (id bigint  );
+create table PRIM2SD (id bigint ,
+defStatus tinyint );
   
 drop table if exists DESCCH ;
-create table DESCCH (id bigint  );
+create table DESCCH (id bigint  ,
+defStatus tinyint);
 
 drop table if exists  FSNCH;
 create table FSNCH (id bigint ,
- term varchar(522) );
+ term varchar(522),
+defStatus tinyint );
   
 drop table if exists  ANYCH;
 create table ANYCH (id bigint  );
@@ -264,7 +270,8 @@ CREATE TABLE cpttable4_details (
 		ANCESTOR VARCHAR(255),
 		ID BIGINT,
 		TERM VARCHAR(522),
-		CHANGETYPE VARCHAR(50)
+		CHANGETYPE VARCHAR(50),
+		DEFINITIONSTATUS VARCHAR(22)
 	);
 	
 DROP TABLE if exists CPTROOTLEVEL_TABLE6;

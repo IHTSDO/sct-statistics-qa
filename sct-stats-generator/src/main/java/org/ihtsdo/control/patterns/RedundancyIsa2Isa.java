@@ -26,7 +26,6 @@ import org.ihtdso.fileprovider.CurrentFile;
 import org.ihtdso.fileprovider.PreviousFile;
 import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.ControlResultLine;
-import org.ihtsdo.control.model.IControlPattern;
 import org.ihtsdo.control.model.MatchObjectRedundantRel;
 import org.ihtsdo.control.model.RedundantRelDetailLine;
 import org.ihtsdo.control.roletesting.RelationshipTests;
@@ -133,8 +132,7 @@ public class RedundancyIsa2Isa extends AControlPattern {
 		ControlResultLine crl=null;
 		MatchObjectRedundantRel mobj=null;
 		RedundantRelDetailLine detLine;
-		String relId1="";
-		String relId2="";
+		String strRelsData="";
 		while ((line=br.readLine())!=null){
 			spl=line.split("\t",-1);
 			if (spl.length>1){
@@ -156,27 +154,29 @@ public class RedundancyIsa2Isa extends AControlPattern {
 					crl.setCurrent(true);
 					List<RedundantRelDetailLine>list=new ArrayList<RedundantRelDetailLine>();
 					detLine = new RedundantRelDetailLine(line);
-					relId1=detLine.getRelationshipId();
+					strRelsData= detLine.getDestinationId() + "|" + detLine.getDestinationTerm() + "|";
 					list.add(detLine);
 					mobj.setGroup1(list);
 					firstLine=false;
 				}else{
 					List<RedundantRelDetailLine>list=new ArrayList<RedundantRelDetailLine>();
 					detLine = new RedundantRelDetailLine(line);
-					relId2=detLine.getRelationshipId();
+					strRelsData+=" redundant isa for " + detLine.getDestinationId() + "|" + detLine.getDestinationTerm() + "|"; 
 					list.add(detLine);
 					mobj.setGroup2(list);
 					firstLine=true;
 					crl.setMatchObject(mobj);
-					crl.setMatchDescription("Redundancy between Isas relationships. RelationshipIds: " + relId1 + ", "  + relId2);
+					crl.setMatchDescription(strRelsData);
 				}
 			}else if (spl[0].indexOf("--")>-1){
+
 				if (first){
 					first=false;
 				}else{
 					bw.append(",");
 				}
 				writeResultLine(bw, crl);
+				strRelsData="";
 				firstLine=true;
 			}
 		}
