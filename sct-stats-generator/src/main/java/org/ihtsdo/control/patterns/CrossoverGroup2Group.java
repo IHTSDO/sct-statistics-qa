@@ -185,7 +185,7 @@ public class CrossoverGroup2Group extends AControlPattern {
 			}else if (spl[0].indexOf("--")>-1){
 
 				crl.setMatchObject(mobj);
-				crl.setMatchDescription("Crossover between group2: group #" + group1 + " and group #"  + group2);
+				crl.setMatchDescription("Crossover between groups: group #" + group1 + " and group #"  + group2);
 				if (first){
 					first=false;
 				}else{

@@ -36,11 +36,13 @@ set TERM= (select top 1 d.term from s_descriptions d
 
 
 update cpttable3_details
-set TERM= TERM + ' SAME AS ' + (select top 1 d.term from 
-			s_same_associations a inner join s_descriptions d 
+set TERM= TERM + ' SAME AS ' + (select top 1 case isnull(d.term,'')
+		when '' then cast(a.targetComponentId as varchar(18)) else d.term end case 
+		from 
+			s_same_associations a left join s_descriptions d 
 			on d.conceptid=a.targetComponentId
-			where d.active=1 and d.typeId=900000000000003001
-			and a.referencedComponentId=cpttable3_details.id)
+			and d.active=1 and d.typeId=900000000000003001
+			where a.referencedComponentId=cpttable3_details.id)
 			where cpttable3_details.REASON= 'Duplicate' ;
 			
 open result;

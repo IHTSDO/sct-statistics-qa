@@ -117,6 +117,7 @@ public class RelationshipTests {
 		}else{
 			tClos = new TClosure(relationshipFile,4,5,7,2);
 		}
+		this.relsCardinalityControl=relsCardinalityControl;
 		if (relsCardinalityControl==null && onIsas){
 			this.relsCardinalityControl=UNGROUPED2UNGROUPED;
 		}
@@ -153,6 +154,7 @@ public class RelationshipTests {
 		}else{
 			tClos = new TClosure(relationshipFile,4,5,7,2);
 		}
+		this.relsCardinalityControl=relsCardinalityControl;
 		if (relsCardinalityControl==null && onIsas){
 			this.relsCardinalityControl=UNGROUPED2UNGROUPED;
 		}
@@ -441,11 +443,15 @@ public class RelationshipTests {
 						}
 					}
 					else if (relsCardinalityControl.equals(UNGROUPED2GROUPED)){
+						
 						if (relgroup1.size()>1 && relgroup2.size()>1){
+							
 							continue;
 						}else if (relgroup1.size()==1 && relgroup2.size()==1){
+							
 							continue;
 						}
+						
 					}else if (relsCardinalityControl.equals(GROUPED2GROUPED)){
 						if (relgroup1.size()==1 ){
 							break;

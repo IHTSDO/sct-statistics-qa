@@ -11,7 +11,7 @@
                                 <thead>
                                 <tr>
                                     <th class="col-md-1">Id</th>
-                                    <th class="col-md-7">Description</th>
+                                    <th class="col-md-7">Name</th>
                                     <th class="col-md-1 text-right">Severity</th>
                                     <th class="col-md-1 text-right">Count</th>
                                     <th class="col-md-2"></th>
@@ -21,7 +21,7 @@
                                 {{#each report.patternProcess.patterns}}
                                     <tr class="small">
                                         <td class="">{{patternId}}</td>
-                                        <td class="">{{description}}</td>
+                                        <td class="">{{name}}</td>
                                         <td class="text-right">{{severity}}</td>
                                         <td class="text-right">{{resultCount}}</td>
                                         <td class=""><a class="btn btn-material-light-blue btn-sm load-sample-button" style="margin: 0px;" href="javascript:showSample({{patternId}});" role="button">Results</a></td>
@@ -29,6 +29,7 @@
                                     <tr class="small" style="display: none;" id="sample-row-{{patternId}}">
                                         <td class=""></td>
                                         <td colspan=3 class="">
+                                        	<p>{{description}}</p>
                                             <table class="table table-striped">
                                                 {{#each resultSample}}
                                                     <tr>
@@ -56,7 +57,7 @@
                                                     <!--{{/each}}-->
                                                 <!--</div>-->
                                             <!--</div>-->
-                                            <p class="text-center"><a href="javascript:loadFullResult('{{resultFileName}}','{{description}}','term','','','');">Load all {{resultCount}} results</a></p>
+                                            <p class="text-center"><a href="javascript:loadFullResult('{{resultFileName}}','{{name}}','{{description}}','term','','','');">Load all {{resultCount}} results</a></p>
                                         </td>
                                         <td class=""></td>
                                     </tr>

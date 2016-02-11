@@ -154,14 +154,14 @@ public class RedundancyIsa2Isa extends AControlPattern {
 					crl.setCurrent(true);
 					List<RedundantRelDetailLine>list=new ArrayList<RedundantRelDetailLine>();
 					detLine = new RedundantRelDetailLine(line);
-					strRelsData= detLine.getDestinationId() + "|" + detLine.getDestinationTerm() + "|";
+					strRelsData= "Redundancy between: " + detLine.getDestinationId() + "|" + detLine.getDestinationTerm() + "|";
 					list.add(detLine);
 					mobj.setGroup1(list);
 					firstLine=false;
 				}else{
 					List<RedundantRelDetailLine>list=new ArrayList<RedundantRelDetailLine>();
 					detLine = new RedundantRelDetailLine(line);
-					strRelsData+=" redundant isa for " + detLine.getDestinationId() + "|" + detLine.getDestinationTerm() + "|"; 
+					strRelsData+=" and " + detLine.getDestinationId() + "|" + detLine.getDestinationTerm() + "|"; 
 					list.add(detLine);
 					mobj.setGroup2(list);
 					firstLine=true;

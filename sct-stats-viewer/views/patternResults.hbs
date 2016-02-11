@@ -4,6 +4,7 @@
         <div class="card-content">
             <div class="card-body">
                 <h2>Pattern: {{pattern}}</h2>
+                <p>{{description}}</p>
                 <p>{{count}} concepts</p>
                 
                 <div class="navbar-collapse collapse navbar-responsive-collapse">
@@ -11,34 +12,34 @@
                 		<li id="tab-pattern-sort" class="dropdown">
                                 <a href="" data-target="#" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Sort by <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','conceptId','{{filterPreexist}}','{{filterNewCpt}}','{{filterModCpt}}')">Concept ID</a></li>
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','term','{{filterPreexist}}','{{filterNewCpt}}','{{filterModCpt}}')">Term</a></li>
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','matchDescription','{{filterPreexist}}','{{filterNewCpt}}','{{filterModCpt}}')">Explanation</a></li>
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','semtag','{{filterPreexist}}','{{filterNewCpt}}','{{filterModCpt}}')">Semantic tag</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','conceptId','{{filterPreexist}}','{{filterNewCpt}}','{{filterModCpt}}')">Concept ID</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','term','{{filterPreexist}}','{{filterNewCpt}}','{{filterModCpt}}')">Term</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','matchDescription','{{filterPreexist}}','{{filterNewCpt}}','{{filterModCpt}}')">Explanation</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','semtag','{{filterPreexist}}','{{filterNewCpt}}','{{filterModCpt}}')">Semantic tag</a></li>
                                 </ul>
                             </li>
                  		<li id="tab-pattern-preexist-filter" class="dropdown">
                                 <a href="" data-target="#" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Filter by Pre-existing: <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{sortBy}}','true','{{filterNewCpt}}','{{filterModCpt}}')">Yes</a></li>
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{sortBy}}','false','{{filterNewCpt}}','{{filterModCpt}}')">No</a></li>
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{sortBy}}','','{{filterNewCpt}}','{{filterModCpt}}')">All</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','{{sortBy}}','true','{{filterNewCpt}}','{{filterModCpt}}')">Yes</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','{{sortBy}}','false','{{filterNewCpt}}','{{filterModCpt}}')">No</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','{{sortBy}}','','{{filterNewCpt}}','{{filterModCpt}}')">All</a></li>
                                 </ul>
                             </li>
                  		<li id="tab-pattern-newcpt-filter" class="dropdown">
                                 <a href="" data-target="#" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Filter by New concept: <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{sortBy}}','{{filterPreexist}}','true','{{filterModCpt}}')">Yes</a></li>
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{sortBy}}','{{filterPreexist}}','false','{{filterModCpt}}')">No</a></li>
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{sortBy}}','{{filterPreexist}}','','{{filterModCpt}}')">All</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','{{sortBy}}','{{filterPreexist}}','true','{{filterModCpt}}')">Yes</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','{{sortBy}}','{{filterPreexist}}','false','{{filterModCpt}}')">No</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','{{sortBy}}','{{filterPreexist}}','','{{filterModCpt}}')">All</a></li>
                                 </ul>
                             </li>
                  		<li id="tab-pattern-modcpt-filter" class="dropdown">
                                 <a href="" data-target="#" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Filter by Modified concept: <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{sortBy}}','{{filterPreexist}}','{{filterNewCpt}}','true')">Yes</a></li>
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{sortBy}}','{{filterPreexist}}','{{filterNewCpt}}','false')">No</a></li>
-                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{sortBy}}','{{filterPreexist}}','{{filterNewCpt}}','')">All</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','{{sortBy}}','{{filterPreexist}}','{{filterNewCpt}}','true')">Yes</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','{{sortBy}}','{{filterPreexist}}','{{filterNewCpt}}','false')">No</a></li>
+                                    <li><a href="javascript:loadFullResult('{{file}}','{{pattern}}','{{description}}','{{sortBy}}','{{filterPreexist}}','{{filterNewCpt}}','')">All</a></li>
                                 </ul>
                             </li>
                   	</ul>

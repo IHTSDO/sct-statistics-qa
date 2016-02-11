@@ -184,7 +184,7 @@
                                     <li><a href="javascript:setReportsActive();loadNewConceptsStatistics()">New Concepts</a></li>
                                     <li><a href="javascript:setReportsActive();loadRetiredConceptsStatistics()">Inactivated Concepts</a></li>
                                     <li><a href="javascript:setReportsActive();loadExistingConceptsCount()">Changes to Existing Concepts (counts)</a></li>
-                                    <li><a href="javascript:setReportsActive();loadExistingConceptsPercent()">Changes to Existing Concepts (percents)</a></li>
+                                    <li><a href="javascript:setReportsActive();loadExistingConceptsPercent()">Changes to Existing Concepts (percentages)</a></li>
                                     <!--<li class="divider"></li>-->
                                 </ul>
                             </li>
@@ -277,7 +277,7 @@
                 $("#sample-row-" + patternId).toggle();
             }
            
-            function loadFullResult(fileName, patternName,sortColumn,filterPreex, filterNewCpt, filterModCpt) {
+            function loadFullResult(fileName, patternName, description, sortColumn,filterPreex, filterNewCpt, filterModCpt) {
                 $.getJSON("data/"+fileName, function(response){
                 }).error(function(err) {
                     console.log("Error", err);
@@ -351,6 +351,7 @@
                         results: dataObject,
                         count: dataObject.length,
                         pattern: patternName,
+                        description: description,
                         file: fileName,
                         sortBy: sortColumn,
                         filterPreexist: filterPreex,
@@ -385,6 +386,21 @@
                             }
                         }
                     };
+                    lines.sort(function(a,b){
+                    	if (a.term.indexOf("SNOMED CT Concept")>-1){
+                    		return -1;
+                    	}
+                    	if (b.term.indexOf("SNOMED CT Concept")>-1){
+                    		return 1;
+                    	}
+                    	if (a.term>b.term){
+	                    	return 1;
+	                    }
+	                    if (a.term<b.term){
+	                    	return -1;
+	                    }
+	                    return 0;
+                    });
                     var context = {
                         rows: lines
                     };
@@ -412,6 +428,22 @@
                             }
                         }
                     };
+                    
+                    lines.sort(function(a,b){
+                    	if (a.term.indexOf("SNOMED CT Concept")>-1){
+                    		return -1;
+                    	}
+                    	if (b.term.indexOf("SNOMED CT Concept")>-1){
+                    		return 1;
+                    	}
+                    	if (a.term>b.term){
+	                    	return 1;
+	                    }
+	                    if (a.term<b.term){
+	                    	return -1;
+	                    }
+	                    return 0;
+                    });
                     var context = {
                         rows: lines
                     };
@@ -439,6 +471,22 @@
                             }
                         }
                     };
+                    
+                    lines.sort(function(a,b){
+                    	if (a.term.indexOf("SNOMED CT Concept")>-1){
+                    		return -1;
+                    	}
+                    	if (b.term.indexOf("SNOMED CT Concept")>-1){
+                    		return 1;
+                    	}
+                    	if (a.term>b.term){
+	                    	return 1;
+	                    }
+	                    if (a.term<b.term){
+	                    	return -1;
+	                    }
+	                    return 0;
+                    });
                     var context = {
                         rows: lines
                     };
@@ -466,6 +514,21 @@
                             }
                         }
                     };
+                    lines.sort(function(a,b){
+                    	if (a.term.indexOf("SNOMED CT Concept")>-1){
+                    		return -1;
+                    	}
+                    	if (b.term.indexOf("SNOMED CT Concept")>-1){
+                    		return 1;
+                    	}
+                    	if (a.term>b.term){
+	                    	return 1;
+	                    }
+	                    if (a.term<b.term){
+	                    	return -1;
+	                    }
+	                    return 0;
+                    });
                     var context = {
                         rows: lines
                     };
@@ -493,6 +556,21 @@
                             }
                         }
                     };
+                    lines.sort(function(a,b){
+                    	if (a.term.indexOf("SNOMED CT Concept")>-1){
+                    		return -1;
+                    	}
+                    	if (b.term.indexOf("SNOMED CT Concept")>-1){
+                    		return 1;
+                    	}
+                    	if (a.term>b.term){
+	                    	return 1;
+	                    }
+	                    if (a.term<b.term){
+	                    	return -1;
+	                    }
+	                    return 0;
+                    });
                     var context = {
                         rows: lines
                     };

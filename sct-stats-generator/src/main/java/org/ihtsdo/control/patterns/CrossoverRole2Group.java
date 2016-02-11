@@ -158,7 +158,7 @@ public class CrossoverRole2Group extends AControlPattern {
 						list=new ArrayList<RedundantRelDetailLine>();
 						detLine = new RedundantRelDetailLine(line);
 						if (detLine.getGroup().equals("0")){
-							relId1=detLine.getRelationshipId();
+							relId1= detLine.getDestinationId() + "|" + detLine.getDestinationTerm();
 						}else{
 							group2=detLine.getGroup();
 						}
@@ -177,7 +177,7 @@ public class CrossoverRole2Group extends AControlPattern {
 						list2=new ArrayList<RedundantRelDetailLine>();
 						detLine = new RedundantRelDetailLine(line);
 						if (detLine.getGroup().equals("0")){
-							relId1=detLine.getRelationshipId();
+							relId1= detLine.getDestinationId() + "|" + detLine.getDestinationTerm();
 						}else{
 							group2=detLine.getGroup();
 						}
@@ -193,7 +193,7 @@ public class CrossoverRole2Group extends AControlPattern {
 			}else if (spl[0].indexOf("--")>-1){
 
 				crl.setMatchObject(mobj);
-				crl.setMatchDescription("Crossover between RelationshipId: " + relId1 + ", and group:#"  + group2);
+				crl.setMatchDescription("Crossover between " + relId1 + ", and group:#"  + group2);
 				if (first){
 					first=false;
 				}else{

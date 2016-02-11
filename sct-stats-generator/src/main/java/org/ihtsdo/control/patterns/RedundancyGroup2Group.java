@@ -189,7 +189,7 @@ public class RedundancyGroup2Group extends AControlPattern {
 			}else if (spl[0].indexOf("--")>-1){
 
 				crl.setMatchObject(mobj);
-				crl.setMatchDescription("Redundancy between group2: group #" + group1 + " and group #"  + group2);
+				crl.setMatchDescription("Redundancy between groups: group #" + group1 + " and group #"  + group2);
 				if (first){
 					first=false;
 				}else{
