@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<patternConfig>
+<patternId>21</patternId>
+<name>New duplicate concepts identified in the subset of concepts that were added in the previous release</name>
+<description>New duplicate concepts identified in the subset of concepts that were added in the previous release</description>
+<severity>low</severity>
+<resultFileName>duplicate_added_in_previous_release.json</resultFileName>
+<executionClass>org.ihtsdo.control.patterns.DuplicateAddedInPreviousRelease</executionClass>
+</patternConfig>

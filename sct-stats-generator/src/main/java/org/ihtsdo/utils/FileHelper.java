@@ -366,7 +366,30 @@ public class FileHelper {
 		br.close();	
 		return modules;
 	}
+	public static File getSortedFile(File currFile,
+			File tempSortedFinalFolder, File tempSortingFolder,
+			int[] sortColumns) {
 
+		File sortedFile = new File(tempSortedFinalFolder, "Sorted" + currFile.getName());
+		boolean sorted = isSorted(currFile, sortColumns);
+		if (!sorted) {
+		FileSorter fsc = new FileSorter(currFile, sortedFile, tempSortingFolder, sortColumns);
+		fsc.execute();
+		fsc = null;
+		System.gc();
+		return sortedFile;
+		}else{
+			return currFile;
+		}
+		
+	}
+	private static boolean isSorted(File file, int[] sortColumns) {
+		SortAnalyzer sa = new SortAnalyzer(file, sortColumns);
+		Boolean ret = sa.isSortedFile();
+		sa = null;
+		System.gc();
+		return ret;
+	}
 }
 
 

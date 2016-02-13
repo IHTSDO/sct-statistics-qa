@@ -28,9 +28,10 @@ public class I_Constants {
 	public final static String ISA = "116680003";
 	public static final String STATS_OUTPUT_FOLDER = "stats_output";
 	public static final String PROCESS_INFO_FOLDER = "process_info";
-	public static final Object SUFFICIENTLY_DEFINED = "900000000000073002";
-	public static final Object CORE_MODULE = "900000000000207008";
-	public static String PATTERN_OUTPUT_FOLDER="patterns_output";
-	
+	public static final String SUFFICIENTLY_DEFINED = "900000000000073002";
+	public static final String CORE_MODULE = "900000000000207008";
+	public static final String DUPLICATE = "900000000000482003";
+	public static final String PATTERN_OUTPUT_FOLDER="patterns_output";
+	public static final String INACTIVATION_CONCEPT_REFSETID = "900000000000489007";
 
 }

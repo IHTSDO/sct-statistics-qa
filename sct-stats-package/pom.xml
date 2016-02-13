@@ -9,20 +9,6 @@
    <properties>
   <nano_webserver_version>2.2.1-SNAPSHOT</nano_webserver_version>
   </properties>
-  	<dependencies>
-		<dependency>
-			<groupId>org.nanohttpd</groupId>
-			<artifactId>nanohttpd-webserver</artifactId>
-			<version>${nano_webserver_version}</version>
-			<classifier>jar-with-dependencies</classifier>
-			<exclusions>
-				<exclusion>
-					<artifactId>nanohttpd</artifactId>
-					<groupId>org.nanohttpd</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-	</dependencies>
 	<build>
 		<resources>
 			<resource>

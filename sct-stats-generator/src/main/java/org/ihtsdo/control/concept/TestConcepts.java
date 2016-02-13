@@ -253,4 +253,62 @@ public class TestConcepts {
 		return cpts;
 	}
 
+	public HashSet<Long> getNewConceptPreviousAndInactiveCurrent(
+			String fullCpts, 
+			File resultTmpFolder, 
+			String releaseDate,
+			String previousReleaseDate) throws IOException {
+		
+		HashSet<Long> concepts=new HashSet<Long>();
+		
+		File sortedFile = FileHelper.getSortedFile(new File(fullCpts), this.outputFolder, resultTmpFolder, new int[]{0,1});
+		BufferedReader br=FileHelper.getReader(sortedFile);
+		br.readLine();
+		String line;
+		String[] spl;
+		String prevCid="";
+		boolean isNew=false;
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (!spl[0].equals(prevCid)){
+				if (spl[1].equals(previousReleaseDate) && spl[2].equals("1")){
+					isNew=true;
+				}else{
+					isNew=false;
+				}
+				prevCid=spl[0];
+			}else{
+				if (isNew){
+					if (spl[1].equals(releaseDate) && spl[2].equals("0")){
+						concepts.add(Long.parseLong(spl[0]));
+					}
+				}
+			}
+		}
+		br.close();
+		
+		return concepts;
+	}
+
+	public HashSet<Long> filterConceptsByReason(HashSet<Long> cpts,
+			String attvalue, String reason) throws IOException {
+		HashSet<Long> concepts=new HashSet<Long>();
+		
+		BufferedReader br=FileHelper.getReader(attvalue);
+		br.readLine();
+		String line;
+		String[] spl;
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (spl[4].equals(I_Constants.INACTIVATION_CONCEPT_REFSETID)
+					&& spl[2].equals("1")
+					&& cpts.contains(Long.parseLong(spl[5]))
+					&& spl[6].equals(reason)){
+				concepts.add(Long.parseLong(spl[5]));
+			}
+		}
+		br.close();
+		return concepts;
+	}
+
 }

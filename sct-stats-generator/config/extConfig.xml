@@ -19,8 +19,9 @@
 		<releaseFullFolder>/Users/ar/Downloads/ES_Release/RF2/SnomedCT_SpanishRelease-es_INT_20151031/RF2Release/Full</releaseFullFolder>
 	</releaseDependencies>
 	<patternExecutions>
-		<runControlPatterns>false</runControlPatterns>
+		<runControlPatterns>true</runControlPatterns>
 		<exclusions>
+		<patternId></patternId>
 		</exclusions>
 	</patternExecutions>
 </config>
