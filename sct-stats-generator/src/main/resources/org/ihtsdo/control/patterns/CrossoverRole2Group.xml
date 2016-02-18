@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <patternConfig>
 <patternId>5</patternId>
-<name>Crossover between ungrouped relationshipType-target pair and grouped one</name>
-<description>Crossover between ungrouped relationshipType-target pair and grouped one</description>
+<name>Inconsistent role and role group distribution normal form anomalies related to partial crossovers and role group inconsistencies in the asserted subtype hierarchy.</name>
+<description>Role grouping anomalies related to combinations of ungrouped roles and role groups inherited from different supertypes with overlapping contradictory restrictions resulting in inconsistent inheritance patterns in Distribution Normal Form.</description>
 <severity>low</severity>
 <resultFileName>crossover_role_to_group.json</resultFileName>
 <executionClass>org.ihtsdo.control.patterns.CrossoverRole2Group</executionClass>
