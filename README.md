@@ -51,11 +51,12 @@ Adding values to the configuration files:
 * Only in config/extConfig.xml
   * releaseDependencies: includes a list of “releaseFullFolder” elements that direct to the location of other RF2 Full packages that represent dependencies of the focus release.
   * Example:
-    * <releaseDependencies>
-    * <releaseFullFolder/MyData/RF2_Core_Release_20150731_Beta_version_4/Full</releaseFullFolder>
-    * <releaseFullFolder>/MyData/ES_Release/RF2/SnomedCT_SpanishRelease-es_INT_20151031/RF2Release/Full</releaseFullFolder>
-    * </releaseDependencies>
-
+```
+    <releaseDependencies>
+      <releaseFullFolder/MyData/RF2_Core_Release_20150731_Beta_version_4/Full</releaseFullFolder>
+      <releaseFullFolder>/MyData/ES_Release/RF2/SnomedCT_SpanishRelease-es_INT_20151031/RF2Release/Full</releaseFullFolder>
+    </releaseDependencies>
+```
 ###	Running queries and creating output files
 
 After the configuration file was edited to include valid path to the source RF2 Full data, the execution script should be launched. In some environments permissions for execution should be granted before, for example in Mac OSX or Linux:
