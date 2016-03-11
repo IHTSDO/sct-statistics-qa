@@ -17,7 +17,6 @@
 	<patternExecutions>
 		<runControlPatterns>true</runControlPatterns>
 		<exclusions>
-			<patternId></patternId>
 		</exclusions>
 	</patternExecutions>
 </config>

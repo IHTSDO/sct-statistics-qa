@@ -83,6 +83,8 @@ public class FileProvider {
 	private String transitiveClosureStatedFile;
 	private String transitiveClosureInferredFile;
 	private HashMap<Long, String> conceptTerms;
+	private String proximalPrimitiveFile;
+	private String canonicalChangesOnSDConceptsFile;
 
 
 	/**
@@ -630,9 +632,9 @@ public class FileProvider {
 		if (transitiveClosureStatedFile==null){
 			String statedRels;
 			if (getReleaseDependenciesFullFolders()!=null){
-				statedRels=getCompleteRelationshipSnapshot();
+				statedRels=getCompleteStatedRelationshipSnapshot();
 			}else{
-				statedRels=getSnapshotRelationshipFile();
+				statedRels=getSnapshotStatedRelationshipFile();
 			}
 			TClosure tClos=new TClosure(statedRels,4,5,7,2);
 			transitiveClosureStatedFile = new File(completedFilesFolder,"t_closure_stated.txt").getAbsolutePath();
@@ -714,6 +716,22 @@ public class FileProvider {
 			}
 		}
 		br.close();
+	}
+
+	public String getProximalPrimitiveFile() {
+		return proximalPrimitiveFile;
+	}
+
+	public void setProximalPrimitiveFile(String proximalPrimitiveFile) {
+		this.proximalPrimitiveFile = proximalPrimitiveFile;
+	}
+
+	public void setCanonicalChangesOnSDConceptsFile(String canonicalChangesOnSDConceptsFile) {
+		this.canonicalChangesOnSDConceptsFile=canonicalChangesOnSDConceptsFile;
+	}
+
+	public String getCanonicalChangesOnSDConceptsFile() {
+		return canonicalChangesOnSDConceptsFile;
 	}
 
 }

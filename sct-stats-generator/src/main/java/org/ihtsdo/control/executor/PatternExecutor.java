@@ -18,13 +18,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.ihtdso.fileprovider.CurrentFile;
+import org.ihtsdo.control.model.ControlResultLine;
 import org.ihtsdo.control.model.IControlPattern;
 import org.ihtsdo.control.model.PatternConfig;
 import org.ihtsdo.statistics.model.OutputInfoFactory;
@@ -121,7 +124,7 @@ public class PatternExecutor {
 			br.close();
 		}
 	}
-	
+
 	private void getNewConcepts() throws UnsupportedEncodingException, FileNotFoundException, Exception {
 		newConcepts=new HashSet<String>();
 		if (CurrentFile.get().getNewConceptFile()!=null){
@@ -171,9 +174,12 @@ public class PatternExecutor {
 		String msg=logger.endTime(start);
 		int posIni=msg.indexOf("ProcessingTime:")+16;
 		patternConfig.setTimeTaken(msg.substring(posIni));
-		patternConfig.setResultSample(controlPattern.getSample());
-		patternConfig.setResultCount(controlPattern.getResultCount());
-		OutputInfoFactory.get().getPatternProcess().getPatterns().add(patternConfig);
+		List<ControlResultLine> sample = controlPattern.getSample();
+		if (sample!=null){
+			patternConfig.setResultSample(sample);
+			patternConfig.setResultCount(controlPattern.getResultCount());
+			OutputInfoFactory.get().getPatternProcess().getPatterns().add(patternConfig);
+		}
 		controlPattern=null;
 
 	}

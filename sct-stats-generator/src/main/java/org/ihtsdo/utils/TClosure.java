@@ -14,6 +14,7 @@ package org.ihtsdo.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -233,6 +234,58 @@ public class TClosure {
 			return parents.contains(parent);
 		}
 		return null;
+	}
+
+	public void getProximalPrimitives(HashSet<Long> sdConcepts,
+			HashSet<Long> pConcepts, File outputFile) throws IOException {
+		BufferedWriter bw = FileHelper.getWriter(outputFile);
+		bw.append("id");
+		bw.append("\t");
+		bw.append("parent");
+		bw.append("\r\n");
+	
+		for (Long concept:sdConcepts){
+			
+			HashSet<Long>primProx=getProximalPrimitives(concept, pConcepts);
+			
+			for (Long prim:primProx){
+				bw.append(concept.toString());
+				bw.append("\t");
+				bw.append(prim.toString());
+				bw.append("\r\n");
+			}
+			
+		}
+		bw.close();
+		bw=null;
+	}
+
+	private HashSet<Long> getProximalPrimitives(Long concept,
+			HashSet<Long> pConcepts) {
+		HashSet<Long>ret=new HashSet<Long>();
+		HashSet<Long> parents = parentHier.get(concept);
+		for (Long parent:parents){
+			if (pConcepts.contains(parent)){
+				addNewProximalParent(ret,parent);
+			}else{
+				ret.addAll(getProximalPrimitives(parent,pConcepts));
+			}
+		}
+		return ret;
+	}
+
+	private void addNewProximalParent(HashSet<Long> parents, Long newParent) {
+		for (Long parent:parents){
+			if (isAncestorOf(newParent, parent)){
+				return ;
+			}else if (isAncestorOf(parent,newParent)){
+				parents.remove(parent);
+				parents.add(newParent);
+				return ;
+			}
+		}
+		parents.add(newParent);
+		return ;
 	}
 
 }

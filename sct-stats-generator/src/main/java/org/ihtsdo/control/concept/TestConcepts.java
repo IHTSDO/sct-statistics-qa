@@ -18,8 +18,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeSet;
 
+import org.ihtdso.fileprovider.CurrentFile;
+import org.ihtdso.fileprovider.PreviousFile;
 import org.ihtsdo.utils.FileHelper;
 import org.ihtsdo.utils.I_Constants;
 import org.ihtsdo.utils.TClosure;
@@ -111,6 +118,48 @@ public class TestConcepts {
 		bw.close();
 		
 		tClos_file=null;
+
+	}
+	public void getProximalPrimitive( String concFile,
+			String completeConcFile, File currFile, TClosure tClos) throws FileNotFoundException, IOException,
+			UnsupportedEncodingException, NumberFormatException {
+
+		if (completeConcFile==null){
+			completeConcFile=concFile;
+		}
+		BufferedReader br = FileHelper.getReader(concFile);
+
+		br.readLine();
+		String[] spl;
+		String line;
+
+		HashSet<Long>SDconcepts=new HashSet<Long>();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (spl[2].equals("1") && spl[4].equals("900000000000073002" )){
+				SDconcepts.add(Long.parseLong(spl[0]));
+			}
+		}
+		br.close();
+
+		br = FileHelper.getReader(completeConcFile);
+
+		br.readLine();
+
+		HashSet<Long>Pconcepts=new HashSet<Long>();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (spl[2].equals("1") && spl[4].equals("900000000000074008" )){
+				Pconcepts.add(Long.parseLong(spl[0]));
+			}
+		}
+		br.close();
+		
+
+		tClos.getProximalPrimitives(SDconcepts,Pconcepts,currFile);
+		
+		return;
+		
 
 	}
 
@@ -311,4 +360,436 @@ public class TestConcepts {
 		return concepts;
 	}
 
+	public String getCanonicalChangesOnSDConceptsFile() throws IOException, Exception{
+		String ret=CurrentFile.get().getCanonicalChangesOnSDConceptsFile();
+		if (ret!=null){
+			return ret;
+		}
+		ret=outputFolder.getAbsolutePath() + "/" + "canonicalChangesOnSDConceptsFile.txt";
+		String statedRels;
+		String concFile;
+		String completeConcFile=null;
+		String currFile=null;
+		String prevFile=null;
+		currFile=CurrentFile.get().getProximalPrimitiveFile();
+		if (currFile==null){
+			File completedFilesFolder=CurrentFile.get().getCompletedFilesFolder();
+			
+			if (CurrentFile.get().getReleaseDependenciesFullFolders()!=null){
+
+				statedRels=CurrentFile.get().getCompleteStatedRelationshipSnapshot();
+				completeConcFile=CurrentFile.get().getCompleteConceptSnapshot();
+			}else{
+				statedRels=CurrentFile.get().getSnapshotStatedRelationshipFile();
+			}
+			concFile=CurrentFile.get().getSnapshotConceptFile();
+			File outputFile=new File(completedFilesFolder,"current_prim_prox.txt");
+			
+			TClosure tClos=new TClosure(statedRels,4,5,7,2);
+
+			getProximalPrimitive(concFile, completeConcFile, outputFile, tClos);
+			currFile=outputFile.getAbsolutePath();
+			CurrentFile.get().setProximalPrimitiveFile(currFile);
+
+
+		}
+		prevFile=PreviousFile.get().getProximalPrimitiveFile();
+		if (prevFile==null){
+			File completedFilesFolder=PreviousFile.get().getCompletedFilesFolder();
+			completeConcFile=null;
+
+			if (PreviousFile.get().getReleaseDependenciesFullFolders()!=null){
+				completeConcFile=PreviousFile.get().getCompleteConceptSnapshot();	
+				statedRels=PreviousFile.get().getCompleteStatedRelationshipSnapshot();
+			}else{
+				statedRels=PreviousFile.get().getSnapshotStatedRelationshipFile();
+			}
+			concFile=PreviousFile.get().getSnapshotConceptFile();
+			File outputFile=new File(completedFilesFolder,"previous_prim_prox.txt");
+			
+			TClosure tClos=new TClosure(statedRels,4,5,7,2);
+
+			getProximalPrimitive(concFile, completeConcFile, outputFile, tClos);
+
+			prevFile=outputFile.getAbsolutePath();
+			PreviousFile.get().setProximalPrimitiveFile(prevFile);
+		}
+
+		HashMap<String,Integer>preInf=new HashMap<String,Integer>();
+		BufferedReader br = FileHelper.getReader(prevFile);
+		br.readLine();
+		String line;
+		String[] spl;
+
+		HashMap<Long,Integer> sdConcepts=new HashMap<Long,Integer>();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			preInf.put(spl[0] + "-i:" + spl[1],0);
+			sdConcepts.put(Long.parseLong(spl[0]),0);
+		}
+		br.close();
+
+		br = FileHelper.getReader(PreviousFile.get().getSnapshotRelationshipFile());
+		br.readLine();
+
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+
+			if (sdConcepts.containsKey(Long.parseLong(spl[4])) 
+					&& spl[2].equals("1") && spl[7].compareTo(I_Constants.ISA)!=0){
+
+				String key=spl[4]+ "-" + spl[7] + ":" + spl[5];
+				if (preInf.containsKey(key)){
+					Integer count=preInf.get(key);
+					count++;
+					preInf.put(key,count);
+				}else{
+					preInf.put(key,0);
+				}
+			}
+		}
+		br.close();
+
+		HashSet<Long> modified=new HashSet<Long>();
+		br = FileHelper.getReader(currFile);
+
+		br.readLine();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			Long cid=Long.parseLong(spl[0]);
+			if (sdConcepts.containsKey(cid)){
+				String key=spl[0]+ "-i:" + spl[1] ;
+
+				if (!preInf.containsKey(key)){
+					sdConcepts.remove(cid);
+					modified.add(cid);
+				}else{
+					preInf.remove(key);
+					sdConcepts.put(cid, 1);
+				}
+			}
+		}
+		br.close();
+
+		br = FileHelper.getReader(CurrentFile.get().getSnapshotRelationshipFile());
+
+		br.readLine();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			Long cid=Long.parseLong(spl[4]);
+			if (sdConcepts.containsKey(cid)
+					&& spl[2].equals("1") && spl[7].compareTo(I_Constants.ISA)!=0){
+				String key=spl[4]+ "-" + spl[7] + ":" + spl[5];
+				if (!preInf.containsKey(key)){
+					sdConcepts.remove(cid);
+					modified.add(cid);
+				}else{
+					Integer count=preInf.get(key);
+					if (count.compareTo(0)>0){
+						count--;
+						preInf.put(key, count);
+					}else{
+						preInf.remove(key);
+					}
+					sdConcepts.put(cid, 1);
+				}
+			}
+		}
+		br.close();
+
+		for (String key:preInf.keySet()){
+			String[] splKey=key.split("-");
+			Long cid=Long.parseLong(splKey[0]);
+			if (!modified.contains(cid)){
+				Integer viewed=sdConcepts.get(cid);
+				if (viewed.equals(1)){
+					modified.add(cid);
+				}
+			}
+		}
+		
+		BufferedWriter bw = FileHelper.getWriter(ret);
+		bw.append("id");
+		bw.append("\r\n");
+		for (Long cid:modified){
+			bw.append(cid.toString());
+			bw.append("\r\n");
+			
+		}
+		bw.close();
+		CurrentFile.get().setCanonicalChangesOnSDConceptsFile(ret);
+		return ret;
+	}
+	public String getStatedChangesOnSDConceptsFile(String releaseDate) throws IOException, Exception{
+		String ret=outputFolder.getAbsolutePath() + "/" + "statedChangesOnSDConceptsFile.txt";
+		String statedRels;
+		String concFile;
+		
+		concFile=PreviousFile.get().getSnapshotConceptFile();
+		
+		BufferedReader br = FileHelper.getReader(concFile);
+
+		br.readLine();
+		String[] spl;
+		String line;
+
+		HashSet<Long>SDconcepts=new HashSet<Long>();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (spl[2].equals("1") && spl[4].equals("900000000000073002" )){
+				SDconcepts.add(Long.parseLong(spl[0]));
+			}
+		}
+		br.close();
+		
+		concFile=CurrentFile.get().getSnapshotConceptFile();
+		
+		br = FileHelper.getReader(concFile);
+
+		br.readLine();
+
+		HashSet<Long>currSDconcepts=new HashSet<Long>();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			Long cid=Long.parseLong(spl[0]);
+			if (spl[2].equals("1") && spl[4].equals("900000000000073002" )
+					&& SDconcepts.contains(cid)){
+				currSDconcepts.add(cid);
+			}
+		}
+		br.close();
+
+		
+		statedRels=CurrentFile.get().getSnapshotStatedRelationshipFile();
+			
+		br = FileHelper.getReader(statedRels);
+		br.readLine();
+
+		BufferedWriter bw = FileHelper.getWriter(ret);
+		bw.append("id");
+		bw.append("\r\n");
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			Long cid=Long.parseLong(spl[4]);
+			if (spl[1].compareTo(releaseDate)==0 && currSDconcepts.contains(cid) ){
+				bw.append(cid.toString());
+				bw.append("\r\n");
+			}
+		}
+		br.close();
+		bw.close();
+		return ret;
+	}
+
+	public String getSDConceptsWithSameCanonicalAsParentFile() throws IOException, Exception{
+		String ret=outputFolder.getAbsolutePath() + "/" + "SDConceptsWithSameCanonicalAsParentFile.txt";
+		String statedRels;
+		String concFile;
+		String completeConcFile=null;
+		String currFile=null;
+		currFile=CurrentFile.get().getProximalPrimitiveFile();
+		if (currFile==null){
+			File completedFilesFolder=CurrentFile.get().getCompletedFilesFolder();
+			
+			if (CurrentFile.get().getReleaseDependenciesFullFolders()!=null){
+
+				statedRels=CurrentFile.get().getCompleteStatedRelationshipSnapshot();
+				completeConcFile=CurrentFile.get().getCompleteConceptSnapshot();
+			}else{
+				statedRels=CurrentFile.get().getSnapshotStatedRelationshipFile();
+			}
+			concFile=CurrentFile.get().getSnapshotConceptFile();
+			File outputFile=new File(completedFilesFolder,"current_prim_prox.txt");
+			
+			TClosure tClos=new TClosure(statedRels,4,5,7,2);
+
+			getProximalPrimitive(concFile, completeConcFile, outputFile, tClos);
+			currFile=outputFile.getAbsolutePath();
+			CurrentFile.get().setProximalPrimitiveFile(currFile);
+
+		}
+
+		HashMap<Long,List<Long>>canonical=new HashMap<Long,List<Long>>();
+		BufferedReader br = FileHelper.getReader(currFile);
+		br.readLine();
+		String line;
+		String[] spl;
+
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			Long cid=Long.parseLong(spl[0]);
+			List<Long> rels;
+			if (canonical.containsKey(cid)){
+				rels=canonical.get(cid);
+			}else{
+				rels=new ArrayList<Long>();
+			}
+			rels.add(Long.parseLong(spl[1]));
+			canonical.put(cid,  rels);
+		}
+		br.close();
+
+		br = FileHelper.getReader(CurrentFile.get().getSnapshotRelationshipFile());
+		br.readLine();
+
+		HashMap<Long, List<Long>>candidate=new HashMap<Long, List<Long>>();
+		HashSet<Long> parentToTest=new HashSet<Long>();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			Long cid=Long.parseLong(spl[4]);
+			if (canonical.containsKey(cid)
+					&& spl[2].equals("1")  
+					&& spl[7].compareTo(I_Constants.ISA)==0){
+				Long tgt=Long.parseLong(spl[5]);
+				
+				if (canonical.containsKey(tgt)){
+					if (identicalPrimitives(canonical.get(cid),canonical.get(tgt))){
+						List<Long>tgts=candidate.get(cid);
+						if (tgts==null){
+							tgts=new ArrayList<Long>();
+						}
+						tgts.add(tgt);
+						candidate.put(cid,tgts);
+						parentToTest.add(tgt);
+					}
+				}else if (canonical.get(cid).size()==1){
+					List<Long>tgts=candidate.get(cid);
+					if (tgts==null){
+						tgts=new ArrayList<Long>();
+					}
+					tgts.add(tgt);
+					candidate.put(cid,tgts);
+					parentToTest.add(tgt);
+				}
+
+			}
+		}
+		br.close();
+
+		canonical=null;
+		
+		
+		HashMap<Long, HashMap<Integer,TreeSet<String>>> rels = new HashMap<Long,HashMap<Integer,TreeSet<String>>>();
+		br = FileHelper.getReader(CurrentFile.get().getSnapshotRelationshipFile());
+		br.readLine();
+
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			Long cid=Long.parseLong(spl[4]);
+			if ((candidate.containsKey(cid) || parentToTest.contains(cid))
+					&& spl[2].equals("1")  
+					&& spl[7].compareTo(I_Constants.ISA)!=0){
+				
+				HashMap<Integer,TreeSet<String>> cptRels;
+				if (rels.containsKey(cid)){
+					cptRels=rels.get(cid);
+					Integer groupNr=Integer.parseInt(spl[6]);
+					TreeSet<String> group=cptRels.get(groupNr);
+					if (group==null){
+						group=new TreeSet<String>();
+					}
+					group.add(spl[7] + ":" + spl[5]);
+					cptRels.put(groupNr, group);
+				}else{
+					cptRels=new HashMap<Integer,TreeSet<String>>();
+					TreeSet<String> group=new TreeSet<String>();
+					group.add(spl[7] + ":" + spl[5]);
+					cptRels.put(Integer.parseInt(spl[6]), group);
+				}
+				rels.put(cid, cptRels);
+			}
+		}
+		br.close();
+		
+
+		BufferedWriter bw = FileHelper.getWriter(ret);
+		bw.append("id");
+		bw.append("\t");
+		bw.append("parentId");
+		bw.append("\r\n");
+
+		for (Long cid:candidate.keySet()){
+			List<Long> parents=candidate.get(cid);
+			
+			HashMap<Integer, TreeSet<String>> cidRels = rels.get(cid);
+			for(Long parent:parents){
+				HashMap<Integer, TreeSet<String>> parentRels = rels.get(parent);
+				
+				if (!diffRels(cidRels,parentRels)){
+
+					bw.append(cid.toString());
+					bw.append("\t");
+					bw.append(parent.toString());
+					bw.append("\r\n");
+					
+				}
+			}
+			
+		}
+		bw.close();
+		
+		return ret;
+	}
+
+	private boolean diffRels(HashMap<Integer, TreeSet<String>> cidRels,
+			HashMap<Integer, TreeSet<String>> parentRels) {
+
+		if (parentRels==null && cidRels==null){
+			return false;
+		}
+		if (parentRels==null){
+			return true;
+		}
+		if (cidRels==null){
+			return true;
+		}
+		for (Integer cidGroup:cidRels.keySet()){
+			TreeSet<String> cidMembers = cidRels.get(cidGroup);
+			boolean equalGroup=false;
+			for (Integer parentGroup:parentRels.keySet()){
+				TreeSet<String> parentMembers = parentRels.get(parentGroup);
+				
+				if (cidMembers.size()!=parentMembers.size()){
+					continue;
+				}
+				boolean equalTriple=true;
+				Iterator<String> iter = cidMembers.iterator();
+				
+				while(iter.hasNext()){
+					String cidRoleTgt=iter.next();
+					String parentRoleTgt=parentMembers.iterator().next();
+					equalTriple=cidRoleTgt.equals(parentRoleTgt);
+					if (!equalTriple){
+						break;
+					}
+				}
+				if (equalTriple){
+					equalGroup=true;
+					break;
+				}
+					
+			}
+			if (!equalGroup){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean identicalPrimitives(List<Long> list, List<Long> list2) {
+		if (list.size()!=list2.size()){
+			return false;
+		}
+		for (Long prim : list){
+			if (!list2.contains(prim)){
+				return false;
+			}
+		}
+		for (Long prim : list2){
+			if (!list.contains(prim)){
+				return false;
+			}
+		}
+		return true;
+	}
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<patternConfig>
+<patternId>26</patternId>
+<name>Sufficiently defined with same canonical form that parent</name>
+<description>Sufficiently defined with same canonical form that parent</description>
+<severity>low</severity>
+<resultFileName>suffdefined_same_canonical_changes_as_parent.json</resultFileName>
+<executionClass>org.ihtsdo.control.patterns.SufficientlyDefinedWithSameCanonicalAsParent</executionClass>
+</patternConfig>

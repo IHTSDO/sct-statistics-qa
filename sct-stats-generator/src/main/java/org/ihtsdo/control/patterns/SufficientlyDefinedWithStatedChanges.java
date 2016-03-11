@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.ihtdso.fileprovider.CurrentFile;
-import org.ihtdso.fileprovider.PreviousFile;
 import org.ihtsdo.control.concept.TestConcepts;
 import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.ControlResultLine;
@@ -31,7 +30,7 @@ import org.ihtsdo.utils.FileHelper;
 
 import com.google.gson.Gson;
 
-public class SuffDefinedConceptWithoutStatedAttr extends AControlPattern {
+public class SufficientlyDefinedWithStatedChanges extends AControlPattern {
 
 	private File resultFile;
 	private HashSet<String> newConcepts;
@@ -55,77 +54,58 @@ public class SuffDefinedConceptWithoutStatedAttr extends AControlPattern {
 		}else{
 			FileHelper.emptyFolder(resultTmpFolder);
 		}
-		String statedRels=CurrentFile.get().getSnapshotStatedRelationshipFile();
-		String prevStatedRels=PreviousFile.get().getSnapshotStatedRelationshipFile();
-		String concept=CurrentFile.get().getSnapshotConceptFile();
-		String prevConcept=PreviousFile.get().getSnapshotConceptFile();
 		
+
+		File completedFilesFolder=CurrentFile.get().getCompletedFilesFolder();
+		TestConcepts tc=new TestConcepts(completedFilesFolder);
 		
-		TestConcepts tc=new TestConcepts(resultTmpFolder);
-		
-		String prevFile="prev_sd_wo_stated_attr.txt";
-		tc.getSDConceptsWithoutStatedAtt(prevStatedRels,prevConcept,prevFile);
-		
-		String currFile="sd_wo_stated_attr.txt";
-		tc.getSDConceptsWithoutStatedAtt(statedRels,concept,currFile);
+		String statedChangesFile=tc.getStatedChangesOnSDConceptsFile(currentEffTime);
 		
 		tc=null;
-		getResults(resultTmpFolder, new File(resultTmpFolder,prevFile),new File(resultTmpFolder,currFile));
-		FileHelper.emptyFolder(resultTmpFolder);
-	}
 
-	
-	private void getResults(File resultTmpFolder, File prevFile,
-			File currFile) throws IOException {
+
 		gson=new Gson(); 
 
 		sep = System.getProperty("line.separator");
 
-		BufferedReader br = FileHelper.getReader(prevFile);
-
-		HashSet<String> prev=new HashSet<String>();
-		br.readLine();
-		String line;
-		String[] spl;
-		while ((line=br.readLine())!=null){
-			spl=line.split("\t",-1);
-			prev.add(spl[0]);
-		}
-		br.close();
 		sample=new ArrayList<ControlResultLine>();
 		BufferedWriter bw = FileHelper.getWriter(resultFile);
 		bw.append("[");
 		boolean first=true;
-		br=FileHelper.getReader(currFile);
-		br.readLine();
 		ControlResultLine crl=null;
-		while ((line=br.readLine())!=null){
-			spl=line.split("\t",-1);
+
+		BufferedReader br = FileHelper.getReader(statedChangesFile);
+		br.readLine();
+		String line;
+		while((line=br.readLine())!=null){
+			Long cid=Long.parseLong(line);
 			crl=new ControlResultLine();
-			crl.setChanged(changedConcepts.contains(spl[0]));
-			crl.setNew(newConcepts.contains(spl[0]));
-			crl.setConceptId(spl[0]);
-			crl.setTerm(conceptTerms.get(Long.parseLong(spl[0])));
+			crl.setChanged(changedConcepts.contains(line));
+			crl.setNew(newConcepts.contains(line));
+			crl.setConceptId(line);
+			crl.setTerm(conceptTerms.get(cid));
 			crl.setSemtag(getSemTag(crl.getTerm()));
 			crl.setCurrentEffectiveTime(currentEffTime);
 			crl.setPreviousEffectiveTime(previousEffTime);
-			crl.setForm("stated");
+			crl.setForm("canonical");
 
 			crl.setPatternId(patternId);
-			crl.setPreexisting(prev.contains(spl[0]));
+			crl.setPreexisting(false);
 			crl.setResultId(UUID.randomUUID().toString());
 			crl.setCurrent(true);
-			crl.setMatchDescription("Sufficiently defined Concepts with no stated attributes.");
+			crl.setMatchDescription("Sufficiently defined concept with stated changes.");
 			if (first){
 				first=false;
 			}else{
 				bw.append(",");
 			}
 			writeResultLine(bw, crl);
+
 		}
 		bw.append("]");
 		bw.close();
-		br.close();		
+		br.close();
+
 	}
 
 
@@ -176,6 +156,7 @@ public class SuffDefinedConceptWithoutStatedAttr extends AControlPattern {
 	public int getResultCount() {
 		return resultCount;
 	}
+
 	public void setConceptTerms(HashMap<Long, String> conceptTerms) {
 		this.conceptTerms=conceptTerms;
 	}
