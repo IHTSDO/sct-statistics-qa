@@ -173,7 +173,7 @@ public class SufficientlyDefinedWithCanonicalChangesAndLostOrGainedDescendant ex
 				crl.setPreexisting(false);
 				crl.setResultId(UUID.randomUUID().toString());
 				crl.setCurrent(true);
-				crl.setMatchDescription("(" + strDiff + ")Sufficiently defined concept with canonical changes have " + gainedOrLost + " inferred subtypes.");
+				crl.setMatchDescription("(" + strDiff + ") Sufficiently defined concept with canonical form changes that has " + gainedOrLost + " inferred descendants.");
 				if (first){
 					first=false;
 				}else{
