@@ -26,18 +26,53 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TClosure.
+ */
 public class TClosure {
 
+	/** The parent hier. */
 	HashMap<Long,HashSet<Long>>parentHier;
+	
+	/** The children hier. */
 	HashMap<Long,HashSet<Long>>childrenHier;
+	
+	/** The isarelationshiptypeid. */
 	private long ISARELATIONSHIPTYPEID=116680003l;
+	
+	/** The root concept. */
 	private String ROOT_CONCEPT = "138875005";
+	
+	/** The rf2 rels. */
 	String rf2Rels;
+	
+	/** The h control. */
 	private HashSet<Long> hControl;
+	
+	/** The source index. */
 	private int sourceIndex;
+	
+	/** The type index. */
 	private int typeIndex;
+	
+	/** The destination index. */
 	private int destinationIndex;
+	
+	/** The active index. */
 	private Integer activeIndex;
+	
+	/**
+	 * Instantiates a new t closure.
+	 *
+	 * @param rf2Rels the rf2 rels
+	 * @param sourceIndex the source index
+	 * @param destinationIndex the destination index
+	 * @param typeIndex the type index
+	 * @param activeIndex the active index
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public TClosure(String rf2Rels,int sourceIndex, int destinationIndex, int typeIndex,Integer activeIndex) throws FileNotFoundException, IOException{
 		parentHier=new HashMap<Long,HashSet<Long>>();
 		this.sourceIndex=sourceIndex;
@@ -49,6 +84,12 @@ public class TClosure {
 		loadIsas();
 	}
 
+	/**
+	 * Load isas.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	private void loadIsas() throws IOException, FileNotFoundException {
 		System.out.println("Starting Isas Relationships from: " + rf2Rels);
 		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(rf2Rels), "UTF8"));
@@ -84,6 +125,13 @@ public class TClosure {
 			br.close();
 		}		
 	}
+	
+	/**
+	 * Adds the rel.
+	 *
+	 * @param parent the parent
+	 * @param child the child
+	 */
 	public void addRel(Long parent, Long child){
 		if (parent==child){
 			System.out.println("same child and parent: " + child);
@@ -104,6 +152,13 @@ public class TClosure {
 		childrenHier.put(parent, childrenList);
 	}
 
+	/**
+	 * Checks if is ancestor of.
+	 *
+	 * @param ancestor the ancestor
+	 * @param descendant the descendant
+	 * @return true, if is ancestor of
+	 */
 	public boolean isAncestorOf(Long ancestor,Long descendant){
 
 
@@ -122,21 +177,46 @@ public class TClosure {
 		return false;
 	}
 
+	/**
+	 * Gets the parent.
+	 *
+	 * @param conceptId the concept id
+	 * @return the parent
+	 */
 	public HashSet<Long> getParent(Long conceptId) {
 		return parentHier.get(conceptId);
 	}
 
+	/**
+	 * Gets the children.
+	 *
+	 * @param conceptId the concept id
+	 * @return the children
+	 */
 	public HashSet<Long> getChildren(Long conceptId) {
 		return childrenHier.get(conceptId);
 	}
 
 
+	/**
+	 * To file.
+	 *
+	 * @param outputFile the output file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void toFile(String outputFile) throws IOException{
 		BufferedWriter bw = getWriter(outputFile);
 		addTClosureFileHeader(bw);
 		writeHierarchy(bw);
 		bw.close();
 	}
+	
+	/**
+	 * To file first level hierarchy.
+	 *
+	 * @param outputFile the output file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void toFileFirstLevelHierarchy(String outputFile) throws IOException{
 		BufferedWriter bw = getWriter(outputFile);
 		addTClosureFileHeader(bw);
@@ -144,6 +224,12 @@ public class TClosure {
 		bw.close();
 	}
 
+	/**
+	 * Adds the t closure file header.
+	 *
+	 * @param bw the bw
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void addTClosureFileHeader(BufferedWriter bw) throws IOException {
 		bw.append("descendant");
 		bw.append("\t");
@@ -151,6 +237,14 @@ public class TClosure {
 		bw.append("\r\n");		
 	}
 
+	/**
+	 * Gets the writer.
+	 *
+	 * @param outFile the out file
+	 * @return the writer
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	private BufferedWriter getWriter(String outFile) throws UnsupportedEncodingException, FileNotFoundException {
 
 		FileOutputStream tfos = new FileOutputStream( outFile);
@@ -159,6 +253,12 @@ public class TClosure {
 
 	}
 
+	/**
+	 * Write hierarchy.
+	 *
+	 * @param bw the bw
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void writeHierarchy(BufferedWriter bw) throws IOException{
 
 		for (Long child: parentHier.keySet()){
@@ -168,6 +268,13 @@ public class TClosure {
 		}
 
 	}
+	
+	/**
+	 * Write first level hierarchy.
+	 *
+	 * @param bw the bw
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void writeFirstLevelHierarchy(BufferedWriter bw) throws IOException{
 
 		for (Long child: childrenHier.get(Long.parseLong(ROOT_CONCEPT))){
@@ -178,6 +285,14 @@ public class TClosure {
 
 	}
 
+	/**
+	 * Write parents.
+	 *
+	 * @param bw the bw
+	 * @param child the child
+	 * @param descendant the descendant
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void writeParents(BufferedWriter bw, Long child,Long descendant) throws IOException {
 
 		HashSet<Long> parents=parentHier.get(child);
@@ -196,6 +311,15 @@ public class TClosure {
 			}
 		}		
 	}
+	
+	/**
+	 * Write descendants.
+	 *
+	 * @param bw the bw
+	 * @param child the child
+	 * @param ancestor the ancestor
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void writeDescendants(BufferedWriter bw, Long child,Long ancestor) throws IOException {
 
 		HashSet<Long> children=childrenHier.get(child);
@@ -215,6 +339,13 @@ public class TClosure {
 		}		
 	}
 
+	/**
+	 * Checks if is intermediate.
+	 *
+	 * @param concept the concept
+	 * @param sDconcepts the s dconcepts
+	 * @return true, if is intermediate
+	 */
 	public boolean isIntermediate(long concept, HashSet<Long> sDconcepts) {
 		for (Long desc:sDconcepts){
 			if (isAncestorOf(concept,desc)){
@@ -228,6 +359,13 @@ public class TClosure {
 		return false;
 	}
 
+	/**
+	 * Checks if is parent.
+	 *
+	 * @param parent the parent
+	 * @param cid the cid
+	 * @return the boolean
+	 */
 	public Boolean isParent(Long parent, Long cid) {
 		HashSet<Long> parents = parentHier.get(cid);
 		if (parents!=null){
@@ -236,6 +374,15 @@ public class TClosure {
 		return null;
 	}
 
+	/**
+	 * Gets the proximal primitives.
+	 *
+	 * @param sdConcepts the sd concepts
+	 * @param pConcepts the concepts
+	 * @param outputFile the output file
+	 * @return the proximal primitives
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void getProximalPrimitives(HashSet<Long> sdConcepts,
 			HashSet<Long> pConcepts, File outputFile) throws IOException {
 		BufferedWriter bw = FileHelper.getWriter(outputFile);
@@ -260,6 +407,13 @@ public class TClosure {
 		bw=null;
 	}
 
+	/**
+	 * Gets the proximal primitives.
+	 *
+	 * @param concept the concept
+	 * @param pConcepts the concepts
+	 * @return the proximal primitives
+	 */
 	private HashSet<Long> getProximalPrimitives(Long concept,
 			HashSet<Long> pConcepts) {
 		HashSet<Long>ret=new HashSet<Long>();
@@ -274,6 +428,12 @@ public class TClosure {
 		return ret;
 	}
 
+	/**
+	 * Adds the new proximal parent.
+	 *
+	 * @param parents the parents
+	 * @param newParent the new parent
+	 */
 	private void addNewProximalParent(HashSet<Long> parents, Long newParent) {
 		for (Long parent:parents){
 			if (isAncestorOf(newParent, parent)){

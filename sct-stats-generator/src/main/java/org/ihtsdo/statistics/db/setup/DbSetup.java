@@ -23,16 +23,31 @@ import org.ihtsdo.utils.ResourceUtils;
 import org.ihtsdo.utils.SQLStatementExecutor;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DbSetup.
+ */
 public class DbSetup {
 
 
+	/** The con. */
 	private Connection con;
 
+	/**
+	 * Instantiates a new db setup.
+	 *
+	 * @param con the con
+	 */
 	public DbSetup(Connection con) {
 		super();
 		this.con = con;
 	}
 
+	/**
+	 * Execute.
+	 *
+	 * @throws Exception the exception
+	 */
 	public void execute() throws Exception{
 		String relativePath="src/main/resources/";
 		if( new File(relativePath).isDirectory() ){
@@ -57,6 +72,12 @@ public class DbSetup {
 	}
 
 
+	/**
+	 * Recreate path.
+	 *
+	 * @param resourcePath the resource path
+	 * @throws Exception the exception
+	 */
 	public void recreatePath(String resourcePath) throws Exception{
 		String relativePath="src/main/resources/";
 		if( new File(relativePath).isDirectory() ){
@@ -69,6 +90,15 @@ public class DbSetup {
 		}
 
 	}
+	
+	/**
+	 * Sets the from file system.
+	 *
+	 * @param path the new from file system
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 * @throws SQLException the sQL exception
+	 */
 	private void setFromFileSystem(String path) throws IOException, Exception,
 			SQLException {
 		Collection<File>list = ResourceUtils.getFileSystemScripts(path);
@@ -83,6 +113,14 @@ public class DbSetup {
 		}
 	}
 
+	/**
+	 * Sets the from resources.
+	 *
+	 * @param path the new from resources
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 * @throws SQLException the sQL exception
+	 */
 	private void setFromResources(String path) throws IOException, Exception,
 			SQLException {
 

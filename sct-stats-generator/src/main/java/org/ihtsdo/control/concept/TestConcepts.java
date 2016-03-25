@@ -31,14 +31,37 @@ import org.ihtsdo.utils.FileHelper;
 import org.ihtsdo.utils.I_Constants;
 import org.ihtsdo.utils.TClosure;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TestConcepts.
+ */
 public class TestConcepts {
 
+	/** The output folder. */
 	private File outputFolder;
 
+	/**
+	 * Instantiates a new test concepts.
+	 *
+	 * @param outputFolder the output folder
+	 */
 	public TestConcepts(File outputFolder) {
 		this.outputFolder=outputFolder;
 	}
 
+	/**
+	 * Gets the intermediate primitive.
+	 *
+	 * @param concFile the conc file
+	 * @param completeConcFile the complete conc file
+	 * @param currFile the curr file
+	 * @param tClos_file the t clos_file
+	 * @return the intermediate primitive
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws NumberFormatException the number format exception
+	 */
 	public void getIntermediatePrimitive( String concFile,
 			String completeConcFile, String currFile, String tClos_file) throws FileNotFoundException, IOException,
 			UnsupportedEncodingException, NumberFormatException {
@@ -120,6 +143,20 @@ public class TestConcepts {
 		tClos_file=null;
 
 	}
+	
+	/**
+	 * Gets the proximal primitive.
+	 *
+	 * @param concFile the conc file
+	 * @param completeConcFile the complete conc file
+	 * @param currFile the curr file
+	 * @param tClos the t clos
+	 * @return the proximal primitive
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws NumberFormatException the number format exception
+	 */
 	public void getProximalPrimitive( String concFile,
 			String completeConcFile, File currFile, TClosure tClos) throws FileNotFoundException, IOException,
 			UnsupportedEncodingException, NumberFormatException {
@@ -163,6 +200,17 @@ public class TestConcepts {
 
 	}
 
+	/**
+	 * Gets the concept gained primitive intermediate parent.
+	 *
+	 * @param concFile the conc file
+	 * @param currFile the curr file
+	 * @param prevTClos the prev t clos
+	 * @param tClos the t clos
+	 * @param gainPrimFile the gain prim file
+	 * @return the concept gained primitive intermediate parent
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void getConceptGainedPrimitiveIntermediateParent(String concFile,
 			String currFile, TClosure prevTClos, TClosure tClos,
 			String gainPrimFile) throws IOException {
@@ -204,6 +252,16 @@ public class TestConcepts {
 		bw.close();
 	}
 
+	/**
+	 * Gets the sD concepts without stated att.
+	 *
+	 * @param rels the rels
+	 * @param concept the concept
+	 * @param outputFile the output file
+	 * @return the sD concepts without stated att
+	 * @throws NumberFormatException the number format exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void getSDConceptsWithoutStatedAtt(String rels,
 			String concept, String outputFile) throws NumberFormatException, IOException {
 
@@ -240,6 +298,14 @@ public class TestConcepts {
 		br.close();
 	}
 
+	/**
+	 * Gets the concepts with entire in fsn.
+	 *
+	 * @param descriptionFile the description file
+	 * @param tClos_file the t clos_file
+	 * @return the concepts with entire in fsn
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public HashSet<Long> getConceptsWithEntireInFSN(String descriptionFile, String tClos_file) throws IOException {
 		HashSet<Long> cpts=new HashSet<Long>();
 		HashSet<Long> bscpts=new HashSet<Long>();
@@ -278,6 +344,14 @@ public class TestConcepts {
 		return cpts;
 	}
 
+	/**
+	 * Gets the cpts without entire.
+	 *
+	 * @param entireCpt the entire cpt
+	 * @param tClos_file the t clos_file
+	 * @return the cpts without entire
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public HashSet<Long> getCptsWithoutEntire(HashSet<Long> entireCpt,
 			String tClos_file) throws IOException {
 		HashSet<Long> cpts=new HashSet<Long>();
@@ -302,6 +376,16 @@ public class TestConcepts {
 		return cpts;
 	}
 
+	/**
+	 * Gets the new concept previous and inactive current.
+	 *
+	 * @param fullCpts the full cpts
+	 * @param resultTmpFolder the result tmp folder
+	 * @param releaseDate the release date
+	 * @param previousReleaseDate the previous release date
+	 * @return the new concept previous and inactive current
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public HashSet<Long> getNewConceptPreviousAndInactiveCurrent(
 			String fullCpts, 
 			File resultTmpFolder, 
@@ -339,6 +423,15 @@ public class TestConcepts {
 		return concepts;
 	}
 
+	/**
+	 * Filter concepts by reason.
+	 *
+	 * @param cpts the cpts
+	 * @param attvalue the attvalue
+	 * @param reason the reason
+	 * @return the hash set
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public HashSet<Long> filterConceptsByReason(HashSet<Long> cpts,
 			String attvalue, String reason) throws IOException {
 		HashSet<Long> concepts=new HashSet<Long>();
@@ -360,6 +453,13 @@ public class TestConcepts {
 		return concepts;
 	}
 
+	/**
+	 * Gets the canonical changes on sd concepts file.
+	 *
+	 * @return the canonical changes on sd concepts file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getCanonicalChangesOnSDConceptsFile() throws IOException, Exception{
 		String ret=CurrentFile.get().getCanonicalChangesOnSDConceptsFile();
 		if (ret!=null){
@@ -520,6 +620,15 @@ public class TestConcepts {
 		CurrentFile.get().setCanonicalChangesOnSDConceptsFile(ret);
 		return ret;
 	}
+	
+	/**
+	 * Gets the stated changes on sd concepts file.
+	 *
+	 * @param releaseDate the release date
+	 * @return the stated changes on sd concepts file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getStatedChangesOnSDConceptsFile(String releaseDate) throws IOException, Exception{
 		String ret=outputFolder.getAbsolutePath() + "/" + "statedChangesOnSDConceptsFile.txt";
 		String statedRels;
@@ -581,6 +690,13 @@ public class TestConcepts {
 		return ret;
 	}
 
+	/**
+	 * Gets the sD concepts with same canonical as parent file.
+	 *
+	 * @return the sD concepts with same canonical as parent file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSDConceptsWithSameCanonicalAsParentFile() throws IOException, Exception{
 		String ret=outputFolder.getAbsolutePath() + "/" + "SDConceptsWithSameCanonicalAsParentFile.txt";
 		String statedRels;
@@ -629,7 +745,7 @@ public class TestConcepts {
 		}
 		br.close();
 
-		br = FileHelper.getReader(CurrentFile.get().getSnapshotRelationshipFile());
+		br = FileHelper.getReader(CurrentFile.get().getSnapshotStatedRelationshipFile());
 		br.readLine();
 
 		HashMap<Long, List<Long>>candidate=new HashMap<Long, List<Long>>();
@@ -731,6 +847,13 @@ public class TestConcepts {
 		return ret;
 	}
 
+	/**
+	 * Diff rels.
+	 *
+	 * @param cidRels the cid rels
+	 * @param parentRels the parent rels
+	 * @return true, if successful
+	 */
 	private boolean diffRels(HashMap<Integer, TreeSet<String>> cidRels,
 			HashMap<Integer, TreeSet<String>> parentRels) {
 
@@ -776,6 +899,13 @@ public class TestConcepts {
 		return false;
 	}
 
+	/**
+	 * Identical primitives.
+	 *
+	 * @param list the list
+	 * @param list2 the list2
+	 * @return true, if successful
+	 */
 	private boolean identicalPrimitives(List<Long> list, List<Long> list2) {
 		if (list.size()!=list2.size()){
 			return false;

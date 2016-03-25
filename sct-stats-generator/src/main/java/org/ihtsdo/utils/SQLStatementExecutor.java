@@ -23,14 +23,36 @@ import org.ihtsdo.statistics.model.SpParam;
 import org.ihtsdo.statistics.model.StoredProcedure;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SQLStatementExecutor.
+ */
 public class SQLStatementExecutor {
 
+	/** The con. */
 	private Connection con;
+	
+	/** The result set. */
 	private ResultSet resultSet;
+	
+	/**
+	 * Instantiates a new sQL statement executor.
+	 *
+	 * @param con the con
+	 * @throws Exception the exception
+	 */
 	public SQLStatementExecutor(Connection con) throws Exception {
 		this.con = con;
 	}
 	
+	/**
+	 * Execute statement.
+	 *
+	 * @param statement the statement
+	 * @param queryTimeOut the query time out
+	 * @return true, if successful
+	 * @throws SQLException the sQL exception
+	 */
 	public boolean executeStatement(String statement, Integer queryTimeOut) throws SQLException {
 		
 		resultSet=null;
@@ -52,6 +74,15 @@ public class SQLStatementExecutor {
 		
 		return false;
 	}
+	
+	/**
+	 * Execute query.
+	 *
+	 * @param query the query
+	 * @param queryTimeOut the query time out
+	 * @return true, if successful
+	 * @throws SQLException the sQL exception
+	 */
 	public boolean executeQuery(String query, Integer queryTimeOut) throws SQLException {
 		resultSet=null;
 		if (query != null && query.length() > 0) {
@@ -72,6 +103,16 @@ public class SQLStatementExecutor {
 		
 		return false;
 	}
+	
+	/**
+	 * Execute stored procedure.
+	 *
+	 * @param sProcedure the s procedure
+	 * @param params the params
+	 * @param queryTimeOut the query time out
+	 * @return true, if successful
+	 * @throws SQLException the sQL exception
+	 */
 	public boolean executeStoredProcedure(StoredProcedure sProcedure,HashMap<String,String> params, Integer queryTimeOut) throws SQLException{
 		resultSet=null;
 		if (sProcedure != null ) {
@@ -104,10 +145,20 @@ public class SQLStatementExecutor {
 		
 	}
 
+	/**
+	 * Gets the result set.
+	 *
+	 * @return the result set
+	 */
 	public ResultSet getResultSet() {
 		return resultSet;
 	}
 
+	/**
+	 * Sets the result set.
+	 *
+	 * @param resultSet the new result set
+	 */
 	public void setResultSet(ResultSet resultSet) {
 		this.resultSet = resultSet;
 	}

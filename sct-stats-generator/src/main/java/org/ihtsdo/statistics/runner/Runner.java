@@ -43,15 +43,35 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Runner.
+ */
 public class Runner {
 
+	/** The logger. */
 	private static ProcessLogger logger;
+	
+	/** The changed date. */
 	private static boolean changedDate;
+	
+	/** The changed previous date. */
 	private static boolean changedPreviousDate;
 
+	/** The data folder. */
 	static File dataFolder;
+	
+	/** The previous release date. */
 	private static String previousReleaseDate;
+	
+	/** The release date. */
 	private static String releaseDate;
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args){
 
 		logger=new ProcessLogger();
@@ -157,6 +177,11 @@ public class Runner {
 		
 	}
 
+	/**
+	 * Save info.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static void saveInfo() throws IOException {
 		Gson gson=new GsonBuilder().setPrettyPrinting().create();
 
@@ -168,11 +193,23 @@ public class Runner {
 		
 	}
 
+	/**
+	 * Gets the config.
+	 *
+	 * @param file the file
+	 * @return the config
+	 */
 	private static Config getConfig(File file) {
 		Config config=XmlMapUtil.getConfigFromFileSystem(file);
 		return config;
 	}
 
+	/**
+	 * Inits the file providers.
+	 *
+	 * @param file the file
+	 * @throws Exception the exception
+	 */
 	private static void initFileProviders(File file) throws Exception {
 		logger.logInfo("Initializing file providers");
 		XMLConfiguration xmlConfig;
@@ -212,6 +249,9 @@ public class Runner {
 		PreviousFile.init(sourceFolder, new File("release" + previousReleaseDate),releaseDependencies, previousReleaseDate);
 	}
 
+	/**
+	 * Removes the db folder.
+	 */
 	private static void removeDBFolder() {
 		File db=new File(I_Constants.DB_ROOT_FOLDER);
 		if (db.exists()){
@@ -220,6 +260,9 @@ public class Runner {
 		
 	}
 	
+	/**
+	 * Removes the repo folder.
+	 */
 	private static void removeRepoFolder() {
 		
 		File data=new File(I_Constants.REPO_FOLDER);
@@ -228,6 +271,12 @@ public class Runner {
 		}
 	}
 
+	/**
+	 * Check dates.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws ConfigurationException the configuration exception
+	 */
 	private static void checkDates() throws IOException, ConfigurationException {
 		String relInDB=getOldDate(I_Constants.RELEASE_DATE);
 		if (relInDB!=null && relInDB.equals(releaseDate)){
@@ -241,6 +290,14 @@ public class Runner {
 		}
 		
 	}
+	
+	/**
+	 * Gets the old date.
+	 *
+	 * @param fileName the file name
+	 * @return the old date
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static String getOldDate(String fileName  ) throws IOException {
 
 		if (!dataFolder.exists()){
@@ -259,6 +316,13 @@ public class Runner {
 		return "";
 	}
 	
+	/**
+	 * Gets the params.
+	 *
+	 * @param configFile the config file
+	 * @return the params
+	 * @throws Exception the exception
+	 */
 	private static void getParams(File configFile) throws Exception{
 		XMLConfiguration xmlConfig;
 		try {

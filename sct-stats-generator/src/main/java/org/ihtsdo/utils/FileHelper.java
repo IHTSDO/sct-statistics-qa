@@ -34,11 +34,23 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.log4j.Logger;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FileHelper.
+ */
 public class FileHelper {
 	
+	/** The Constant log. */
 	private static final Logger log = Logger.getLogger(FileHelper.class);
 	
 
+	/**
+	 * Complete file from array.
+	 *
+	 * @param filesArray the files array
+	 * @param fileName the file name
+	 * @return the string
+	 */
 	public static String completeFileFromArray(HashSet<String> filesArray,String fileName) {
 		HashSet<File>fileSet=new HashSet<File>();
 		for (String sfile:filesArray){
@@ -55,6 +67,14 @@ public class FileHelper {
 		return null;
 	}
 	
+	/**
+	 * Count lines.
+	 *
+	 * @param file the file
+	 * @param firstLineHeader the first line header
+	 * @return the int
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static int countLines(File file, boolean firstLineHeader) throws IOException {
 
 		FileInputStream fis = new FileInputStream(file);
@@ -76,6 +96,15 @@ public class FileHelper {
 		}
 	}
 
+	/**
+	 * Find all files.
+	 *
+	 * @param releaseFolder the release folder
+	 * @param hashSimpleRefsetList the hash simple refset list
+	 * @param mustHave the must have
+	 * @param doesntMustHave the doesnt must have
+	 * @param isPrevious the is previous
+	 */
 	public static void findAllFiles(File releaseFolder, HashSet< String> hashSimpleRefsetList, String mustHave, String doesntMustHave, boolean isPrevious) {
 		String name="";
 		if (hashSimpleRefsetList==null){
@@ -106,6 +135,15 @@ public class FileHelper {
 		}
 
 	}
+	
+	/**
+	 * Gets the file type by header.
+	 *
+	 * @param inputFile the input file
+	 * @param isReduced the is reduced
+	 * @return the file type by header
+	 * @throws Exception the exception
+	 */
 	public static String getFileTypeByHeader(File inputFile, boolean isReduced) throws Exception {
 		String namePattern =null;
 		try {
@@ -182,6 +220,14 @@ public class FileHelper {
 		return namePattern;
 	}
 
+	/**
+	 * Gets the writer.
+	 *
+	 * @param outFile the out file
+	 * @return the writer
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	public static BufferedWriter getWriter(String outFile) throws UnsupportedEncodingException, FileNotFoundException {
 
 		FileOutputStream tfos = new FileOutputStream( outFile);
@@ -190,6 +236,14 @@ public class FileHelper {
 
 	}
 
+	/**
+	 * Gets the writer.
+	 *
+	 * @param outFile the out file
+	 * @return the writer
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	public static BufferedWriter getWriter(File outFile) throws UnsupportedEncodingException, FileNotFoundException {
 
 		FileOutputStream tfos = new FileOutputStream( outFile);
@@ -197,6 +251,15 @@ public class FileHelper {
 		return new BufferedWriter(tfosw);
 
 	}
+	
+	/**
+	 * Gets the reader.
+	 *
+	 * @param inFile the in file
+	 * @return the reader
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	public static BufferedReader getReader(String inFile) throws UnsupportedEncodingException, FileNotFoundException {
 
 		FileInputStream rfis = new FileInputStream(inFile);
@@ -205,6 +268,15 @@ public class FileHelper {
 		return rbr;
 
 	}
+	
+	/**
+	 * Gets the reader.
+	 *
+	 * @param inFile the in file
+	 * @return the reader
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	public static BufferedReader getReader(File inFile) throws UnsupportedEncodingException, FileNotFoundException {
 
 		FileInputStream rfis = new FileInputStream(inFile);
@@ -214,6 +286,20 @@ public class FileHelper {
 
 	}
 	
+	/**
+	 * Gets the file.
+	 *
+	 * @param pathFolder the path folder
+	 * @param patternFile the pattern file
+	 * @param defaultFolder the default folder
+	 * @param mustHave the must have
+	 * @param doesntMustHave the doesnt must have
+	 * @param isPrevious the is previous
+	 * @param isReduced the is reduced
+	 * @return the file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public static String getFile(File pathFolder,String patternFile,String defaultFolder, String mustHave, String doesntMustHave, boolean isPrevious, boolean isReduced) throws IOException, Exception{
 		if (!pathFolder.exists()){
 			pathFolder.mkdirs();
@@ -234,6 +320,16 @@ public class FileHelper {
 		return previousFile;
 	}
 
+	/**
+	 * Gets the file by header.
+	 *
+	 * @param files the files
+	 * @param patternType the pattern type
+	 * @param isReduced the is reduced
+	 * @return the file by header
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	private static String getFileByHeader(HashSet<String> files, String patternType, boolean isReduced) throws IOException, Exception {
 		if (files!=null){
 			for (String file:files){
@@ -250,6 +346,17 @@ public class FileHelper {
 		return null;
 	}
 	
+	/**
+	 * Gets the files from folder.
+	 *
+	 * @param folder the folder
+	 * @param mustHave the must have
+	 * @param doesntMustHave the doesnt must have
+	 * @param isPrevious the is previous
+	 * @return the files from folder
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	private static HashSet<String> getFilesFromFolder(String folder, String mustHave, String doesntMustHave, boolean isPrevious) throws IOException, Exception {
 		HashSet<String> result = new HashSet<String>();
 		File dir=new File(folder);
@@ -259,6 +366,14 @@ public class FileHelper {
 		return result;
 
 	}
+	
+	/**
+	 * Gets the txt file content.
+	 *
+	 * @param file the file
+	 * @return the txt file content
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static String getTxtFileContent(File file) throws IOException {
 		String line = null;
 		StringBuffer str = new StringBuffer();
@@ -275,6 +390,14 @@ public class FileHelper {
 		return str.toString();
 		
 	}
+	
+	/**
+	 * Gets the txt resource content.
+	 *
+	 * @param path the path
+	 * @return the txt resource content
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static String getTxtResourceContent(String path) throws IOException{
 		System.out.println("getting txt file from: " + path);
 		InputStream stream= FileHelper.class.getResourceAsStream("/" + path);
@@ -289,6 +412,14 @@ public class FileHelper {
 		br.close();
 		return str.toString();
 	}
+	
+	/**
+	 * Copy to.
+	 *
+	 * @param inputFile the input file
+	 * @param outputFile the output file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void copyTo(File inputFile,File outputFile)  throws IOException {
 
 		FileInputStream fis = new FileInputStream(inputFile);
@@ -310,6 +441,11 @@ public class FileHelper {
 			
 	}
 	
+	/**
+	 * Empty folder.
+	 *
+	 * @param folder the folder
+	 */
 	public static void emptyFolder(File folder){
 		if(folder.isDirectory()){
 			File[] files = folder.listFiles();
@@ -324,6 +460,14 @@ public class FileHelper {
 		}
 	}
 
+	/**
+	 * Gets the folder.
+	 *
+	 * @param parentFolder the parent folder
+	 * @param folderName the folder name
+	 * @param empty the empty
+	 * @return the folder
+	 */
 	public static File getFolder(File parentFolder,String folderName,boolean empty) {
 		File folder=null;
 		if (parentFolder!=null){
@@ -338,6 +482,12 @@ public class FileHelper {
 		}
 		return folder;
 	}
+	
+	/**
+	 * Removes the folder tree.
+	 *
+	 * @param folder the folder
+	 */
 	public static void removeFolderTree(File folder) {
 		if (folder.isDirectory()){
 			for (File file:folder.listFiles()){
@@ -351,6 +501,13 @@ public class FileHelper {
 		folder.delete();
 	}
 
+	/**
+	 * Gets the modules.
+	 *
+	 * @param tmpFile the tmp file
+	 * @return the modules
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static HashSet<String> getModules(String tmpFile) throws IOException {
 		BufferedReader br=getReader(tmpFile);
 		br.readLine();
@@ -366,6 +523,16 @@ public class FileHelper {
 		br.close();	
 		return modules;
 	}
+	
+	/**
+	 * Gets the sorted file.
+	 *
+	 * @param currFile the curr file
+	 * @param tempSortedFinalFolder the temp sorted final folder
+	 * @param tempSortingFolder the temp sorting folder
+	 * @param sortColumns the sort columns
+	 * @return the sorted file
+	 */
 	public static File getSortedFile(File currFile,
 			File tempSortedFinalFolder, File tempSortingFolder,
 			int[] sortColumns) {
@@ -383,6 +550,14 @@ public class FileHelper {
 		}
 		
 	}
+	
+	/**
+	 * Checks if is sorted.
+	 *
+	 * @param file the file
+	 * @param sortColumns the sort columns
+	 * @return true, if is sorted
+	 */
 	private static boolean isSorted(File file, int[] sortColumns) {
 		SortAnalyzer sa = new SortAnalyzer(file, sortColumns);
 		Boolean ret = sa.isSortedFile();

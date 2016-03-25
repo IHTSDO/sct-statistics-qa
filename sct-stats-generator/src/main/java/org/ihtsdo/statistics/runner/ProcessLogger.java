@@ -17,10 +17,23 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProcessLogger.
+ */
 public class ProcessLogger {
+	
+	/** The logger. */
 	private static Logger logger = Logger.getLogger(ProcessLogger.class);
+    
+    /** The date formatter. */
     final private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
    
+	/**
+	 * Start time.
+	 *
+	 * @return the long
+	 */
 	public long startTime() {
 		StringBuffer str = new StringBuffer();
 		Date d = new Date();
@@ -32,6 +45,12 @@ public class ProcessLogger {
 
 	
 	
+	/**
+	 * End time.
+	 *
+	 * @param startTime the start time
+	 * @return the string
+	 */
 	public String endTime(long startTime) {
 		StringBuffer str = new StringBuffer();
 		Date d = new Date();
@@ -48,6 +67,11 @@ public class ProcessLogger {
 	
 	
 	
+	/**
+	 * Initialize process.
+	 *
+	 * @return the date
+	 */
 	public Date initializeProcess() {
 		Date testingStartDate = new Date();
 		String testingStartTime = "'" + dateFormatter.format(testingStartDate) + "'";
@@ -56,6 +80,11 @@ public class ProcessLogger {
 		return testingStartDate;
 	}
 
+	/**
+	 * Finalize process.
+	 *
+	 * @param testingStartDate the testing start date
+	 */
 	public void finalizeProcess(Date testingStartDate) {
 		Date testingEndDate = new Date();
 		String testingEndTime = "'" + dateFormatter.format(testingEndDate) + "'";
@@ -65,6 +94,13 @@ public class ProcessLogger {
 
 	
 
+	/**
+	 * Compare times.
+	 *
+	 * @param startTime the start time
+	 * @param endTime the end time
+	 * @return the string
+	 */
 	private String compareTimes(long startTime, long endTime) {
 		long ellapsedTime = endTime - startTime;
 		long time = ellapsedTime / 1000;
@@ -88,10 +124,20 @@ public class ProcessLogger {
 	}
 
 	
+	/**
+	 * Log error.
+	 *
+	 * @param msg the msg
+	 */
 	public void logError(String msg) {
 		logger.error(msg);
 	}
 
+	/**
+	 * Log info.
+	 *
+	 * @param msg the msg
+	 */
 	public void logInfo(String msg) {
 		logger.info(msg);
 	}

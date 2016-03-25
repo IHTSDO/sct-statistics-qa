@@ -12,6 +12,7 @@
  */
 package org.ihtsdo.inheritance.model;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class StringIDConcept.
  * Represents an extension for concept, adding stringId, definition status and module.

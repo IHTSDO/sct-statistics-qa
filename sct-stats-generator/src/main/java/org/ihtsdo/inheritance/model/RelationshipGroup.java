@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class RelationshipGroup.
  * Represents a relationships list.
@@ -190,6 +191,11 @@ public class RelationshipGroup extends ArrayList<Relationship> {
 		return null;
 	}
 
+	/**
+	 * To string4 file.
+	 *
+	 * @return the string
+	 */
 	public String toString4File(){
 		StringBuffer sb=new StringBuffer();
 		for(Relationship rel : this){

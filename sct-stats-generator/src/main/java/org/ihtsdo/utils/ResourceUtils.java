@@ -29,18 +29,23 @@ import org.apache.commons.io.FileUtils;
 import org.ihtsdo.statistics.model.ReportConfig;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResourceUtils.
+ */
 public class ResourceUtils{
 
-	/**
-	 * for all elements of java.class.path get a Collection of resources Pattern
-	 * pattern = Pattern.compile(".*"); gets all resources
-	 * 
-	 * @param pattern
-	 *            the pattern to match
-	 * @return the resources in the order they are found
-	 */
+	/** for all elements of java.class.path get a Collection of resources Pattern pattern = Pattern.compile(".*"); gets all resources */
 
 	private static final long serialVersionUID = 7L;
+	
+	/**
+	 * Gets the resources.
+	 *
+	 * @param pattern the pattern
+	 * @param packageName the package name
+	 * @return the resources
+	 */
 	public static Collection<String> getResources(
 			final Pattern pattern,final String packageName){
 		final ArrayList<String> retval = new ArrayList<String>();
@@ -52,6 +57,13 @@ public class ResourceUtils{
 		return retval;
 	}
 
+	/**
+	 * Gets the resources.
+	 *
+	 * @param element the element
+	 * @param pattern the pattern
+	 * @return the resources
+	 */
 	private static Collection<String> getResources(
 			final String element,
 			final Pattern pattern){
@@ -65,6 +77,13 @@ public class ResourceUtils{
 		return retval;
 	}
 
+	/**
+	 * Gets the resources from jar file.
+	 *
+	 * @param file the file
+	 * @param pattern the pattern
+	 * @return the resources from jar file
+	 */
 	private static Collection<String> getResourcesFromJarFile(
 			final File file,
 			final Pattern pattern){
@@ -94,6 +113,13 @@ public class ResourceUtils{
 		return retval;
 	}
 
+	/**
+	 * Gets the resources from directory.
+	 *
+	 * @param directory the directory
+	 * @param pattern the pattern
+	 * @return the resources from directory
+	 */
 	private static Collection<String> getResourcesFromDirectory(
 			final File directory,
 			final Pattern pattern){
@@ -117,6 +143,11 @@ public class ResourceUtils{
 		return retval;
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(final String[] args){
 		//		Pattern pattern;
 		//		if(args.length < 1){
@@ -141,14 +172,38 @@ public class ResourceUtils{
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Gets the file system scripts.
+	 *
+	 * @param path the path
+	 * @return the file system scripts
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static Collection<File> getFileSystemScripts(String path) throws IOException{
 		return getFileSystemScripts(new File(path));
 	}
+	
+	/**
+	 * Gets the file system scripts.
+	 *
+	 * @param path the path
+	 * @return the file system scripts
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static Collection<File> getFileSystemScripts(File path) throws IOException{
 		Collection<File> files = 
 				FileUtils.listFiles(path, null, false);
 		return files;
 	}
+	
+	/**
+	 * Gets the resource scripts.
+	 *
+	 * @param path the path
+	 * @return the resource scripts
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static Collection<String> getResourceScripts(String path) throws IOException{
 		System.out.println("getting files from " + path);
 		List<String> strFiles=new ArrayList<String>();
@@ -185,6 +240,12 @@ public class ResourceUtils{
 		return strFiles;
 	}
 
+	/**
+	 * Gets the report config.
+	 *
+	 * @param report the report
+	 * @return the report config
+	 */
 	public static ReportConfig getReportConfig(String report) {
  
 		String relativePath="src2/main/resources";

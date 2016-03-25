@@ -39,18 +39,42 @@ import org.ihtsdo.utils.ResourceUtils;
 import org.ihtsdo.utils.SQLStatementExecutor;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Processor.
+ */
 public class Processor {
 
+	/** The connection. */
 	private Connection connection;
+	
+	/** The config file. */
 	private File configFile;
+	
+	/** The create details. */
 	private String createDetails;
 
+	/** The logger. */
 	private ProcessLogger logger;
+	
+	/**
+	 * Instantiates a new processor.
+	 *
+	 * @param con the con
+	 * @param file the file
+	 */
 	public Processor(Connection con, File file) {
 		this.connection=con;
 		this.configFile=file;
 		logger = new ProcessLogger();
 	}
+	
+	/**
+	 * Execute.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public void execute() throws IOException, Exception {
 		logger.logInfo("Starting report execution");
 		createFolders();
@@ -101,6 +125,9 @@ public class Processor {
 		}
 	}
 
+	/**
+	 * Creates the folders.
+	 */
 	private void createFolders() {
 
 		File outputFolder=new File(I_Constants.STATS_OUTPUT_FOLDER);
@@ -110,6 +137,14 @@ public class Processor {
 			FileHelper.emptyFolder(outputFolder);
 		}
 	}
+	
+	/**
+	 * Write reports.
+	 *
+	 * @param reportCfg the report cfg
+	 * @param report the report
+	 * @throws Exception the exception
+	 */
 	private void writeReports(ReportConfig reportCfg, String report) throws Exception {
 
 		if (reportCfg.getOutputFile()!=null){
@@ -142,6 +177,13 @@ public class Processor {
 	}
 
 
+	/**
+	 * Prints the report.
+	 *
+	 * @param bw the bw
+	 * @param detail the detail
+	 * @throws Exception the exception
+	 */
 	private void printReport(BufferedWriter bw, OutputDetailFile detail) throws Exception {
 
 		SQLStatementExecutor executor=new SQLStatementExecutor(connection);
@@ -168,16 +210,39 @@ public class Processor {
 		}
 		executor=null;		
 	}
+	
+	/**
+	 * Adds the header.
+	 *
+	 * @param bw the bw
+	 * @param detail the detail
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void addHeader(BufferedWriter bw, OutputDetailFile detail) throws IOException {
 		bw.append(detail.getReportHeader());
 		bw.append("\r\n");
 
 	}
+	
+	/**
+	 * Adds the header.
+	 *
+	 * @param bw the bw
+	 * @param tableMap the table map
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void addHeader(BufferedWriter bw, OutputFileTableMap tableMap) throws IOException {
 		bw.append(tableMap.getReportHeader());
 		bw.append("\r\n");
 	}
 
+	/**
+	 * Prints the report.
+	 *
+	 * @param bw the bw
+	 * @param tableMap the table map
+	 * @throws Exception the exception
+	 */
 	private void printReport(BufferedWriter bw, OutputFileTableMap tableMap) throws Exception {
 
 		SQLStatementExecutor executor=new SQLStatementExecutor(connection);
@@ -208,6 +273,12 @@ public class Processor {
 		executor=null;
 	}
 
+	/**
+	 * Execute report.
+	 *
+	 * @param reportCfg the report cfg
+	 * @throws Exception the exception
+	 */
 	private void executeReport(ReportConfig reportCfg) throws Exception {
 
 		SQLStatementExecutor executor=new SQLStatementExecutor(connection);

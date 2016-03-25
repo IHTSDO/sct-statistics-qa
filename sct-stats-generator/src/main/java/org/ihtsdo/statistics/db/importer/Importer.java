@@ -23,10 +23,25 @@ import org.ihtsdo.statistics.runner.ProcessLogger;
 
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Importer.
+ */
 public class Importer {
 
+	/** The importlogger. */
 	ProcessLogger importlogger = new ProcessLogger();
 	
+	/**
+	 * Load file to database.
+	 *
+	 * @param filename the filename
+	 * @param table the table
+	 * @param con the con
+	 * @param queryTimeOut the query time out
+	 * @throws SQLException the sQL exception
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	public void loadFileToDatabase(File filename , TABLE table,Connection con, Integer queryTimeOut) throws SQLException, FileNotFoundException  {
 		
 		
@@ -77,6 +92,13 @@ public class Importer {
 	}
 	
 
+	/**
+	 * Table exists.
+	 *
+	 * @param table the table
+	 * @param con the con
+	 * @return true, if successful
+	 */
 	public boolean tableExists(TABLE table,Connection con)  {
 		try {
 			Statement statement = (java.sql.Statement)con.createStatement();

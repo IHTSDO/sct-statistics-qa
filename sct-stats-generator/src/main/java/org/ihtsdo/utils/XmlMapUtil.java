@@ -26,9 +26,19 @@ import org.ihtsdo.statistics.model.Config;
 import org.ihtsdo.statistics.model.ReportConfig;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class XmlMapUtil.
+ */
 public class XmlMapUtil {
 
 
+	/**
+	 * Gets the report config from resource.
+	 *
+	 * @param fileName the file name
+	 * @return the report config from resource
+	 */
 	public static ReportConfig getReportConfigFromResource(String fileName) {
 
 		ReportConfig config = null;
@@ -49,6 +59,12 @@ public class XmlMapUtil {
 		return config;
 	}
 
+	/**
+	 * Gets the report config from file system.
+	 *
+	 * @param fileName the file name
+	 * @return the report config from file system
+	 */
 	public static ReportConfig getReportConfigFromFileSystem(String fileName) {
 
 		ReportConfig config = null;
@@ -70,6 +86,12 @@ public class XmlMapUtil {
 		return config;
 	}
 
+	/**
+	 * Gets the pattern config from resource.
+	 *
+	 * @param fileName the file name
+	 * @return the pattern config from resource
+	 */
 	public static PatternConfig getPatternConfigFromResource(String fileName) {
 
 		PatternConfig config = null;
@@ -94,6 +116,12 @@ public class XmlMapUtil {
 		return config;
 	}
 
+	/**
+	 * Gets the pattern config from file system.
+	 *
+	 * @param file the file
+	 * @return the pattern config from file system
+	 */
 	public static PatternConfig getPatternConfigFromFileSystem(File file) {
 
 		PatternConfig config = null;
@@ -115,6 +143,12 @@ public class XmlMapUtil {
 		return config;
 	}
 
+	/**
+	 * Gets the config from file system.
+	 *
+	 * @param file the file
+	 * @return the config from file system
+	 */
 	public static Config getConfigFromFileSystem(File file) {
 
 		Config config = null;

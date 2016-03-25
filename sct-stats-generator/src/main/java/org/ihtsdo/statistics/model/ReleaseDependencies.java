@@ -18,15 +18,31 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ReleaseDependencies.
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ReleaseDependencies {
+	
+	/** The release full folder. */
 	List<String> releaseFullFolder;
 
+	/**
+	 * Gets the release full folder.
+	 *
+	 * @return the release full folder
+	 */
 	public List<String> getReleaseFullFolder() {
 		return releaseFullFolder;
 	}
 
+	/**
+	 * Sets the release full folder.
+	 *
+	 * @param releaseFullFolder the new release full folder
+	 */
 	public void setReleaseFullFolder(List<String> releaseFullFolder) {
 		this.releaseFullFolder = releaseFullFolder;
 	}

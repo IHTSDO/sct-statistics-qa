@@ -22,16 +22,41 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DeltaGenerator.
+ */
 public class DeltaGenerator {
 	
 
+	/** The sorted file. */
 	private File sortedFile;
+	
+	/** The initial date. */
 	private String initialDate;
+	
+	/** The final date. */
 	private String finalDate;
+	
+	/** The column id. */
 	private int[] columnId;
+	
+	/** The effective time column. */
 	private int effectiveTimeColumn;
+	
+	/** The output file. */
 	private File outputFile;
 
+	/**
+	 * Instantiates a new delta generator.
+	 *
+	 * @param sortedFile the sorted file
+	 * @param initialDate the initial date
+	 * @param finalDate the final date
+	 * @param columnId the column id
+	 * @param effectiveTimeColumn the effective time column
+	 * @param outputFile the output file
+	 */
 	public DeltaGenerator(File sortedFile, String initialDate,
 			String finalDate, int[] columnId, int effectiveTimeColumn,
 			File outputFile) {
@@ -44,6 +69,11 @@ public class DeltaGenerator {
 		this.outputFile = outputFile;
 	}
 
+	/**
+	 * Execute.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void execute() throws IOException{
 
 			Thread currentThread = Thread.currentThread();

@@ -41,58 +41,174 @@ import org.ihtsdo.utils.ResourceUtils;
 import org.ihtsdo.utils.TClosure;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ImportManager.
+ */
 public class ImportManager {
+	
+	/** The root desc. */
 	boolean rootDesc;
+	
+	/** The concepts. */
 	boolean concepts;
+	
+	/** The descriptions. */
 	boolean descriptions;
+	
+	/** The descriptions_pre. */
 	boolean descriptions_pre;
+	
+	/** The relationships. */
 	boolean relationships;
+	
+	/** The stated rels. */
 	boolean statedRels;
+	
+	/** The text defins. */
 	boolean textDefins;
+	
+	/** The attribute values. */
 	boolean attributeValues;
+	
+	/** The associations. */
 	boolean associations;
+	
+	/** The same_associations. */
 	boolean same_associations;
+	
+	/** The simple refset. */
 	boolean simpleRefset;
+	
+	/** The simple maps. */
 	boolean simpleMaps;
+	
+	/** The language. */
 	boolean language;
+	
+	/** The t closure inferred. */
 	boolean tClosureInferred;
+	
+	/** The t closure stated. */
 	boolean tClosureStated;
+	
+	/** The concepts_pre. */
 	boolean concepts_pre;
+	
+	/** The relationships_pre. */
 	boolean relationships_pre;
+	
+	/** The stated rels_pre. */
 	boolean statedRels_pre;
+	
+	/** The t closure stated_pre. */
 	boolean tClosureStated_pre;
+	
+	/** The params. */
 	public static HashMap<String,String> params;
+	
+	/**
+	 * The Enum TABLE.
+	 */
 	public enum TABLE{
+		
+		/** The concepts. */
 		CONCEPTS("s_concepts", "rf2-concepts",null,null,null,false,"id,active,definitionStatusId",null,null),
+		
+		/** The concepts previous. */
 		CONCEPTS_PREVIOUS("s_concepts_pre", "rf2-concepts",null,null,null,true,"id,active,definitionStatusId",null,null),
+		
+		/** The descriptions. */
 		DESCRIPTIONS("s_descriptions", "rf2-descriptions",null,null,null,false,"effectiveTime,active,conceptId,typeId,term",null,null),
+		
+		/** The descriptions previous. */
 		DESCRIPTIONS_PREVIOUS("s_descriptions_pre", "rf2-descriptions",null,null,null,true,"effectiveTime,active,conceptId,typeId,term",null,null),
+		
+		/** The relationships. */
 		RELATIONSHIPS("s_relationships","rf2-relationships",null,null,"stated",false,"sourceId,effectiveTime,active",null,null),
+		
+		/** The relationships previous. */
 		RELATIONSHIPS_PREVIOUS("s_relationships_pre",null,null,null,"stated",true,null,null,null),
+		
+		/** The statedrels. */
 		STATEDRELS("s_statedrels", "rf2-relationships",null,"stated",null,false,"sourceId,effectiveTime,active",null,null),
+		
+		/** The statedrootdesc. */
 		STATEDROOTDESC("s_statedrootdesc", "rf2-statedrootdesc",null,"stated",null,false,"sourceId,term",new Integer[]{2,5,7},new String[]{"1","138875005","116680003"}),
+		
+		/** The statedrels previous. */
 		STATEDRELS_PREVIOUS("s_statedrels_pre", null,null,"stated",null,true,null,null,null),
+		
+		/** The textdefins. */
 		TEXTDEFINS("s_textdefin",null,null,null,null,false,null,null,null),
+		
+		/** The attributevalues. */
 		ATTRIBUTEVALUES("s_attributevalues","rf2-attributevalue",null,null,null,false,"refsetId,referencedComponentId,valueId",new Integer[]{2,4},new String[]{"1","900000000000489007"}),
+		
+		/** The associations. */
 		ASSOCIATIONS("s_associations",null,null,null,null,false,null,null,null),
+		
+		/** The same as associations. */
 		SAME_AS_ASSOCIATIONS("s_same_associations","rf2-association",null,null,null,false,"referencedComponentId,targetComponentId",new Integer[]{2,4},new String[]{"1","900000000000527005"}),
+		
+		/** The simplerefset. */
 		SIMPLEREFSET("s_simplerefsets",null,null,null,null,false,null,null,null),
+		
+		/** The simplemaps. */
 		SIMPLEMAPS("s_simplemaps",null,null,null,null,false,null,null,null),
+		
+		/** The language. */
 		LANGUAGE("s_languages",null,null,null,null,false,null,null,null),
+		
+		/** The tclosurestated. */
 		TCLOSURESTATED("s_tclosure_stated","transitive-closure",null,"stated","pre",false,null,null,null),
+		
+		/** The tclosurestated previous. */
 		TCLOSURESTATED_PREVIOUS("s_tclosure_stated_pre","transitive-closure",null,"stated",null,true,null,null,null),
+		
+		/** The tclosureinferred. */
 		TCLOSUREINFERRED("s_tclosure_inferred",null,null,null,null,false,null,null,null);
 
+		/** The table name. */
 		private String tableName;
+		
+		/** The pattern tag. */
 		private String patternTag;
+		
+		/** The default folder. */
 		private String defaultFolder;
+		
+		/** The file name must have. */
 		private String fileNameMustHave;
+		
+		/** The file name doesnt must have. */
 		private String fileNameDoesntMustHave;
+		
+		/** The is previous. */
 		private boolean isPrevious;
+		
+		/** The fields. */
 		private String fields;
+		
+		/** The field filter. */
 		private Integer[] fieldFilter;
+		
+		/** The field filter value. */
 		private String[] fieldFilterValue;
 
+		/**
+		 * Instantiates a new table.
+		 *
+		 * @param tableName the table name
+		 * @param patternTag the pattern tag
+		 * @param defaultFolder the default folder
+		 * @param fileNameMustHave the file name must have
+		 * @param fileNameDoesntMustHave the file name doesnt must have
+		 * @param isPrevious the is previous
+		 * @param fields the fields
+		 * @param fieldFilter the field filter
+		 * @param fieldFilterValue the field filter value
+		 */
 		TABLE (String tableName,
 				String patternTag,
 				String defaultFolder, 
@@ -113,94 +229,219 @@ public class ImportManager {
 			this.fieldFilterValue=fieldFilterValue;
 		}
 
+		/**
+		 * Gets the table name.
+		 *
+		 * @return the table name
+		 */
 		public String getTableName() {
 			return tableName;
 		}
 
+		/**
+		 * Gets the pattern tag.
+		 *
+		 * @return the pattern tag
+		 */
 		public String getPatternTag() {
 			return patternTag;
 		}
 
+		/**
+		 * Sets the pattern tag.
+		 *
+		 * @param patternTag the new pattern tag
+		 */
 		public void setPatternTag(String patternTag) {
 			this.patternTag = patternTag;
 		}
 
+		/**
+		 * Gets the default folder.
+		 *
+		 * @return the default folder
+		 */
 		public String getDefaultFolder() {
 			return defaultFolder;
 		}
 
+		/**
+		 * Sets the default folder.
+		 *
+		 * @param defaultFolder the new default folder
+		 */
 		public void setDefaultFolder(String defaultFolder) {
 			this.defaultFolder = defaultFolder;
 		}
 
+		/**
+		 * Gets the file name must have.
+		 *
+		 * @return the file name must have
+		 */
 		public String getFileNameMustHave() {
 			return fileNameMustHave;
 		}
 
+		/**
+		 * Sets the file name must have.
+		 *
+		 * @param fileNameMustHave the new file name must have
+		 */
 		public void setFileNameMustHave(String fileNameMustHave) {
 			this.fileNameMustHave = fileNameMustHave;
 		}
 
+		/**
+		 * Gets the file name doesnt must have.
+		 *
+		 * @return the file name doesnt must have
+		 */
 		public String getFileNameDoesntMustHave() {
 			return fileNameDoesntMustHave;
 		}
 
+		/**
+		 * Sets the file name doesnt must have.
+		 *
+		 * @param fileNameDoesntMustHave the new file name doesnt must have
+		 */
 		public void setFileNameDoesntMustHave(String fileNameDoesntMustHave) {
 			this.fileNameDoesntMustHave = fileNameDoesntMustHave;
 		}
 
+		/**
+		 * Checks if is previous.
+		 *
+		 * @return true, if is previous
+		 */
 		public boolean isPrevious() {
 			return isPrevious;
 		}
 
+		/**
+		 * Sets the previous.
+		 *
+		 * @param isPrevious the new previous
+		 */
 		public void setPrevious(boolean isPrevious) {
 			this.isPrevious = isPrevious;
 		}
 
+		/**
+		 * Sets the table name.
+		 *
+		 * @param tableName the new table name
+		 */
 		public void setTableName(String tableName) {
 			this.tableName = tableName;
 		}
 
+		/**
+		 * Gets the fields.
+		 *
+		 * @return the fields
+		 */
 		public String getFields() {
 			return fields;
 		}
 
+		/**
+		 * Sets the fields.
+		 *
+		 * @param fields the new fields
+		 */
 		public void setFields(String fields) {
 			this.fields = fields;
 		}
 
+		/**
+		 * Gets the field filter.
+		 *
+		 * @return the field filter
+		 */
 		public Integer[] getFieldFilter() {
 			return fieldFilter;
 		}
 
+		/**
+		 * Sets the field filter.
+		 *
+		 * @param fieldFilter the new field filter
+		 */
 		public void setFieldFilter(Integer[] fieldFilter) {
 			this.fieldFilter = fieldFilter;
 		}
 
+		/**
+		 * Gets the field filter value.
+		 *
+		 * @return the field filter value
+		 */
 		public String[] getFieldFilterValue() {
 			return fieldFilterValue;
 		}
 
+		/**
+		 * Sets the field filter value.
+		 *
+		 * @param fieldFilterValue the new field filter value
+		 */
 		public void setFieldFilterValue(String[] fieldFilterValue) {
 			this.fieldFilterValue = fieldFilterValue;
 		}
 	};
 
+	/** The importer. */
 	Importer importer;
+	
+	/** The data folder. */
 	File dataFolder;
+	
+	/** The config file. */
 	private File configFile;
+	
+	/** The release date. */
 	private String releaseDate;
+	
+	/** The previous release date. */
 	private String previousReleaseDate;
+	
+	/** The reduced snapshot folder. */
 	private File reducedSnapshotFolder;
+	
+	/** The previous reduced snapshot folder. */
 	private File previousReducedSnapshotFolder;
+	
+	/** The connection. */
 	private Connection connection;
+	
+	/** The changed previous date. */
 	private boolean changedPreviousDate;
+	
+	/** The changed date. */
 	private boolean changedDate;
+	
+	/** The sort folder tmp. */
 	private File sortFolderTmp;
+	
+	/** The sorted folder tmp. */
 	private File sortedFolderTmp;
+	
+	/** The release dependencies. */
 	private boolean releaseDependencies;
 
+	/** The logger. */
 	private static Logger logger;
+	
+	/**
+	 * Instantiates a new import manager.
+	 *
+	 * @param con the con
+	 * @param file the file
+	 * @param changedDate the changed date
+	 * @param changedPreviousDate the changed previous date
+	 */
 	public ImportManager(Connection con, File file, boolean changedDate, boolean changedPreviousDate) {
 		logger = Logger.getLogger("org.ihtsdo.statistics.db.importer.ImportManager");
 		this.connection=con;
@@ -209,6 +450,11 @@ public class ImportManager {
 		this.changedPreviousDate=changedPreviousDate;
 	}
 
+	/**
+	 * Creates the folders.
+	 *
+	 * @throws Exception the exception
+	 */
 	private void createFolders() throws Exception {
 
 		dataFolder=new File(I_Constants.REPO_FOLDER);
@@ -220,6 +466,12 @@ public class ImportManager {
 
 	}
 
+	/**
+	 * Execute.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public void execute() throws IOException, Exception {
 		logger.info("Starting import manager process");
 
@@ -382,6 +634,11 @@ public class ImportManager {
 	}
 
 
+	/**
+	 * Existing tables.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean existingTables() {
 		for(TABLE table:TABLE.values()){
 			if (table.getPatternTag()!=null && !importer.tableExists(table, connection)){
@@ -396,9 +653,11 @@ public class ImportManager {
 
 
 	/**
-	 * @param table
-	 * @throws IOException
-	 * @throws Exception
+	 * Import rf2 table.
+	 *
+	 * @param table the table
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
 	 */
 	void ImportRf2Table( TABLE table) throws IOException, Exception{
 		String newChk;
@@ -449,6 +708,13 @@ public class ImportManager {
 		}
 	}
 
+	/**
+	 * Save new check.
+	 *
+	 * @param table the table
+	 * @param newChk the new chk
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void saveNewCheck(TABLE table, String newChk) throws IOException {
 		if (!dataFolder.exists()){
 			dataFolder.mkdirs();
@@ -460,6 +726,14 @@ public class ImportManager {
 		bw.close();
 		bw=null;
 	}
+	
+	/**
+	 * Save new date.
+	 *
+	 * @param fileName the file name
+	 * @param date the date
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void saveNewDate(String fileName, String date) throws IOException {
 		if (!dataFolder.exists()){
 			dataFolder.mkdirs();
@@ -471,6 +745,15 @@ public class ImportManager {
 		bw.close();
 		bw=null;
 	}
+	
+	/**
+	 * Gets the writer.
+	 *
+	 * @param outFile the out file
+	 * @return the writer
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	private BufferedWriter getWriter(String outFile) throws UnsupportedEncodingException, FileNotFoundException {
 
 		FileOutputStream tfos = new FileOutputStream( outFile);
@@ -478,6 +761,16 @@ public class ImportManager {
 		return new BufferedWriter(tfosw);
 
 	}
+	
+	/**
+	 * Gets the snapshot.
+	 *
+	 * @param table the table
+	 * @param targetFolder the target folder
+	 * @param snapshotDate the snapshot date
+	 * @return the snapshot
+	 * @throws Exception the exception
+	 */
 	private String getSnapshot(TABLE table,File targetFolder,String snapshotDate) throws Exception {
 		logger.info("Getting snapshot for " + table.getTableName() );
 		String[] outputFields=null;
@@ -555,6 +848,13 @@ public class ImportManager {
 		return txtFile.getAbsolutePath();
 	}
 
+	/**
+	 * Gets the descriptions for top level.
+	 *
+	 * @param txtFile the txt file
+	 * @return the descriptions for top level
+	 * @throws Exception the exception
+	 */
 	private void getDescriptionsForTopLevel(File txtFile) throws Exception {
 		String descFile;		
 		if (releaseDependencies){
@@ -601,6 +901,13 @@ public class ImportManager {
 		bw.close();
 	}
 
+	/**
+	 * Gets the old check.
+	 *
+	 * @param table the table
+	 * @return the old check
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private String getOldCheck(TABLE table) throws IOException {
 
 		if (!dataFolder.exists()){

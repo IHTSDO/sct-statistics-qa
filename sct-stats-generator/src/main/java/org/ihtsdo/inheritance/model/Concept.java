@@ -13,6 +13,7 @@
 package org.ihtsdo.inheritance.model;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Concept.
  * Represents a concept.
@@ -76,18 +77,38 @@ public class Concept implements Comparable<Object> {
         }
     }
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public long getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Checks if is defined.
+	 *
+	 * @return true, if is defined
+	 */
 	public boolean isDefined() {
 		return isDefined;
 	}
 
+	/**
+	 * Sets the defined.
+	 *
+	 * @param isDefined the new defined
+	 */
 	public void setDefined(boolean isDefined) {
 		this.isDefined = isDefined;
 	}

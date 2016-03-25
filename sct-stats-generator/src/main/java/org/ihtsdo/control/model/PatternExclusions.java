@@ -18,15 +18,31 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PatternExclusions.
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PatternExclusions {
+	
+	/** The pattern id. */
 	List<String> patternId;
 
+	/**
+	 * Gets the pattern id.
+	 *
+	 * @return the pattern id
+	 */
 	public List<String> getPatternId() {
 		return patternId;
 	}
 
+	/**
+	 * Sets the pattern id.
+	 *
+	 * @param patternId the new pattern id
+	 */
 	public void setPatternId(List<String> patternId) {
 		this.patternId = patternId;
 	}

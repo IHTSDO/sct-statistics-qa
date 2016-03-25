@@ -18,7 +18,18 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FileTest.
+ */
 public class FileTest {
+	
+	/**
+	 * Gets the file size.
+	 *
+	 * @param file the file
+	 * @return the file size
+	 */
 	public static long getFileSize(File file){
 
 		long fileSize = file.length();
@@ -26,6 +37,13 @@ public class FileTest {
 		return fileSize;
 	}
 
+	/**
+	 * Creates the checksum.
+	 *
+	 * @param filename the filename
+	 * @return the byte[]
+	 * @throws Exception the exception
+	 */
 	public static byte[] createChecksum(String filename) throws Exception {
 		InputStream fis =  new FileInputStream(filename);
 		byte[] buffer = new byte[1024];
@@ -46,6 +64,13 @@ public class FileTest {
 
 
 	// a byte array to a HEX string
+	/**
+	 * Gets the m d5 checksum.
+	 *
+	 * @param filename the filename
+	 * @return the m d5 checksum
+	 * @throws Exception the exception
+	 */
 	public static String getMD5Checksum(String filename) throws Exception {
 		byte[] b = createChecksum(filename);
 		String result = "";

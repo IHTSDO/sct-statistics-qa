@@ -14,13 +14,29 @@ package org.ihtsdo.statistics.model;
 
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SpParamList.
+ */
 public class SpParamList {
+	
+	/** The param. */
 	List<StoredProcedureParamDescriptor>param;
 
+	/**
+	 * Gets the param.
+	 *
+	 * @return the param
+	 */
 	public List<StoredProcedureParamDescriptor> getParam() {
 		return param;
 	}
 
+	/**
+	 * Sets the param.
+	 *
+	 * @param param the new param
+	 */
 	public void setParam(List<StoredProcedureParamDescriptor> param) {
 		this.param = param;
 	}

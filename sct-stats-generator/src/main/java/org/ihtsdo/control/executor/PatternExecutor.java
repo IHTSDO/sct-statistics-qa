@@ -37,17 +37,44 @@ import org.ihtsdo.utils.I_Constants;
 import org.ihtsdo.utils.ResourceUtils;
 import org.ihtsdo.utils.XmlMapUtil;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PatternExecutor.
+ */
 public class PatternExecutor {
+	
+	/** The config file. */
 	File configFile;
+	
+	/** The result output folder. */
 	private String resultOutputFolder;
+	
+	/** The excludes. */
 	private HashSet<String> excludes;
+	
+	/** The new concepts. */
 	private HashSet<String> newConcepts;
+	
+	/** The changed concepts. */
 	private HashSet<String> changedConcepts;
+	
+	/** The concept terms. */
 	private HashMap<Long,String> conceptTerms;
+	
+	/** The release date. */
 	private String releaseDate;
+	
+	/** The previous release date. */
 	private String previousReleaseDate;
+	
+	/** The logger. */
 	ProcessLogger logger ;
 
+	/**
+	 * Instantiates a new pattern executor.
+	 *
+	 * @param configFile the config file
+	 */
 	public PatternExecutor( File configFile) {
 		super();
 		this.configFile = configFile;
@@ -55,6 +82,12 @@ public class PatternExecutor {
 	}
 
 
+	/**
+	 * Execute.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public void execute() throws IOException, Exception {
 		logger.logInfo("Starting patterns execution");
 		XMLConfiguration xmlConfig;
@@ -110,6 +143,14 @@ public class PatternExecutor {
 		}
 	}
 
+	/**
+	 * Gets the changed concepts.
+	 *
+	 * @return the changed concepts
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws Exception the exception
+	 */
 	private void getChangedConcepts() throws UnsupportedEncodingException, FileNotFoundException, Exception {
 		changedConcepts=new HashSet<String>();
 		if (CurrentFile.get().getChangedConceptFile()!=null){
@@ -125,6 +166,14 @@ public class PatternExecutor {
 		}
 	}
 
+	/**
+	 * Gets the new concepts.
+	 *
+	 * @return the new concepts
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws Exception the exception
+	 */
 	private void getNewConcepts() throws UnsupportedEncodingException, FileNotFoundException, Exception {
 		newConcepts=new HashSet<String>();
 		if (CurrentFile.get().getNewConceptFile()!=null){
@@ -140,6 +189,14 @@ public class PatternExecutor {
 		}
 	}
 
+	/**
+	 * Execute from file system.
+	 *
+	 * @param path the path
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 * @throws SQLException the sQL exception
+	 */
 	private void executeFromFileSystem(String path) throws IOException, Exception,
 	SQLException {
 		Collection<File>list = ResourceUtils.getFileSystemScripts(path);
@@ -155,6 +212,12 @@ public class PatternExecutor {
 		}
 	}
 
+	/**
+	 * Process pattern.
+	 *
+	 * @param patternConfig the pattern config
+	 * @throws Exception the exception
+	 */
 	private void processPattern(PatternConfig patternConfig) throws Exception {
 		logger.logInfo("Executing pattern: " + patternConfig.getName() + " - id:" + patternConfig.getPatternId());
 		IControlPattern controlPattern= (IControlPattern) Class.forName(patternConfig.getExecutionClass()).newInstance();
@@ -185,6 +248,14 @@ public class PatternExecutor {
 	}
 
 
+	/**
+	 * Execute from resources.
+	 *
+	 * @param path the path
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 * @throws SQLException the sQL exception
+	 */
 	private void executeFromResources(String path) throws IOException, Exception,
 	SQLException {
 

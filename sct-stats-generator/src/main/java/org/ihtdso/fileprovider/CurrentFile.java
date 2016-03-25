@@ -15,10 +15,21 @@ package org.ihtdso.fileprovider;
 import java.io.File;
 import java.util.HashSet;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CurrentFile.
+ */
 public class CurrentFile {
 
+	/** The current file. */
 	private static FileProvider currentFile;
 	
+	/**
+	 * Gets the.
+	 *
+	 * @return the file provider
+	 * @throws Exception the exception
+	 */
 	public static FileProvider get() throws Exception{
 
 		if (currentFile==null){
@@ -27,6 +38,14 @@ public class CurrentFile {
 		return currentFile;
 	}
 	
+	/**
+	 * Inits the.
+	 *
+	 * @param sourceFullFolder the source full folder
+	 * @param baseFolder the base folder
+	 * @param releaseDependenciesFullFolders the release dependencies full folders
+	 * @param releaseDate the release date
+	 */
 	public static void init(File sourceFullFolder,File baseFolder,HashSet<String> releaseDependenciesFullFolders,  String releaseDate){
 		
 		currentFile=new FileProvider( sourceFullFolder, baseFolder, releaseDependenciesFullFolders, releaseDate);

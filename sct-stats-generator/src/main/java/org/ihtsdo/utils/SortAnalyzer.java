@@ -19,17 +19,35 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SortAnalyzer.
+ */
 public class SortAnalyzer {
 
+	/** The sort columns. */
 	private int[] sortColumns;
+	
+	/** The file. */
 	private File file;
 
+	/**
+	 * Instantiates a new sort analyzer.
+	 *
+	 * @param file the file
+	 * @param sortColumns the sort columns
+	 */
 	public SortAnalyzer(File file, int[] sortColumns) {
 		super();
 		this.file = file;
 		this.sortColumns = sortColumns;
 	}
 
+	/**
+	 * Checks if is sorted file.
+	 *
+	 * @return true, if is sorted file
+	 */
 	public boolean isSortedFile(){
 		boolean sorted=true;
 		try {

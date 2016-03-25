@@ -34,21 +34,48 @@ import org.ihtsdo.utils.FileHelper;
 
 import com.google.gson.Gson;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CrossoverRole2Group.
+ */
 public class CrossoverRole2Group extends AControlPattern {
 
+	/** The result file. */
 	private File resultFile;
+	
+	/** The new concepts. */
 	private HashSet<String> newConcepts;
+	
+	/** The changed concepts. */
 	private HashSet<String> changedConcepts;
+	
+	/** The current eff time. */
 	private String currentEffTime;
+	
+	/** The previous eff time. */
 	private String previousEffTime;
+	
+	/** The pattern id. */
 	private String patternId;
 
+	/** The gson. */
 	private Gson gson;
+	
+	/** The sep. */
 	private String sep;
+	
+	/** The sample. */
 	private List<ControlResultLine> sample;
+	
+	/** The result count. */
 	private int resultCount;
+	
+	/** The concept terms. */
 	private HashMap<Long, String> conceptTerms;
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#execute()
+	 */
 	public void execute() throws Exception {
 
 		resultCount=0;
@@ -99,6 +126,15 @@ public class CrossoverRole2Group extends AControlPattern {
 		FileHelper.emptyFolder(resultTmpFolder);
 	}
 
+	/**
+	 * Gets the results.
+	 *
+	 * @param resultTmpFolder the result tmp folder
+	 * @param prevFile the prev file
+	 * @param currFile the curr file
+	 * @return the results
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void getResults(File resultTmpFolder, String prevFile,
 			String currFile) throws IOException {
 		gson=new Gson(); 
@@ -215,6 +251,13 @@ public class CrossoverRole2Group extends AControlPattern {
 
 	}
 
+	/**
+	 * Write result line.
+	 *
+	 * @param bw the bw
+	 * @param crl the crl
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void writeResultLine(BufferedWriter bw, ControlResultLine crl) throws IOException {
 		bw.append(gson.toJson(crl).toString());
 		bw.append(sep);
@@ -224,44 +267,74 @@ public class CrossoverRole2Group extends AControlPattern {
 		resultCount++;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setConfigFile(java.io.File)
+	 */
 	public void setConfigFile(File configFile) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#getSample()
+	 */
 	public List<ControlResultLine> getSample() {
 		return sample;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setResultFile(java.io.File)
+	 */
 	public void setResultFile(File resultFile) {
 		this.resultFile=resultFile;
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setNewConceptsList(java.util.HashSet)
+	 */
 	public void setNewConceptsList(HashSet<String> newConcepts) {
 		this.newConcepts=newConcepts;		
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setChangedConceptsList(java.util.HashSet)
+	 */
 	public void setChangedConceptsList(HashSet<String> changedConcepts) {
 		this.changedConcepts=changedConcepts;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setCurrentEffTime(java.lang.String)
+	 */
 	public void setCurrentEffTime(String releaseDate) {
 		this.currentEffTime=releaseDate;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setPreviousEffTime(java.lang.String)
+	 */
 	public void setPreviousEffTime(String previousReleaseDate) {
 		this.previousEffTime=previousReleaseDate;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setPatternId(java.lang.String)
+	 */
 	public void setPatternId(String patternId) {
 		this.patternId=patternId;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#getResultCount()
+	 */
 	public int getResultCount() {
 		return resultCount;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setConceptTerms(java.util.HashMap)
+	 */
 	public void setConceptTerms(HashMap<Long, String> conceptTerms) {
 		this.conceptTerms=conceptTerms;
 	}

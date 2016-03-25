@@ -37,30 +37,80 @@ import org.ihtsdo.utils.FileSorter;
 import org.ihtsdo.utils.I_Constants;
 import org.ihtsdo.utils.TClosure;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RelationshipTests.
+ */
 public class RelationshipTests {
 
+	/** The Constant ROLE_REDUNDANCE. */
 	private static final String ROLE_REDUNDANCE = "ROLE_REDUNDANCE";
+	
+	/** The Constant CROSSOVER. */
 	private static final String CROSSOVER = "CROSSOVER";
+	
+	/** The Constant ISA_REDUNDANCE. */
 	private static final String ISA_REDUNDANCE = "ISA_REDUNDANCE";
+	
+	/** The Constant UNGROUPED2UNGROUPED. */
 	public static final String UNGROUPED2UNGROUPED = "UNGROUPED_2_UNGROUPED";
+	
+	/** The Constant UNGROUPED2GROUPED. */
 	public static final String UNGROUPED2GROUPED = "UNGROUPED_2_GROUPED";
+	
+	/** The Constant GROUPED2GROUPED. */
 	public static final String GROUPED2GROUPED = "GROUPED_2_GROUPED";
+	
+	/** The c relationships. */
 	private  ArrayList<Relationship> cRelationships;
+	
+	/** The sorted folder tmp. */
 	private File sortedFolderTmp;
+	
+	/** The sort folder tmp. */
 	private File sortFolderTmp;
+	
+	/** The output folder. */
 	private String outputFolder;
+	
+	/** The t clos. */
 	private TClosure tClos;
+	
+	/** The t co. */
 	private TestCrossover tCo;
+	
+	/** The bw. */
 	private BufferedWriter bw;
+	
+	/** The description file. */
 	private String descriptionFile;
+	
+	/** The output. */
 	private File output;
+	
+	/** The h control. */
 	private HashSet<String> hControl;
+	
+	/** The concept file. */
 	private String conceptFile;
+	
+	/** The stated file. */
 	private String statedFile;
+	
+	/** The output file name. */
 	private String outputFileName;
+	
+	/** The rels cardinality control. */
 	private String relsCardinalityControl;
+	
+	/** The concept terms. */
 	private HashMap<Long, String> conceptTerms;
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args){
 		//		RelationshipTests rt=new RelationshipTests("/Users/ar/Downloads/Crossover");
 		//		try {
@@ -80,10 +130,20 @@ public class RelationshipTests {
 		//		}
 		//		rt=null;
 	}
+	
+	/**
+	 * Instantiates a new relationship tests.
+	 *
+	 * @param outputFolder the output folder
+	 */
 	public RelationshipTests(String outputFolder){
 		this.outputFolder=outputFolder;
 		createFolders();
 	}
+	
+	/**
+	 * Creates the folders.
+	 */
 	private void createFolders() {
 
 		sortFolderTmp=new File(outputFolder, "sortFolderTmp");
@@ -99,6 +159,15 @@ public class RelationshipTests {
 			FileHelper.emptyFolder(sortedFolderTmp);
 		}
 	}
+	
+	/**
+	 * Gets the writer.
+	 *
+	 * @param outFile the out file
+	 * @return the writer
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	private BufferedWriter getWriter(String outFile) throws UnsupportedEncodingException, FileNotFoundException {
 
 		FileOutputStream tfos = new FileOutputStream( outFile);
@@ -107,6 +176,18 @@ public class RelationshipTests {
 
 	}
 
+	/**
+	 * Search redundance.
+	 *
+	 * @param relationshipFile the relationship file
+	 * @param relationship4TC the relationship4 tc
+	 * @param conceptFile the concept file
+	 * @param descriptionFile the description file
+	 * @param onIsas the on isas
+	 * @param relsCardinalityControl the rels cardinality control
+	 * @param outputFileName the output file name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void searchRedundance( String relationshipFile,String relationship4TC, String conceptFile,String descriptionFile,boolean onIsas,String relsCardinalityControl,String outputFileName)throws IOException {
 		this.conceptFile=conceptFile;
 		this.descriptionFile=descriptionFile;
@@ -143,6 +224,19 @@ public class RelationshipTests {
 
 	}
 
+	/**
+	 * Search redundance.
+	 *
+	 * @param relationshipFile the relationship file
+	 * @param relationship4TC the relationship4 tc
+	 * @param conceptFile the concept file
+	 * @param conceptTerms the concept terms
+	 * @param onIsas the on isas
+	 * @param relsCardinalityControl the rels cardinality control
+	 * @param outputFileName the output file name
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void searchRedundance(String relationshipFile,String relationship4TC, String conceptFile,HashMap<Long, String> conceptTerms,boolean onIsas,String relsCardinalityControl,String outputFileName) throws FileNotFoundException, IOException{
 
 		this.conceptFile=conceptFile;
@@ -178,6 +272,17 @@ public class RelationshipTests {
 		cRelationships=null;
 		createFolders();		
 	}
+	
+	/**
+	 * Process relationship.
+	 *
+	 * @param relationshipFile the relationship file
+	 * @param controlType the control type
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws NumberFormatException the number format exception
+	 */
 	private void processRelationship(String relationshipFile, String controlType)
 			throws FileNotFoundException, UnsupportedEncodingException,
 			IOException, NumberFormatException {
@@ -247,6 +352,19 @@ public class RelationshipTests {
 			output.renameTo(new File(outputFolder, outputFileName));
 		}
 	}
+	
+	/**
+	 * Search crossover.
+	 *
+	 * @param relationshipFile the relationship file
+	 * @param descriptionFile the description file
+	 * @param statedFile the stated file
+	 * @param relationship4TC the relationship4 tc
+	 * @param conceptFile the concept file
+	 * @param relsCardinalityControl the rels cardinality control
+	 * @param outputFileName the output file name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void searchCrossover( String relationshipFile,String descriptionFile, String statedFile,String relationship4TC, String conceptFile,String relsCardinalityControl, String outputFileName)throws IOException {
 		this.descriptionFile=descriptionFile;
 		this.conceptTerms=null;
@@ -277,6 +395,21 @@ public class RelationshipTests {
 
 	}
 
+	/**
+	 * Search crossover.
+	 *
+	 * @param inferRels the infer rels
+	 * @param conceptTerms the concept terms
+	 * @param statedRels the stated rels
+	 * @param relationship4TC the relationship4 tc
+	 * @param conceptFile the concept file
+	 * @param relsCardinalityControl the rels cardinality control
+	 * @param outputFileName the output file name
+	 * @throws NumberFormatException the number format exception
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void searchCrossover(String inferRels,
 			HashMap<Long, String> conceptTerms, String statedRels,
 			String relationship4TC, String conceptFile, String relsCardinalityControl,
@@ -308,6 +441,15 @@ public class RelationshipTests {
 		tClos=null;
 
 	}
+	
+	/**
+	 * Gets the reader.
+	 *
+	 * @param inFile the in file
+	 * @return the reader
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	private BufferedReader getReader(String inFile) throws UnsupportedEncodingException, FileNotFoundException {
 
 		FileInputStream rfis = new FileInputStream(inFile);
@@ -316,6 +458,12 @@ public class RelationshipTests {
 		return rbr;
 
 	}
+	
+	/**
+	 * Adds the term to report.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void AddTermToReport() throws IOException {
 		BufferedReader br=null;
 		String[] spl;
@@ -423,6 +571,14 @@ public class RelationshipTests {
 		cptDef=null;
 
 	}
+	
+	/**
+	 * Test groups.
+	 *
+	 * @param groups the groups
+	 * @param controlType the control type
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void testGroups(RelationshipGroupList groups, String controlType) throws IOException {
 		hControl=new HashSet<String>();
 		String key1;
@@ -481,6 +637,14 @@ public class RelationshipTests {
 
 		}
 	}
+	
+	/**
+	 * Added.
+	 *
+	 * @param i the i
+	 * @param j the j
+	 * @return true, if successful
+	 */
 	private boolean added(String i, String j) {
 		String key=i + "-" + j;
 		String revKey=j + "-" + i;
@@ -489,6 +653,14 @@ public class RelationshipTests {
 		}
 		return false;
 	}
+	
+	/**
+	 * Adds the to report.
+	 *
+	 * @param relgroup1 the relgroup1
+	 * @param relgroup2 the relgroup2
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void addToReport(RelationshipGroup relgroup1, RelationshipGroup relgroup2) throws IOException {
 		bw.append(relgroup1.toString4File());
 		bw.append("\r\n");
@@ -497,6 +669,13 @@ public class RelationshipTests {
 		bw.append("\r\n");
 
 	}
+	
+	/**
+	 * Gets the groups.
+	 *
+	 * @param snorelA the snorel a
+	 * @return the groups
+	 */
 	private RelationshipGroupList getGroups(List<Relationship> snorelA){
 		RelationshipGroupList groupList_A = new RelationshipGroupList();
 		if (snorelA.size()>1){

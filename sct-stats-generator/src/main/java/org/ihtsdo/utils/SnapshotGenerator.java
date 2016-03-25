@@ -22,18 +22,51 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SnapshotGenerator.
+ */
 public class SnapshotGenerator {
 
+	/** The sorted file. */
 	private File sortedFile;
+	
+	/** The column filter ixs. */
 	private Integer[] columnFilterIxs;
+	
+	/** The column filter values. */
 	private String[] columnFilterValues;
+	
+	/** The date. */
 	private String date;
+	
+	/** The component column. */
 	private int componentColumn;
+	
+	/** The effective time column. */
 	private int effectiveTimeColumn;
+	
+	/** The output file. */
 	private File outputFile;
+	
+	/** The output fields. */
 	private String[] outputFields;
+	
+	/** The output columns. */
 	private int[] outputColumns;
 
+	/**
+	 * Instantiates a new snapshot generator.
+	 *
+	 * @param sortedFile the sorted file
+	 * @param date the date
+	 * @param componentColumn the component column
+	 * @param effectiveTimeColumn the effective time column
+	 * @param outputFile the output file
+	 * @param columnFilterIxs the column filter ixs
+	 * @param columnFilterValues the column filter values
+	 * @param outputFields the output fields
+	 */
 	public SnapshotGenerator(File sortedFile, String date,
 			int componentColumn, int effectiveTimeColumn, File outputFile,
 			Integer[] columnFilterIxs,String[] columnFilterValues,String[] outputFields) {
@@ -48,6 +81,9 @@ public class SnapshotGenerator {
 		this.outputFields=outputFields;
 	}
 
+	/**
+	 * Execute.
+	 */
 	public void execute(){
 		
 		try {
@@ -149,6 +185,12 @@ public class SnapshotGenerator {
 		}
 	}
 
+	/**
+	 * Gets the map columns.
+	 *
+	 * @param header the header
+	 * @return the map columns
+	 */
 	private void getMapColumns(String header) {
 		if (outputFields!=null){
 			int cont=0;
@@ -170,6 +212,13 @@ public class SnapshotGenerator {
 		}
 	}
 
+	/**
+	 * Write header.
+	 *
+	 * @param bw the bw
+	 * @param header the header
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void writeHeader(BufferedWriter bw, String header) throws IOException  {
 		if (outputFields==null){
 			bw.append(header);
@@ -184,6 +233,13 @@ public class SnapshotGenerator {
 		bw.append("\r\n");
 	}
 	
+	/**
+	 * Write line.
+	 *
+	 * @param bw the bw
+	 * @param line the line
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void writeLine(BufferedWriter bw, String line) throws IOException  {
 		if (outputFields==null){
 			bw.append(line);

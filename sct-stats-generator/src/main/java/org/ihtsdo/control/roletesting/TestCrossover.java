@@ -23,15 +23,28 @@ import org.ihtsdo.inheritance.model.RelationshipGroup;
 import org.ihtsdo.utils.TClosure;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TestCrossover.
+ */
 public class TestCrossover {
 
+	/** The Tclos. */
 	TClosure Tclos;
 
+	/**
+	 * Instantiates a new test crossover.
+	 *
+	 * @param tclos the tclos
+	 */
 	public TestCrossover(TClosure tclos) {
 		super();
 		Tclos = tclos;
 	}
 
+	/**
+	 * The Enum TEST_RESULTS.
+	 */
 	public enum TEST_RESULTS {/** The CONCEP t1_ ancestoro f_ concep t2. */
 		CONCEPT1_ANCESTOROF_CONCEPT2,/** The CONCEP t2_ ancestoro f_ concep t1. */
 		CONCEPT2_ANCESTOROF_CONCEPT1,/** The CONCEPT s_ dif f_ hierarchy. */
@@ -64,14 +77,13 @@ public class TestCrossover {
 		/** The ROLEGROUP s_ crossover. */
 		ROLEGROUPS_CROSSOVER
 	};
+	
 	/**
 	 * Subsumption concept test.
 	 *
 	 * @param concept1 the concept1
 	 * @param concept2 the concept2
 	 * @return the tES t_ results
-	 * @throws IOException signals that an I/O exception has occurred.
-	 * @throws TerminologyException the terminology exception
 	 */
 	public TEST_RESULTS subsumptionConceptTest(long concept1, long concept2){
 		if (concept1==concept2){
@@ -93,8 +105,6 @@ public class TestCrossover {
 	 * @param role1 the role1
 	 * @param role2 the role2
 	 * @return the tES t_ results
-	 * @throws TerminologyException the terminology exception
-	 * @throws IOException signals that an I/O exception has occurred.
 	 */
 	public TEST_RESULTS subsumptionRoleTest(Relationship role1, Relationship role2){
 		TEST_RESULTS relTargetSubSum=subsumptionConceptTest(role1.destinationId,role2.destinationId);
@@ -143,18 +153,25 @@ public class TestCrossover {
 		return null;
 
 	}
+	
+	/**
+	 * Checks if is crossover.
+	 *
+	 * @param rolegroup1 the rolegroup1
+	 * @param rolegroup2 the rolegroup2
+	 * @return true, if is crossover
+	 */
 	public boolean isCrossover(RelationshipGroup rolegroup1, RelationshipGroup rolegroup2) {
 		TEST_RESULTS result = subsumptionRoleGroupTest( rolegroup1,  rolegroup2) ;
 		return result.equals(TEST_RESULTS.ROLEGROUPS_CROSSOVER) || result.equals(TEST_RESULTS.ROLES_CROSSOVER );
 	}
+	
 	/**
 	 * Subsumption role group test.
 	 *
 	 * @param rolegroup1 the rolegroup1
 	 * @param rolegroup2 the rolegroup2
 	 * @return the tES t_ results
-	 * @throws TerminologyException the terminology exception
-	 * @throws IOException signals that an I/O exception has occurred.
 	 */
 	public TEST_RESULTS subsumptionRoleGroupTest(RelationshipGroup rolegroup1, RelationshipGroup rolegroup2) {
 		TEST_RESULTS roleTestResult ;
@@ -267,8 +284,6 @@ public class TestCrossover {
 	 * @param rolegroup1 the rolegroup1
 	 * @param rolegroup2 the rolegroup2
 	 * @return true, if successful
-	 * @throws TerminologyException the terminology exception
-	 * @throws IOException signals that an I/O exception has occurred.
 	 */
 	private boolean roleGroup1SubSumToRoleGroup2(
 			RelationshipGroup rolegroup1, RelationshipGroup rolegroup2) {
@@ -316,6 +331,13 @@ public class TestCrossover {
 
 	}
 
+	/**
+	 * Checks if is redundant.
+	 *
+	 * @param rolegroup1 the rolegroup1
+	 * @param rolegroup2 the rolegroup2
+	 * @return true, if is redundant
+	 */
 	public boolean isRedundant(RelationshipGroup rolegroup1,RelationshipGroup rolegroup2) {
 
 		TEST_RESULTS result = subsumptionRoleGroupTest( rolegroup1,  rolegroup2) ;

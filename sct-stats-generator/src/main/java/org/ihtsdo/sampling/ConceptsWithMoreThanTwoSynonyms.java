@@ -1,12 +1,32 @@
+/**
+ * Copyright (c) 2016 TermMed SA
+ * Organization
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/
+ */
+
+/**
+ * Author: Alejandro Rodriguez
+ */
 package org.ihtsdo.sampling;
 
 import java.io.*;
 import java.util.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * Created by alo on 2/15/16.
  */
 public class ConceptsWithMoreThanTwoSynonyms {
+    
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     * @throws Exception the exception
+     */
     public static void main(String[] args) throws Exception {
         System.out.println("Starting...");
         File conceptsFile = new File("/Users/alo/Downloads/SnomedCT_RF2Release_INT_20160131-1/Snapshot/Terminology/sct2_Concept_Snapshot_INT_20160131.txt");

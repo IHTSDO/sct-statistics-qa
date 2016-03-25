@@ -25,13 +25,34 @@ import org.ihtsdo.control.model.ControlResultLine;
 import org.ihtsdo.utils.FileHelper;
 import org.ihtsdo.utils.I_Constants;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ListOfChildrenAndDescendants.
+ */
 public class ListOfChildrenAndDescendants extends AControlPattern {
 
+	/** The result file. */
 	private File resultFile;
 
+	/** The concept terms. */
 	private HashMap<Long, String> conceptTerms;
-	private enum Indexes{STATED_CHILDREN,STATED_DESCENDANTS,INFERRED_CHILDREN,INFERRED_DESCENDANTS};
+	
+	/**
+	 * The Enum Indexes.
+	 */
+	private enum Indexes{
+/** The stated children. */
+STATED_CHILDREN,
+/** The stated descendants. */
+STATED_DESCENDANTS,
+/** The inferred children. */
+INFERRED_CHILDREN,
+/** The inferred descendants. */
+INFERRED_DESCENDANTS};
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#execute()
+	 */
 	public void execute() throws Exception {
 
 		String file=CurrentFile.get().getSnapshotConceptFile();
@@ -158,39 +179,69 @@ public class ListOfChildrenAndDescendants extends AControlPattern {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setConfigFile(java.io.File)
+	 */
 	public void setConfigFile(File configFile) {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#getSample()
+	 */
 	public List<ControlResultLine> getSample() {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setResultFile(java.io.File)
+	 */
 	public void setResultFile(File resultFile) {
 		this.resultFile=resultFile;
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setNewConceptsList(java.util.HashSet)
+	 */
 	public void setNewConceptsList(HashSet<String> newConcepts) {
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setChangedConceptsList(java.util.HashSet)
+	 */
 	public void setChangedConceptsList(HashSet<String> changedConcepts) {
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setCurrentEffTime(java.lang.String)
+	 */
 	public void setCurrentEffTime(String releaseDate) {
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setPreviousEffTime(java.lang.String)
+	 */
 	public void setPreviousEffTime(String previousReleaseDate) {
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setPatternId(java.lang.String)
+	 */
 	public void setPatternId(String patternId) {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#getResultCount()
+	 */
 	public int getResultCount() {
 		return 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ihtsdo.control.model.IControlPattern#setConceptTerms(java.util.HashMap)
+	 */
 	public void setConceptTerms(HashMap<Long, String> conceptTerms) {
 		this.conceptTerms=conceptTerms;
 	}

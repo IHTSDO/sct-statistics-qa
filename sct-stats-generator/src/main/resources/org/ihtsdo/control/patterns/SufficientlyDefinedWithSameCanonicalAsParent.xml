@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <patternConfig>
 <patternId>26</patternId>
-<name>Sufficiently defined with same canonical form that parent</name>
-<description>Sufficiently defined with same canonical form that parent</description>
+<name>Sufficiently defined concepts with a long canonical form identical to that of a stated parent</name>
+<description>Sufficiently defined concepts with a long canonical form identical to that of a stated parent</description>
 <severity>low</severity>
 <resultFileName>suffdefined_same_canonical_changes_as_parent.json</resultFileName>
 <executionClass>org.ihtsdo.control.patterns.SufficientlyDefinedWithSameCanonicalAsParent</executionClass>

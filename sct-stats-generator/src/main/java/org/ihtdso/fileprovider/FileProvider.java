@@ -26,71 +26,165 @@ import org.ihtsdo.utils.FileHelper;
 import org.ihtsdo.utils.I_Constants;
 import org.ihtsdo.utils.TClosure;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FileProvider.
+ */
 public class FileProvider {
 
 
+	/** The Constant TEMP_SORTING_FOLDER. */
 	private static final String TEMP_SORTING_FOLDER = "tmpWorking";
+	
+	/** The Constant TEMP_SORTED_FINAL_FOLDER. */
 	private static final String TEMP_SORTED_FINAL_FOLDER = "tmpSortedFinal";
+	
+	/** The Constant SNAPSHOT_FOLDER. */
 	private static final String SNAPSHOT_FOLDER = "snapshot";
+	
+	/** The Constant COMPLETED_FILES_FOLDER. */
 	private static final String COMPLETED_FILES_FOLDER = "completedFiles";
+	
+	/** The concept file. */
 	private String conceptFile ;
+	
+	/** The description file. */
 	private String descriptionFile ;
+	
+	/** The relationship file. */
 	private String relationshipFile ;
+	
+	/** The attribute value file. */
 	private String attributeValueFile ;
+	
+	/** The simple map file. */
 	private String simpleMapFile ;
+	
+	/** The association file. */
 	private String associationFile ;
+	
+	/** The language file. */
 	private String languageFile ;
+	
+	/** The refset simple file. */
 	private String refsetSimpleFile ;
+	
+	/** The stated relationship file. */
 	private String statedRelationshipFile ;
+	
+	/** The text definition file. */
 	private String textDefinitionFile ;
 	/* Snapshot files */
+	/** The snapshot concept file. */
 	private String snapshotConceptFile ;
+	
+	/** The snapshot description file. */
 	private String snapshotDescriptionFile ;
+	
+	/** The snapshot relationship file. */
 	private String snapshotRelationshipFile ;
+	
+	/** The snapshot attribute value file. */
 	private String snapshotAttributeValueFile ;
+	
+	/** The snapshot simple map file. */
 	private String snapshotSimpleMapFile ;
+	
+	/** The snapshot association file. */
 	private String snapshotAssociationFile ;
+	
+	/** The snapshot language file. */
 	private String snapshotLanguageFile ;
+	
+	/** The snapshot refset simple file. */
 	private String snapshotRefsetSimpleFile ;
+	
+	/** The snapshot stated relationship file. */
 	private String snapshotStatedRelationshipFile ;
+	
+	/** The snapshot text definition file. */
 	private String snapshotTextDefinitionFile ;
 
 
+	/** The full folder. */
 	private File fullFolder;
 
+	/** The snapshot folder. */
 	private File snapshotFolder;
 
+	/** The temp sorting folder. */
 	private File tempSortingFolder;
 
+	/** The temp sorted finalfolder. */
 	private File tempSortedFinalfolder;
 
+	/** The completed files folder. */
 	private File completedFilesFolder;
 
+	/** The release date. */
 	private String releaseDate;
+	
+	/** The complete stated relationship snapshot. */
 	private String completeStatedRelationshipSnapshot;
+	
+	/** The complete relationship snapshot. */
 	private String completeRelationshipSnapshot;
+	
+	/** The complete description snapshot. */
 	private String completeDescriptionSnapshot;
+	
+	/** The release dependencies full folders. */
 	private HashSet<String> releaseDependenciesFullFolders;
+	
+	/** The base folder. */
 	private File baseFolder;
+	
+	/** The complete stated relationship full. */
 	private String completeStatedRelationshipFull;
+	
+	/** The complete relationship full. */
 	private String completeRelationshipFull;
+	
+	/** The complete description full. */
 	private String completeDescriptionFull;
+	
+	/** The new concept file. */
 	private File newConceptFile;
+	
+	/** The changed concept file. */
 	private File changedConceptFile;
+	
+	/** The intermediate primitive file. */
 	private String intermediatePrimitiveFile;
+	
+	/** The complete concept snapshot. */
 	private String completeConceptSnapshot;
+	
+	/** The complete concept full. */
 	private String completeConceptFull;
+	
+	/** The transitive closure stated file. */
 	private String transitiveClosureStatedFile;
+	
+	/** The transitive closure inferred file. */
 	private String transitiveClosureInferredFile;
+	
+	/** The concept terms. */
 	private HashMap<Long, String> conceptTerms;
+	
+	/** The proximal primitive file. */
 	private String proximalPrimitiveFile;
+	
+	/** The canonical changes on sd concepts file. */
 	private String canonicalChangesOnSDConceptsFile;
 
 
 	/**
+	 * Gets the concept file.
+	 *
 	 * @return the conceptFile
-	 * @throws Exception 
-	 * @throws IOException 
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
 	 */
 	public String getConceptFile() throws IOException, Exception {
 		if (conceptFile==null){
@@ -100,9 +194,11 @@ public class FileProvider {
 	}
 
 	/**
+	 * Gets the description file.
+	 *
 	 * @return the descriptionFile
-	 * @throws Exception 
-	 * @throws IOException 
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
 	 */
 	public String getDescriptionFile() throws IOException, Exception {
 		if (descriptionFile==null){
@@ -112,9 +208,11 @@ public class FileProvider {
 	}
 
 	/**
+	 * Gets the relationship file.
+	 *
 	 * @return the relationshipFile
-	 * @throws Exception 
-	 * @throws IOException 
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
 	 */
 	public String getRelationshipFile() throws IOException, Exception {
 		if (relationshipFile==null){
@@ -124,9 +222,11 @@ public class FileProvider {
 	}
 
 	/**
+	 * Gets the attribute value file.
+	 *
 	 * @return the attributeValueFile
-	 * @throws Exception 
-	 * @throws IOException 
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
 	 */
 	public String getAttributeValueFile() throws IOException, Exception {
 		if (attributeValueFile==null){
@@ -136,9 +236,11 @@ public class FileProvider {
 	}
 
 	/**
+	 * Gets the simple map file.
+	 *
 	 * @return the simpleMapFile
-	 * @throws Exception 
-	 * @throws IOException 
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
 	 */
 	public String getSimpleMapFile() throws IOException, Exception {
 		if (simpleMapFile==null){
@@ -148,9 +250,11 @@ public class FileProvider {
 	}
 
 	/**
+	 * Gets the association file.
+	 *
 	 * @return the associationFile
-	 * @throws Exception 
-	 * @throws IOException 
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
 	 */
 	public String getAssociationFile() throws IOException, Exception {
 		if (associationFile==null){
@@ -160,9 +264,11 @@ public class FileProvider {
 	}
 
 	/**
+	 * Gets the language file.
+	 *
 	 * @return the languageFile
-	 * @throws Exception 
-	 * @throws IOException 
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
 	 */
 	public String getLanguageFile() throws IOException, Exception {
 		if (languageFile==null){
@@ -171,6 +277,13 @@ public class FileProvider {
 		return languageFile;
 	}
 
+	/**
+	 * Gets the refset simple file.
+	 *
+	 * @return the refset simple file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getRefsetSimpleFile() throws IOException, Exception {
 		if (refsetSimpleFile==null){
 			refsetSimpleFile=FileHelper.getFile(fullFolder, "rf2-simple", null, null, null, false, false);
@@ -178,6 +291,13 @@ public class FileProvider {
 		return refsetSimpleFile;
 	}
 
+	/**
+	 * Gets the stated relationship file.
+	 *
+	 * @return the stated relationship file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getStatedRelationshipFile() throws IOException, Exception {
 		if (statedRelationshipFile==null){
 			statedRelationshipFile=FileHelper.getFile(fullFolder, "rf2-relationships", null, "stated", null, false, false);
@@ -185,6 +305,13 @@ public class FileProvider {
 		return statedRelationshipFile;
 	}
 
+	/**
+	 * Gets the text definition file.
+	 *
+	 * @return the text definition file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getTextDefinitionFile() throws IOException, Exception {
 		if (textDefinitionFile==null){
 			textDefinitionFile=FileHelper.getFile(fullFolder, "rf2-textDefinition", null, null, null, false, false);
@@ -194,6 +321,13 @@ public class FileProvider {
 
 
 
+	/**
+	 * Gets the snapshot concept file.
+	 *
+	 * @return the snapshot concept file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotConceptFile() throws IOException, Exception {
 		if (snapshotConceptFile==null){
 			snapshotConceptFile=FileHelper.getFile(snapshotFolder, "rf2-concepts", null, null, null, false, false);
@@ -206,6 +340,13 @@ public class FileProvider {
 		return snapshotConceptFile;
 	}
 
+	/**
+	 * Gets the snapshot description file.
+	 *
+	 * @return the snapshot description file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotDescriptionFile() throws IOException, Exception {
 		if (snapshotDescriptionFile==null){
 			snapshotDescriptionFile=FileHelper.getFile(snapshotFolder, "rf2-descriptions", null, null, null, false, false);
@@ -218,6 +359,13 @@ public class FileProvider {
 		return snapshotDescriptionFile;
 	}
 
+	/**
+	 * Gets the snapshot relationship file.
+	 *
+	 * @return the snapshot relationship file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotRelationshipFile() throws IOException, Exception {
 		if (snapshotRelationshipFile==null){
 			snapshotRelationshipFile=FileHelper.getFile(snapshotFolder, "rf2-relationships", null, null, "stated", false, false);
@@ -230,6 +378,13 @@ public class FileProvider {
 		return snapshotRelationshipFile;
 	}
 
+	/**
+	 * Gets the snapshot attribute value file.
+	 *
+	 * @return the snapshot attribute value file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotAttributeValueFile() throws IOException, Exception {
 		if (snapshotAttributeValueFile==null){
 			snapshotAttributeValueFile=FileHelper.getFile(snapshotFolder, "rf2-attributevalue", null, null, null, false, false);
@@ -242,6 +397,13 @@ public class FileProvider {
 		return snapshotAttributeValueFile;
 	}
 
+	/**
+	 * Gets the snapshot simple map file.
+	 *
+	 * @return the snapshot simple map file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotSimpleMapFile() throws IOException, Exception {
 		if (snapshotSimpleMapFile==null){
 			snapshotSimpleMapFile=FileHelper.getFile(snapshotFolder, "rf2-simplemaps", null, null, null, false, false);
@@ -254,6 +416,13 @@ public class FileProvider {
 		return snapshotSimpleMapFile;
 	}
 
+	/**
+	 * Gets the snapshot association file.
+	 *
+	 * @return the snapshot association file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotAssociationFile() throws IOException, Exception {
 		if (snapshotAssociationFile==null){
 			snapshotAssociationFile=FileHelper.getFile(snapshotFolder, "rf2-association", null, null, null, false, false);
@@ -266,6 +435,13 @@ public class FileProvider {
 		return snapshotAssociationFile;
 	}
 
+	/**
+	 * Gets the snapshot language file.
+	 *
+	 * @return the snapshot language file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotLanguageFile() throws IOException, Exception {
 		if (snapshotLanguageFile==null){
 			snapshotLanguageFile=FileHelper.getFile(snapshotFolder, "rf2-language", null, null, null, false, false);
@@ -278,6 +454,13 @@ public class FileProvider {
 		return snapshotLanguageFile;
 	}
 
+	/**
+	 * Gets the snapshot refset simple file.
+	 *
+	 * @return the snapshot refset simple file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotRefsetSimpleFile() throws IOException, Exception {
 		if (snapshotRefsetSimpleFile==null){
 			snapshotRefsetSimpleFile=FileHelper.getFile(snapshotFolder, "rf2-simple", null, null, null, false, false);
@@ -290,6 +473,13 @@ public class FileProvider {
 		return snapshotRefsetSimpleFile;
 	}
 
+	/**
+	 * Gets the snapshot stated relationship file.
+	 *
+	 * @return the snapshot stated relationship file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotStatedRelationshipFile() throws IOException, Exception {
 		if (snapshotStatedRelationshipFile==null){
 			snapshotStatedRelationshipFile=FileHelper.getFile(snapshotFolder, "rf2-relationships", null, "stated", null, false, false);
@@ -302,6 +492,13 @@ public class FileProvider {
 		return snapshotStatedRelationshipFile;
 	}
 
+	/**
+	 * Gets the snapshot text definition file.
+	 *
+	 * @return the snapshot text definition file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getSnapshotTextDefinitionFile() throws IOException, Exception {
 		if (snapshotTextDefinitionFile==null){
 			snapshotTextDefinitionFile=FileHelper.getFile(snapshotFolder, "rf2-textDefinition", null, null, null, false, false);
@@ -314,46 +511,104 @@ public class FileProvider {
 		return snapshotTextDefinitionFile;
 	}
 
+	/**
+	 * Gets the full folder.
+	 *
+	 * @return the full folder
+	 */
 	public File getFullFolder() {
 		return fullFolder;
 	}
 
+	/**
+	 * Sets the full folder.
+	 *
+	 * @param fullFolder the new full folder
+	 */
 	public void setFullFolder(File fullFolder) {
 		this.fullFolder = fullFolder;
 	}
 
+	/**
+	 * Gets the snapshot folder.
+	 *
+	 * @return the snapshot folder
+	 */
 	public File getSnapshotFolder() {
 		return snapshotFolder;
 	}
 
+	/**
+	 * Sets the snapshot folder.
+	 *
+	 * @param snapshotFolder the new snapshot folder
+	 */
 	public void setSnapshotFolder(File snapshotFolder) {
 		this.snapshotFolder = snapshotFolder;
 	}
 
+	/**
+	 * Gets the temp sorting folder.
+	 *
+	 * @return the temp sorting folder
+	 */
 	public File getTempSortingFolder() {
 		return tempSortingFolder;
 	}
 
+	/**
+	 * Sets the temp sorting folder.
+	 *
+	 * @param tempSortingFolder the new temp sorting folder
+	 */
 	public void setTempSortingFolder(File tempSortingFolder) {
 		this.tempSortingFolder = tempSortingFolder;
 	}
 
+	/**
+	 * Gets the temp sorted finalfolder.
+	 *
+	 * @return the temp sorted finalfolder
+	 */
 	public File getTempSortedFinalfolder() {
 		return tempSortedFinalfolder;
 	}
 
+	/**
+	 * Sets the temp sorted finalfolder.
+	 *
+	 * @param tempSortedFinalfolder the new temp sorted finalfolder
+	 */
 	public void setTempSortedFinalfolder(File tempSortedFinalfolder) {
 		this.tempSortedFinalfolder = tempSortedFinalfolder;
 	}
 
+	/**
+	 * Gets the release date.
+	 *
+	 * @return the release date
+	 */
 	public String getReleaseDate() {
 		return releaseDate;
 	}
 
+	/**
+	 * Sets the release date.
+	 *
+	 * @param releaseDate the new release date
+	 */
 	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
+	/**
+	 * Instantiates a new file provider.
+	 *
+	 * @param sourceFullFolder the source full folder
+	 * @param baseFolder the base folder
+	 * @param releaseDependenciesFullFolders the release dependencies full folders
+	 * @param releaseDate the release date
+	 */
 	public FileProvider(File sourceFullFolder,File baseFolder,HashSet<String>releaseDependenciesFullFolders, String releaseDate){
 		setFullFolder(sourceFullFolder);
 		setBaseFolder(baseFolder);
@@ -363,10 +618,18 @@ public class FileProvider {
 
 	}
 
+	/**
+	 * Sets the base folder.
+	 *
+	 * @param baseFolder the new base folder
+	 */
 	private void setBaseFolder(File baseFolder) {
 		this.baseFolder=baseFolder;
 	}
 
+	/**
+	 * Creates the folders.
+	 */
 	private void createFolders() {
 
 		if (!baseFolder.exists()){
@@ -403,6 +666,13 @@ public class FileProvider {
 
 	}
 
+	/**
+	 * Gets the complete description snapshot.
+	 *
+	 * @return the complete description snapshot
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getCompleteDescriptionSnapshot() throws IOException, Exception {
 		if (completeDescriptionSnapshot==null){
 			getCompleteDescriptionFull();
@@ -413,6 +683,14 @@ public class FileProvider {
 		}
 		return completeDescriptionSnapshot;
 	}
+	
+	/**
+	 * Gets the complete description full.
+	 *
+	 * @return the complete description full
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getCompleteDescriptionFull() throws IOException, Exception {
 		if (completeDescriptionFull==null){
 			if (releaseDependenciesFullFolders!=null){
@@ -432,28 +710,60 @@ public class FileProvider {
 		return completeDescriptionFull;
 	}
 
+	/**
+	 * Sets the complete description snapshot.
+	 *
+	 * @param completeDescriptionSnapshot the new complete description snapshot
+	 */
 	public void setCompleteDescriptionSnapshot(
 			String completeDescriptionSnapshot) {
 		this.completeDescriptionSnapshot = completeDescriptionSnapshot;
 	}
 
+	/**
+	 * Gets the release dependencies full folders.
+	 *
+	 * @return the release dependencies full folders
+	 */
 	public HashSet<String> getReleaseDependenciesFullFolders() {
 		return releaseDependenciesFullFolders;
 	}
 
+	/**
+	 * Sets the release dependencies full folders.
+	 *
+	 * @param releaseDependenciesFullFolders the new release dependencies full folders
+	 */
 	public void setReleaseDependenciesFullFolders(
 			HashSet<String> releaseDependenciesFullFolders) {
 		this.releaseDependenciesFullFolders = releaseDependenciesFullFolders;
 	}
 
+	/**
+	 * Gets the completed files folder.
+	 *
+	 * @return the completed files folder
+	 */
 	public File getCompletedFilesFolder() {
 		return completedFilesFolder;
 	}
 
+	/**
+	 * Sets the completed files folder.
+	 *
+	 * @param completedFilesFolder the new completed files folder
+	 */
 	public void setCompletedFilesFolder(File completedFilesFolder) {
 		this.completedFilesFolder = completedFilesFolder;
 	}
 
+	/**
+	 * Gets the complete relationship snapshot.
+	 *
+	 * @return the complete relationship snapshot
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getCompleteRelationshipSnapshot() throws IOException, Exception {
 		if (completeRelationshipSnapshot==null){
 			getCompleteRelationshipFull();
@@ -465,6 +775,13 @@ public class FileProvider {
 		return completeRelationshipSnapshot;
 	}
 
+	/**
+	 * Gets the complete relationship full.
+	 *
+	 * @return the complete relationship full
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getCompleteRelationshipFull() throws IOException, Exception {
 		if (completeRelationshipFull==null){
 			if (releaseDependenciesFullFolders!=null){
@@ -484,11 +801,23 @@ public class FileProvider {
 		return completeRelationshipFull;
 	}
 
+	/**
+	 * Sets the complete relationship snapshot.
+	 *
+	 * @param completeRelationshipSnapshot the new complete relationship snapshot
+	 */
 	public void setCompleteRelationshipSnapshot(
 			String completeRelationshipSnapshot) {
 		this.completeRelationshipSnapshot = completeRelationshipSnapshot;
 	}
 
+	/**
+	 * Gets the complete stated relationship snapshot.
+	 *
+	 * @return the complete stated relationship snapshot
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getCompleteStatedRelationshipSnapshot() throws IOException, Exception {
 		if (completeStatedRelationshipSnapshot==null){
 			getCompleteStatedRelationshipFull();
@@ -500,6 +829,13 @@ public class FileProvider {
 		return completeStatedRelationshipSnapshot;
 	}
 
+	/**
+	 * Gets the complete stated relationship full.
+	 *
+	 * @return the complete stated relationship full
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getCompleteStatedRelationshipFull() throws IOException, Exception {
 		if (completeStatedRelationshipFull==null){
 			if (releaseDependenciesFullFolders!=null){
@@ -519,11 +855,26 @@ public class FileProvider {
 		return completeStatedRelationshipFull;
 	}
 
+	/**
+	 * Sets the complete stated relationship snapshot.
+	 *
+	 * @param completeStatedRelationshipSnapshot the new complete stated relationship snapshot
+	 */
 	public void setCompleteStatedRelationshipSnapshot(
 			String completeStatedRelationshipSnapshot) {
 		this.completeStatedRelationshipSnapshot = completeStatedRelationshipSnapshot;
 	}
 
+	/**
+	 * Gets the full file by pattern.
+	 *
+	 * @param patternTag the pattern tag
+	 * @param fileNameMustHave the file name must have
+	 * @param fileNameDoesntMustHave the file name doesnt must have
+	 * @return the full file by pattern
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getFullFileByPattern(String patternTag,
 			String fileNameMustHave, String fileNameDoesntMustHave) throws IOException, Exception {
 		if (patternTag.equals("rf2-concepts")){
@@ -570,30 +921,67 @@ public class FileProvider {
 		return null;
 	}
 
+	/**
+	 * Gets the new concept file.
+	 *
+	 * @return the new concept file
+	 */
 	public File getNewConceptFile() {
 		return newConceptFile;
 	}
 
+	/**
+	 * Sets the new concept file.
+	 *
+	 * @param newConceptFile the new new concept file
+	 */
 	public void setNewConceptFile(File newConceptFile) {
 		this.newConceptFile = newConceptFile;
 	}
 
+	/**
+	 * Gets the changed concept file.
+	 *
+	 * @return the changed concept file
+	 */
 	public File getChangedConceptFile() {
 		return changedConceptFile;
 	}
 
+	/**
+	 * Sets the changed concept file.
+	 *
+	 * @param changedConceptFile the new changed concept file
+	 */
 	public void setChangedConceptFile(File changedConceptFile) {
 		this.changedConceptFile = changedConceptFile;
 	}
 
+	/**
+	 * Sets the intermediate primitive file.
+	 *
+	 * @param intermediatePrimitiveFile the new intermediate primitive file
+	 */
 	public void setIntermediatePrimitiveFile(String intermediatePrimitiveFile) {
 		this.intermediatePrimitiveFile=intermediatePrimitiveFile;
 	}
 
+	/**
+	 * Gets the intermediate primitive file.
+	 *
+	 * @return the intermediate primitive file
+	 */
 	public String getIntermediatePrimitiveFile() {
 		return intermediatePrimitiveFile;
 	}
 
+	/**
+	 * Gets the complete concept snapshot.
+	 *
+	 * @return the complete concept snapshot
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getCompleteConceptSnapshot() throws IOException, Exception {
 		if (completeConceptSnapshot==null){
 			getCompleteConceptFull();
@@ -605,6 +993,13 @@ public class FileProvider {
 		return completeConceptSnapshot;
 	}
 
+	/**
+	 * Gets the complete concept full.
+	 *
+	 * @return the complete concept full
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	private String getCompleteConceptFull() throws IOException, Exception {
 		if (completeConceptFull==null){
 			if (releaseDependenciesFullFolders!=null){
@@ -624,10 +1019,22 @@ public class FileProvider {
 		return completeConceptFull;		
 	}
 
+	/**
+	 * Sets the transitive closure stated file.
+	 *
+	 * @param transitiveClosureStatedFile the new transitive closure stated file
+	 */
 	public void setTransitiveClosureStatedFile(String transitiveClosureStatedFile) {
 		this.transitiveClosureStatedFile=transitiveClosureStatedFile;
 	}
 
+	/**
+	 * Gets the transitive closure stated file.
+	 *
+	 * @return the transitive closure stated file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getTransitiveClosureStatedFile() throws IOException, Exception {
 		if (transitiveClosureStatedFile==null){
 			String statedRels;
@@ -644,10 +1051,22 @@ public class FileProvider {
 		return transitiveClosureStatedFile;
 	}
 
+	/**
+	 * Sets the transitive closure inferred file.
+	 *
+	 * @param transitiveClosureInferredFile the new transitive closure inferred file
+	 */
 	public void setTransitiveClosureInferredFile(String transitiveClosureInferredFile) {
 		this.transitiveClosureInferredFile=transitiveClosureInferredFile;
 	}
 
+	/**
+	 * Gets the transitive closure inferred file.
+	 *
+	 * @return the transitive closure inferred file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public String getTransitiveClosureInferredFile() throws IOException, Exception {
 		if (transitiveClosureInferredFile==null){
 			String inferRels;
@@ -664,6 +1083,13 @@ public class FileProvider {
 		return transitiveClosureInferredFile;
 	}
 
+	/**
+	 * Gets the concept terms.
+	 *
+	 * @return the concept terms
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws Exception the exception
+	 */
 	public HashMap<Long, String> getConceptTerms() throws IOException, Exception {
 		if (conceptTerms==null){
 			conceptTerms=new HashMap<Long, String>();
@@ -700,6 +1126,15 @@ public class FileProvider {
 		return conceptTerms;
 	}
 
+	/**
+	 * Sets the terms.
+	 *
+	 * @param file the new terms
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws NumberFormatException the number format exception
+	 */
 	private void setTerms(String file) throws UnsupportedEncodingException,
 			FileNotFoundException, IOException, NumberFormatException {
 //		System.out.println("desc file:" + file);
@@ -718,18 +1153,38 @@ public class FileProvider {
 		br.close();
 	}
 
+	/**
+	 * Gets the proximal primitive file.
+	 *
+	 * @return the proximal primitive file
+	 */
 	public String getProximalPrimitiveFile() {
 		return proximalPrimitiveFile;
 	}
 
+	/**
+	 * Sets the proximal primitive file.
+	 *
+	 * @param proximalPrimitiveFile the new proximal primitive file
+	 */
 	public void setProximalPrimitiveFile(String proximalPrimitiveFile) {
 		this.proximalPrimitiveFile = proximalPrimitiveFile;
 	}
 
+	/**
+	 * Sets the canonical changes on sd concepts file.
+	 *
+	 * @param canonicalChangesOnSDConceptsFile the new canonical changes on sd concepts file
+	 */
 	public void setCanonicalChangesOnSDConceptsFile(String canonicalChangesOnSDConceptsFile) {
 		this.canonicalChangesOnSDConceptsFile=canonicalChangesOnSDConceptsFile;
 	}
 
+	/**
+	 * Gets the canonical changes on sd concepts file.
+	 *
+	 * @return the canonical changes on sd concepts file
+	 */
 	public String getCanonicalChangesOnSDConceptsFile() {
 		return canonicalChangesOnSDConceptsFile;
 	}

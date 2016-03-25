@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * Helper class for merge, concatenate files 
  * and get a UUID from a string with or without namespace

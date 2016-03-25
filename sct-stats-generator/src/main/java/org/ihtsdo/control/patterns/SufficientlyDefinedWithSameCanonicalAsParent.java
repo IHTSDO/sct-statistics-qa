@@ -95,7 +95,7 @@ public class SufficientlyDefinedWithSameCanonicalAsParent extends AControlPatter
 			crl.setPreexisting(false);
 			crl.setResultId(UUID.randomUUID().toString());
 			crl.setCurrent(true);
-			crl.setMatchDescription("Same canonical def.as parent: " + spl[1] + "|" + conceptTerms.get(Long.parseLong(spl[1])));
+			crl.setMatchDescription("Sufficiently defined concept with a long canonical form identical to that of a parent: " + spl[1] + "|" + conceptTerms.get(Long.parseLong(spl[1])));
 			if (first){
 				first=false;
 			}else{

@@ -12,9 +12,20 @@
  */
 package org.ihtsdo.statistics.model;
 
+// TODO: Auto-generated Javadoc
+/**
+ * A factory for creating OutputInfo objects.
+ */
 public class OutputInfoFactory {
+	
+	/** The output info. */
 	private static OutputInfo outputInfo;
 	
+	/**
+	 * Gets the.
+	 *
+	 * @return the output info
+	 */
 	public static OutputInfo get(){
 		if (outputInfo==null){
 			outputInfo=new OutputInfo();

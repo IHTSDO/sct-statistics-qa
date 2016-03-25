@@ -24,20 +24,18 @@ import java.util.UUID;
 
 import org.ihtdso.fileprovider.CurrentFile;
 import org.ihtdso.fileprovider.PreviousFile;
+import org.ihtsdo.control.concept.TestConcepts;
 import org.ihtsdo.control.model.AControlPattern;
 import org.ihtsdo.control.model.ControlResultLine;
-import org.ihtsdo.control.model.MatchObjectRedundantRel;
-import org.ihtsdo.control.model.RedundantRelDetailLine;
-import org.ihtsdo.control.roletesting.RelationshipTests;
 import org.ihtsdo.utils.FileHelper;
 
 import com.google.gson.Gson;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class RedundancyIsa2Isa.
+ * The Class SufficientlyDefinedWithCanonicalChangesAndGainedDescendant.
  */
-public class RedundancyIsa2Isa extends AControlPattern {
+public class SufficientlyDefinedWithCanonicalChangesAndGainedDescendant extends AControlPattern {
 
 	/** The result file. */
 	private File resultFile;
@@ -78,148 +76,169 @@ public class RedundancyIsa2Isa extends AControlPattern {
 	public void execute() throws Exception {
 
 		resultCount=0;
-
 		File resultTmpFolder=new File(resultFile.getParentFile() + "/tmp");
 		if (!resultTmpFolder.exists()){
 			resultTmpFolder.mkdirs();
 		}else{
 			FileHelper.emptyFolder(resultTmpFolder);
 		}
-		RelationshipTests rt=new RelationshipTests(resultTmpFolder.getAbsolutePath());
 
-		String statedRels;
-		String inferRels;
-		String concFile;
-		if (CurrentFile.get().getReleaseDependenciesFullFolders()!=null){
-			statedRels=CurrentFile.get().getSnapshotStatedRelationshipFile();
-			inferRels=CurrentFile.get().getCompleteRelationshipSnapshot();
-			concFile=CurrentFile.get().getSnapshotConceptFile();
-		}else{
-			statedRels=CurrentFile.get().getSnapshotStatedRelationshipFile();
-			inferRels=CurrentFile.get().getSnapshotRelationshipFile();
-			concFile=CurrentFile.get().getSnapshotConceptFile();
+
+		File completedFilesFolder=CurrentFile.get().getCompletedFilesFolder();
+		TestConcepts tc=new TestConcepts(completedFilesFolder);
+
+		String canonicalChangesFile=tc.getCanonicalChangesOnSDConceptsFile();
+
+		tc=null;
+
+		BufferedReader br = FileHelper.getReader(new File(canonicalChangesFile));
+		HashSet<String> curr=new HashSet<String>();
+		br.readLine();
+		String[] spl;
+		String line;
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			curr.add(spl[0]);
 		}
-		String currFile="current_isa_red.txt";
-		rt.searchRedundance(statedRels
-				,inferRels
-				,concFile
-				, conceptTerms
-				,true
-				,null
-				,currFile);
+		br.close();
+		String tClos_file=null;
 
-		if (PreviousFile.get().getReleaseDependenciesFullFolders()!=null){
-			statedRels=PreviousFile.get().getSnapshotStatedRelationshipFile();
-			inferRels=PreviousFile.get().getCompleteRelationshipSnapshot();
-		}else{
-			statedRels=PreviousFile.get().getSnapshotStatedRelationshipFile();
-			inferRels=PreviousFile.get().getSnapshotRelationshipFile();
+		tClos_file=PreviousFile.get().getTransitiveClosureInferredFile();
+
+		br = FileHelper.getReader(CurrentFile.get().getSnapshotConceptFile());
+		HashSet<Long> retired=new HashSet<Long>();
+		br.readLine();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (spl[2].compareTo("0")==0){
+				retired.add(Long.parseLong(spl[0]));
+			}
 		}
-		String prevFile="previous_isa_red.txt";
-		rt.searchRedundance(statedRels
-				,inferRels
-				, null
-				,(String)null
-				,true
-				,null
-				,prevFile);
+		br.close();
 
-		rt=null;
-		getResults(resultTmpFolder, prevFile,currFile);
-		FileHelper.emptyFolder(resultTmpFolder);
-	}
+		br = FileHelper.getReader(tClos_file);
+		br.readLine();
+		HashMap<Long,HashSet<Long>>prevSubTypes=new HashMap<Long,HashSet<Long>>();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (curr.contains(spl[1])){
+				Long cid=Long.parseLong(spl[1]);
+				Long descId=Long.parseLong(spl[0]);
+				if (retired.contains(descId)){
+					continue;
+				}
+				HashSet<Long> list=prevSubTypes.get(cid);
+				if (list==null){
+					list=new HashSet<Long>();
+				}
+				list.add(descId);
+				prevSubTypes.put(cid, list);
+			}
+		}
+		br.close();
+		retired=null;
 
-	/**
-	 * Gets the results.
-	 *
-	 * @param resultTmpFolder the result tmp folder
-	 * @param prevFile the prev file
-	 * @param currFile the curr file
-	 * @return the results
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	private void getResults(File resultTmpFolder, String prevFile,
-			String currFile) throws IOException {
+
+		tClos_file=CurrentFile.get().getTransitiveClosureInferredFile();
+		br=FileHelper.getReader(tClos_file);
+		br.readLine();
+		HashMap<Long,HashSet<Long>>currSubTypes=new HashMap<Long,HashSet<Long>>();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (curr.contains(spl[1])){
+				Long cid=Long.parseLong(spl[1]);
+				Long descId=Long.parseLong(spl[0]);
+				HashSet<Long> list=currSubTypes.get(cid);
+				if (list==null){
+					list=new HashSet<Long>();
+				}
+				list.add(descId);
+				currSubTypes.put(cid, list);
+			}
+		}
+		br.close();
 		gson=new Gson(); 
 
 		sep = System.getProperty("line.separator");
-		
-		BufferedReader br = FileHelper.getReader(new File(resultTmpFolder,prevFile));
 
-		HashSet<String> prev=new HashSet<String>();
-		br.readLine();
-		String line;
-		String[] spl;
-		while ((line=br.readLine())!=null){
-			spl=line.split("\t",-1);
-			if (spl.length>1){
-				prev.add(spl[1]);
-			}
-
-		}
-		br.close();
 		sample=new ArrayList<ControlResultLine>();
 		BufferedWriter bw = FileHelper.getWriter(resultFile);
 		bw.append("[");
 		boolean first=true;
-		br=FileHelper.getReader(new File(resultTmpFolder,currFile));
-		br.readLine();
-		boolean firstLine=true;
 		ControlResultLine crl=null;
-		MatchObjectRedundantRel mobj=null;
-		RedundantRelDetailLine detLine;
-		String strRelsData="";
-		while ((line=br.readLine())!=null){
-			spl=line.split("\t",-1);
-			if (spl.length>1){
-				if (firstLine){
-					crl=new ControlResultLine();
-					mobj=new MatchObjectRedundantRel();
-					crl.setChanged(changedConcepts.contains(spl[1]));
-					crl.setNew(newConcepts.contains(spl[1]));
-					crl.setConceptId(spl[1]);
-					crl.setTerm(conceptTerms.get(Long.parseLong(spl[1])));
-					crl.setSemtag(getSemTag(crl.getTerm()));
-					crl.setCurrentEffectiveTime(currentEffTime);
-					crl.setPreviousEffectiveTime(previousEffTime);
-					crl.setForm("stated");
 
-					crl.setPatternId(patternId);
-					crl.setPreexisting(prev.contains(spl[1]));
-					crl.setResultId(UUID.randomUUID().toString());
-					crl.setCurrent(true);
-					List<RedundantRelDetailLine>list=new ArrayList<RedundantRelDetailLine>();
-					detLine = new RedundantRelDetailLine(line);
-					strRelsData= "Redundancy between: " + detLine.getDestinationId() + "|" + detLine.getDestinationTerm() + "|";
-					list.add(detLine);
-					mobj.setGroup1(list);
-					firstLine=false;
-				}else{
-					List<RedundantRelDetailLine>list=new ArrayList<RedundantRelDetailLine>();
-					detLine = new RedundantRelDetailLine(line);
-					strRelsData+=" and " + detLine.getDestinationId() + "|" + detLine.getDestinationTerm() + "|"; 
-					list.add(detLine);
-					mobj.setGroup2(list);
-					firstLine=true;
-					crl.setMatchObject(mobj);
-					crl.setMatchDescription(strRelsData);
-				}
-			}else if (spl[0].indexOf("--")>-1){
+		for (String currCid:curr){
+			HashSet<Long> prevList=prevSubTypes.get(Long.parseLong(currCid));
+			HashSet<Long> currList=currSubTypes.get(Long.parseLong(currCid));
+			int diff=0;
+			if (prevList==null && currList!=null){
+				diff=currList.size();
+			}else if (currList==null){
+				continue;
+			}else{
+				diff=getDiff(prevList, currList);
+			}
+			if (diff!=0){
+				String strDiff= formatDiff(diff);
+				crl=new ControlResultLine();
+				crl.setChanged(changedConcepts.contains(currCid));
+				crl.setNew(newConcepts.contains(currCid));
+				crl.setConceptId(currCid);
+				crl.setTerm(conceptTerms.get(Long.parseLong(currCid)));
+				crl.setSemtag(getSemTag(crl.getTerm()));
+				crl.setCurrentEffectiveTime(currentEffTime);
+				crl.setPreviousEffectiveTime(previousEffTime);
+				crl.setForm("canonical");
 
+				crl.setPatternId(patternId);
+				crl.setPreexisting(false);
+				crl.setResultId(UUID.randomUUID().toString());
+				crl.setCurrent(true);
+				crl.setMatchDescription("(" + strDiff + ")Sufficiently defined concept with long canonical form changes that has gained inferred descendants.");
 				if (first){
 					first=false;
 				}else{
 					bw.append(",");
 				}
 				writeResultLine(bw, crl);
-				strRelsData="";
-				firstLine=true;
+
+
 			}
 		}
 		bw.append("]");
 		bw.close();
-		br.close();
 
+
+	}
+
+	/**
+	 * Gets the diff.
+	 *
+	 * @param prevList the prev list
+	 * @param currList the curr list
+	 * @return the diff
+	 */
+	private int getDiff(HashSet<Long> prevList, HashSet<Long> currList) {
+		int diff=0;
+		for (Long descId:currList){
+			if (!prevList.contains(descId)){
+				diff++;
+			}
+		}
+		return diff;
+	}
+
+	/**
+	 * Format diff.
+	 *
+	 * @param diff the diff
+	 * @return the string
+	 */
+	private String formatDiff(int diff) {
+		
+		String ret="000000" + String.valueOf(diff);
+		ret= ret.substring(ret.length()-6);
+		return ret;
 	}
 
 	/**
@@ -242,7 +261,6 @@ public class RedundancyIsa2Isa extends AControlPattern {
 	 * @see org.ihtsdo.control.model.IControlPattern#setConfigFile(java.io.File)
 	 */
 	public void setConfigFile(File configFile) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -295,6 +313,7 @@ public class RedundancyIsa2Isa extends AControlPattern {
 	public void setPatternId(String patternId) {
 		this.patternId=patternId;
 	}
+
 
 	/* (non-Javadoc)
 	 * @see org.ihtsdo.control.model.IControlPattern#getResultCount()

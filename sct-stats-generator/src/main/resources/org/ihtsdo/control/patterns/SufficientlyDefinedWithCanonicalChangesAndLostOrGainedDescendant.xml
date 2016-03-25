@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<patternConfig>
-<patternId>24</patternId>
-<name>Sufficiently defined concepts with canonical changes that dont have lost or gained descendants</name>
-<description>Sufficiently defined concepts with canonical changes that dont have lost or gained descendants</description>
-<severity>low</severity>
-<resultFileName>suffdefined_canonical_changes_dont_lost_gained_descendant.json</resultFileName>
-<executionClass>org.ihtsdo.control.patterns.SufficientlyDefinedWithCanonicalChangesAndDoesntLostOrGainedDescendant</executionClass>
-</patternConfig>
