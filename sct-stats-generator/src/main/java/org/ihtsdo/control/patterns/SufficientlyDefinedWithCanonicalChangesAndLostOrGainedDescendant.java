@@ -31,7 +31,7 @@ import org.ihtsdo.utils.FileHelper;
 
 import com.google.gson.Gson;
 
-public class SufficientlyDefinedWithCanonicalChangesAndDoesntLostOrGainedDescendant extends AControlPattern {
+public class SufficientlyDefinedWithCanonicalChangesAndLostOrGainedDescendant extends AControlPattern {
 
 	private File resultFile;
 	private HashSet<String> newConcepts;
@@ -151,8 +151,14 @@ public class SufficientlyDefinedWithCanonicalChangesAndDoesntLostOrGainedDescend
 				currCount=0;
 			}
 			int diff=currCount-prevCount;
-			if (diff==0){
-				
+			if (diff!=0){
+				String strDiff= formatDiff(diff);
+				String gainedOrLost;
+				if (diff<0){
+					gainedOrLost="lost";
+				}else{
+					gainedOrLost="gained";
+				}
 				crl=new ControlResultLine();
 				crl.setChanged(changedConcepts.contains(currCid));
 				crl.setNew(newConcepts.contains(currCid));
@@ -167,7 +173,7 @@ public class SufficientlyDefinedWithCanonicalChangesAndDoesntLostOrGainedDescend
 				crl.setPreexisting(false);
 				crl.setResultId(UUID.randomUUID().toString());
 				crl.setCurrent(true);
-				crl.setMatchDescription("Sufficiently defined concept with canonical changes does not have lost or gained inferred subtypes.");
+				crl.setMatchDescription("(" + strDiff + ") Sufficiently defined concept with canonical form changes that has " + gainedOrLost + " inferred descendants.");
 				if (first){
 					first=false;
 				}else{
@@ -181,7 +187,18 @@ public class SufficientlyDefinedWithCanonicalChangesAndDoesntLostOrGainedDescend
 		bw.append("]");
 		bw.close();
 
-		
+
+	}
+
+	private String formatDiff(int diff) {
+		String sign="";
+		if (diff<0){
+			diff=Math.abs(diff);
+			sign="-";
+		}
+		String ret="000000" + String.valueOf(diff);
+		ret=sign + ret.substring(ret.length()-6);
+		return ret;
 	}
 
 	private void writeResultLine(BufferedWriter bw, ControlResultLine crl) throws IOException {

@@ -1,3 +1,12 @@
+com.termmed.test
+org.ihtdso.fileprovider
+org.ihtsdo.control.concept
+org.ihtsdo.control.executor
+org.ihtsdo.control.model
+org.ihtsdo.control.patterns
+org.ihtsdo.control.roletesting
+org.ihtsdo.inheritance.model
+org.ihtsdo.sampling
 org.ihtsdo.statistics
 org.ihtsdo.statistics.db.importer
 org.ihtsdo.statistics.db.setup
