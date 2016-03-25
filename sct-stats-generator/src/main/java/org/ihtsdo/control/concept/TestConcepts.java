@@ -677,10 +677,12 @@ public class TestConcepts {
 		BufferedWriter bw = FileHelper.getWriter(ret);
 		bw.append("id");
 		bw.append("\r\n");
+		HashSet<Long> control = new HashSet<Long>();
 		while ((line=br.readLine())!=null){
 			spl=line.split("\t",-1);
 			Long cid=Long.parseLong(spl[4]);
-			if (spl[1].compareTo(releaseDate)==0 && currSDconcepts.contains(cid) ){
+			if (spl[1].compareTo(releaseDate)==0 && currSDconcepts.contains(cid) && !control.contains(cid)){
+				control.add(cid);
 				bw.append(cid.toString());
 				bw.append("\r\n");
 			}
