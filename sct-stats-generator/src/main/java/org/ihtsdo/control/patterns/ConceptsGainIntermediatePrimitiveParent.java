@@ -90,6 +90,7 @@ public class ConceptsGainIntermediatePrimitiveParent extends AControlPattern {
 		String completeConcFile=null;
 		String currFile=null;
 		TestConcepts tc;
+		String prevConceptFile=PreviousFile.get().getSnapshotConceptFile();
 		File completedFilesFolder=CurrentFile.get().getCompletedFilesFolder();
 		if (CurrentFile.get().getReleaseDependenciesFullFolders()!=null){
 			statedRels=CurrentFile.get().getCompleteStatedRelationshipSnapshot();
@@ -130,7 +131,7 @@ public class ConceptsGainIntermediatePrimitiveParent extends AControlPattern {
 
 		TClosure prevTClos=new TClosure(statedRels,4,5,7,2);
 
-		tc.getConceptGainedPrimitiveIntermediateParent(concFile,currFile,prevTClos,tClos,gainPrimFile);
+		tc.getConceptGainedPrimitiveIntermediateParent(prevConceptFile, concFile,currFile,prevTClos,tClos,gainPrimFile);
 		tClos=null;
 		prevTClos=null;
 		gainPrimFile=new File(completedFilesFolder,gainPrimFile).getAbsolutePath();

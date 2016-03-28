@@ -96,7 +96,7 @@ public class TestConcepts {
 			}
 		}
 		br.close();
-		
+
 		br = FileHelper.getReader(tClos_file);
 		br.readLine();
 		Long desc;
@@ -127,23 +127,23 @@ public class TestConcepts {
 		SDconcepts=null;
 		checkAsDesc=null;
 		checkAsPar=null;
-		
+
 		BufferedWriter bw = FileHelper.getWriter(new File(outputFolder,currFile));
 		bw.append("id");
 		bw.append("\r\n");
-		
+
 		for (Long key:intermPrim){
 
 			bw.append(key.toString());
 			bw.append("\r\n");
 		}
-		
+
 		bw.close();
-		
+
 		tClos_file=null;
 
 	}
-	
+
 	/**
 	 * Gets the proximal primitive.
 	 *
@@ -191,12 +191,12 @@ public class TestConcepts {
 			}
 		}
 		br.close();
-		
+
 
 		tClos.getProximalPrimitives(SDconcepts,Pconcepts,currFile);
-		
+
 		return;
-		
+
 
 	}
 
@@ -211,14 +211,25 @@ public class TestConcepts {
 	 * @return the concept gained primitive intermediate parent
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public void getConceptGainedPrimitiveIntermediateParent(String concFile,
+	public void getConceptGainedPrimitiveIntermediateParent(String prevConcFile,String concFile,
 			String currFile, TClosure prevTClos, TClosure tClos,
 			String gainPrimFile) throws IOException {
 
-		BufferedReader br=FileHelper.getReader(currFile);
+		BufferedReader br=FileHelper.getReader(prevConcFile);
 		br.readLine();
 		String line;
 		String[] spl;
+		HashSet<Long>prevSDConc=new HashSet<Long>();
+		while ((line=br.readLine())!=null){
+			spl=line.split("\t",-1);
+			if (spl[2].equals("1") && spl[4].equals("900000000000073002")){
+				prevSDConc.add(Long.parseLong(spl[0]));
+			}
+		}
+		br.close();
+
+		br=FileHelper.getReader(currFile);
+		br.readLine();
 		HashSet<Long> curr=new HashSet<Long>();
 		while ((line=br.readLine())!=null){
 			spl=line.split("\t",-1);
@@ -235,15 +246,20 @@ public class TestConcepts {
 		while ((line=br.readLine())!=null){
 
 			spl=line.split("\t",-1);
-			Long cid=Long.parseLong(spl[0]);
-			for (Long intPrim: curr){
-				Boolean isParent=tClos.isParent(intPrim,cid);
-				if (isParent!=null && isParent){
-					isParent=prevTClos.isParent(intPrim,cid);
-					if (isParent!=null && isParent==false){
-						bw.append(cid.toString());
-						bw.append("\r\n");
-						
+			if ( spl[2].equals("1") && spl[4].equals("900000000000073002")){
+
+				Long cid=Long.parseLong(spl[0]);
+				if (prevSDConc.contains(cid)){
+					for (Long intPrim: curr){
+						Boolean isParent=tClos.isParent(intPrim,cid);
+						if (isParent!=null && isParent){
+							isParent=prevTClos.isParent(intPrim,cid);
+							if (isParent!=null && isParent==false){
+								bw.append(cid.toString());
+								bw.append("\r\n");
+
+							}
+						}
 					}
 				}
 			}
@@ -319,7 +335,7 @@ public class TestConcepts {
 		while ((line=br.readLine())!=null){
 			spl=line.split("\t",-1);
 			desc=Long.parseLong(spl[0]);
-			
+
 			if (spl[1].equals("91723000") ){
 				bscpts.add(desc);
 			}else if (spl[1].equals("4421005") ){
@@ -355,7 +371,7 @@ public class TestConcepts {
 	public HashSet<Long> getCptsWithoutEntire(HashSet<Long> entireCpt,
 			String tClos_file) throws IOException {
 		HashSet<Long> cpts=new HashSet<Long>();
-		
+
 		BufferedReader br=FileHelper.getReader(tClos_file);
 		br.readLine();
 		String line;
@@ -366,7 +382,7 @@ public class TestConcepts {
 			spl=line.split("\t",-1);
 			desc=Long.parseLong(spl[0]);
 			asc=Long.parseLong(spl[1]);
-			
+
 			if (entireCpt.contains(asc) & !entireCpt.contains(desc)){
 				cpts.add(desc);
 			}
@@ -391,9 +407,9 @@ public class TestConcepts {
 			File resultTmpFolder, 
 			String releaseDate,
 			String previousReleaseDate) throws IOException {
-		
+
 		HashSet<Long> concepts=new HashSet<Long>();
-		
+
 		File sortedFile = FileHelper.getSortedFile(new File(fullCpts), this.outputFolder, resultTmpFolder, new int[]{0,1});
 		BufferedReader br=FileHelper.getReader(sortedFile);
 		br.readLine();
@@ -419,7 +435,7 @@ public class TestConcepts {
 			}
 		}
 		br.close();
-		
+
 		return concepts;
 	}
 
@@ -435,7 +451,7 @@ public class TestConcepts {
 	public HashSet<Long> filterConceptsByReason(HashSet<Long> cpts,
 			String attvalue, String reason) throws IOException {
 		HashSet<Long> concepts=new HashSet<Long>();
-		
+
 		BufferedReader br=FileHelper.getReader(attvalue);
 		br.readLine();
 		String line;
@@ -474,7 +490,7 @@ public class TestConcepts {
 		currFile=CurrentFile.get().getProximalPrimitiveFile();
 		if (currFile==null){
 			File completedFilesFolder=CurrentFile.get().getCompletedFilesFolder();
-			
+
 			if (CurrentFile.get().getReleaseDependenciesFullFolders()!=null){
 
 				statedRels=CurrentFile.get().getCompleteStatedRelationshipSnapshot();
@@ -484,7 +500,7 @@ public class TestConcepts {
 			}
 			concFile=CurrentFile.get().getSnapshotConceptFile();
 			File outputFile=new File(completedFilesFolder,"current_prim_prox.txt");
-			
+
 			TClosure tClos=new TClosure(statedRels,4,5,7,2);
 
 			getProximalPrimitive(concFile, completeConcFile, outputFile, tClos);
@@ -506,7 +522,7 @@ public class TestConcepts {
 			}
 			concFile=PreviousFile.get().getSnapshotConceptFile();
 			File outputFile=new File(completedFilesFolder,"previous_prim_prox.txt");
-			
+
 			TClosure tClos=new TClosure(statedRels,4,5,7,2);
 
 			getProximalPrimitive(concFile, completeConcFile, outputFile, tClos);
@@ -577,7 +593,7 @@ public class TestConcepts {
 		while ((line=br.readLine())!=null){
 			spl=line.split("\t",-1);
 			Long cid=Long.parseLong(spl[4]);
-			if (sdConcepts.containsKey(cid)
+			if (sdConcepts.containsKey(cid) && sdConcepts.get(cid).equals(1)
 					&& spl[2].equals("1") && spl[7].compareTo(I_Constants.ISA)!=0){
 				String key=spl[4]+ "-" + spl[7] + ":" + spl[5];
 				if (!preInf.containsKey(key)){
@@ -591,7 +607,6 @@ public class TestConcepts {
 					}else{
 						preInf.remove(key);
 					}
-					sdConcepts.put(cid, 1);
 				}
 			}
 		}
@@ -607,20 +622,20 @@ public class TestConcepts {
 				}
 			}
 		}
-		
+
 		BufferedWriter bw = FileHelper.getWriter(ret);
 		bw.append("id");
 		bw.append("\r\n");
 		for (Long cid:modified){
 			bw.append(cid.toString());
 			bw.append("\r\n");
-			
+
 		}
 		bw.close();
 		CurrentFile.get().setCanonicalChangesOnSDConceptsFile(ret);
 		return ret;
 	}
-	
+
 	/**
 	 * Gets the stated changes on sd concepts file.
 	 *
@@ -633,9 +648,9 @@ public class TestConcepts {
 		String ret=outputFolder.getAbsolutePath() + "/" + "statedChangesOnSDConceptsFile.txt";
 		String statedRels;
 		String concFile;
-		
+
 		concFile=PreviousFile.get().getSnapshotConceptFile();
-		
+
 		BufferedReader br = FileHelper.getReader(concFile);
 
 		br.readLine();
@@ -650,9 +665,9 @@ public class TestConcepts {
 			}
 		}
 		br.close();
-		
+
 		concFile=CurrentFile.get().getSnapshotConceptFile();
-		
+
 		br = FileHelper.getReader(concFile);
 
 		br.readLine();
@@ -668,9 +683,9 @@ public class TestConcepts {
 		}
 		br.close();
 
-		
+
 		statedRels=CurrentFile.get().getSnapshotStatedRelationshipFile();
-			
+
 		br = FileHelper.getReader(statedRels);
 		br.readLine();
 
@@ -708,7 +723,7 @@ public class TestConcepts {
 		currFile=CurrentFile.get().getProximalPrimitiveFile();
 		if (currFile==null){
 			File completedFilesFolder=CurrentFile.get().getCompletedFilesFolder();
-			
+
 			if (CurrentFile.get().getReleaseDependenciesFullFolders()!=null){
 
 				statedRels=CurrentFile.get().getCompleteStatedRelationshipSnapshot();
@@ -718,7 +733,7 @@ public class TestConcepts {
 			}
 			concFile=CurrentFile.get().getSnapshotConceptFile();
 			File outputFile=new File(completedFilesFolder,"current_prim_prox.txt");
-			
+
 			TClosure tClos=new TClosure(statedRels,4,5,7,2);
 
 			getProximalPrimitive(concFile, completeConcFile, outputFile, tClos);
@@ -759,7 +774,7 @@ public class TestConcepts {
 					&& spl[2].equals("1")  
 					&& spl[7].compareTo(I_Constants.ISA)==0){
 				Long tgt=Long.parseLong(spl[5]);
-				
+
 				if (canonical.containsKey(tgt)){
 					if (identicalPrimitives(canonical.get(cid),canonical.get(tgt))){
 						List<Long>tgts=candidate.get(cid);
@@ -785,8 +800,8 @@ public class TestConcepts {
 		br.close();
 
 		canonical=null;
-		
-		
+
+
 		HashMap<Long, HashMap<Integer,TreeSet<String>>> rels = new HashMap<Long,HashMap<Integer,TreeSet<String>>>();
 		br = FileHelper.getReader(CurrentFile.get().getSnapshotRelationshipFile());
 		br.readLine();
@@ -797,7 +812,7 @@ public class TestConcepts {
 			if ((candidate.containsKey(cid) || parentToTest.contains(cid))
 					&& spl[2].equals("1")  
 					&& spl[7].compareTo(I_Constants.ISA)!=0){
-				
+
 				HashMap<Integer,TreeSet<String>> cptRels;
 				if (rels.containsKey(cid)){
 					cptRels=rels.get(cid);
@@ -818,7 +833,7 @@ public class TestConcepts {
 			}
 		}
 		br.close();
-		
+
 
 		BufferedWriter bw = FileHelper.getWriter(ret);
 		bw.append("id");
@@ -828,24 +843,24 @@ public class TestConcepts {
 
 		for (Long cid:candidate.keySet()){
 			List<Long> parents=candidate.get(cid);
-			
+
 			HashMap<Integer, TreeSet<String>> cidRels = rels.get(cid);
 			for(Long parent:parents){
 				HashMap<Integer, TreeSet<String>> parentRels = rels.get(parent);
-				
+
 				if (!diffRels(cidRels,parentRels)){
 
 					bw.append(cid.toString());
 					bw.append("\t");
 					bw.append(parent.toString());
 					bw.append("\r\n");
-					
+
 				}
 			}
-			
+
 		}
 		bw.close();
-		
+
 		return ret;
 	}
 
@@ -873,13 +888,13 @@ public class TestConcepts {
 			boolean equalGroup=false;
 			for (Integer parentGroup:parentRels.keySet()){
 				TreeSet<String> parentMembers = parentRels.get(parentGroup);
-				
+
 				if (cidMembers.size()!=parentMembers.size()){
 					continue;
 				}
 				boolean equalTriple=true;
 				Iterator<String> iter = cidMembers.iterator();
-				
+
 				while(iter.hasNext()){
 					String cidRoleTgt=iter.next();
 					String parentRoleTgt=parentMembers.iterator().next();
@@ -892,7 +907,7 @@ public class TestConcepts {
 					equalGroup=true;
 					break;
 				}
-					
+
 			}
 			if (!equalGroup){
 				return true;
