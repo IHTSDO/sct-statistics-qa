@@ -27,7 +27,6 @@
 	</build>
 	<modules>
 		<module>sct-stats-generator</module>
-		<module>sct-stats-viewer</module>
 		<module>sct-stats-package</module>
 	</modules>
 </project>

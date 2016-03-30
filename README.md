@@ -11,7 +11,6 @@ Components:
 
 * Data generator: reads release files, executes queries, creates outputs.
 * Command line tool: packages the generator in a format that enables the execution from the command line
-* Results viewer: basic visualization tool to browse the output
 
 All these components are included in a single multi-module Maven Java project, that facilitates distribution and deployment.
 
@@ -72,17 +71,3 @@ After the process finishes the following folders will contain the results:
 
 * toolkit/stats_output: contains the statistics results, as CSV files.
 * toolkit/patterns_output: contains the output of the patterns results, as JSON files.
-
-When the files creation finishes, the process automatically launches a results server that be accessed from a web browser, this tool is explained in the next chapter. To exit the server press Enter in the command line window.
-
-###	Browsing results
-
-When all the statics and patterns queries have ended, point a web browser to this URL:
-
-```
-http://localhost:8080
-```
-
-The site displays the resulting information, organized in a friendly way and with sorting and filtering utilities.
-The site can be copied into a web server and published to external consumption, all the site is contained in the folder /site. The site uses Ajax to dynamically load content, and it requires a web server to run, the index.html won’t load content properly if opened directly as a file from a web browser.
-The Statistics reports home page contains a few dynamic graphs generated form the results data, and options to visualize each individual report.
