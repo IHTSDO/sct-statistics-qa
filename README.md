@@ -14,6 +14,10 @@ Components:
 
 All these components are included in a single multi-module Maven Java project, that facilitates distribution and deployment.
 
+## Dependencies
+
+This project has a dependency on the [HTML5 Viewer](https://github.com/termMed/sct-stats-viewer) for rendenring the results in an HTML site. It's necessary to build that project before the SNOMED CT Pattern and Changes Evaluation Toolkit, to ensure that the dependency is available in the maven repository.
+
 ## Running the statistics 
 
 ### Unpacking the binaries
