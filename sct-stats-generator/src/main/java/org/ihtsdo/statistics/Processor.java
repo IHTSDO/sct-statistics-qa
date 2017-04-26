@@ -195,7 +195,12 @@ public class Processor {
 				ResultSetMetaData meta= rs.getMetaData();
 				while(rs.next()){
 					for (int i=0;i<meta.getColumnCount();i++){
-						bw.append(rs.getObject(i+1).toString().replaceAll(",","&#44;").trim());
+
+						if (rs.getObject(i+1)!=null){
+							bw.append(rs.getObject(i+1).toString().replaceAll(",","&#44;").trim());
+						}else{
+							bw.append("");
+						}
 						if (i+1<meta.getColumnCount()){
 							bw.append(",");
 						}else{
@@ -256,7 +261,12 @@ public class Processor {
 					ResultSetMetaData meta= rs.getMetaData();
 					while(rs.next()){
 						for (int i=0;i<meta.getColumnCount();i++){
-							bw.append(rs.getObject(i+1).toString());
+
+							if (rs.getObject(i+1)!=null){
+								bw.append(rs.getObject(i+1).toString());
+							}else{
+								bw.append("");
+							}
 							if (i+1<meta.getColumnCount()){
 								bw.append(",");
 							}else{

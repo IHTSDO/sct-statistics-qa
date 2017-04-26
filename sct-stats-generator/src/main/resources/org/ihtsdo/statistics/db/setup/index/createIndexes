@@ -2,6 +2,7 @@ create index s_concepts_pre_ix1 on  s_concepts_pre(id asc);
 create index s_concepts_ix1 on s_concepts(id asc);
  create index s_descriptions_ix2 on s_descriptions (conceptId asc);
  create index s_descriptions_ix3 on s_descriptions (effectiveTime asc);
+ create index s_descriptions_pre_ix2 on s_descriptions_pre (conceptId asc);	
  create index s_statedrels_ix1 on  s_statedrels(sourceid asc);
  create index s_statedrels_ix2 on  s_statedrels(effectiveTime asc);
  create index s_relationships_ix1 on  s_relationships(sourceid asc);

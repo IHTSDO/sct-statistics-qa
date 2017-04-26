@@ -50,9 +50,10 @@ values ( 138875005, 'SNOMED CT Concept (SNOMED RT+CTV3)' , cast(0 as integer) , 
 Update cptRootLevel_table3
 set RetiredConcepts=retCpts;
 
+if totCpt>0 then
 Update cptRootLevel_table3
 set PercentOfTotal =convert(100, decimal(16,2)) * retCpts/totCpt;
-
+end if;
 Update cptRootLevel_table3
 set PercentOfAllRetired =100;
 
