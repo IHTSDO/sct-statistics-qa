@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.ihtsdo</groupId>
 		<artifactId>sct-statistics-qa</artifactId>
-		<version>1.0.4-SNAPSHOT</version>
+		<version>1.0.4</version>
 	</parent>
 	<artifactId>sct-stats-generator</artifactId>
 	<packaging>jar</packaging>
@@ -25,8 +25,8 @@
 			<version>1.6</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-IO</groupId>
-			<artifactId>commons-IO</artifactId>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
         <dependency>

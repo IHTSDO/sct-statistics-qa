@@ -3,11 +3,14 @@
   <parent>
     <groupId>org.ihtsdo</groupId>
     <artifactId>sct-statistics-qa</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
   </parent>
   <artifactId>sct-stats-package</artifactId>
    <properties>
   <nano_webserver_version>2.2.1-SNAPSHOT</nano_webserver_version>
+		<packageName>${project.artifactId}</packageName>
+		<execFinalName>${project.build.finalName}-package.zip</execFinalName>
+		<jdeb.version>1.5</jdeb.version>
   </properties>
 	<build>
 		<resources>
@@ -35,6 +38,60 @@
 							<goal>single</goal>
 						</goals>
 						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+							<!-- create deb -->
+			<plugin>
+				<groupId>org.vafer</groupId>
+				<artifactId>jdeb</artifactId>
+				<version>${jdeb.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jdeb</goal>
+						</goals>
+						<configuration>
+							<deb>${project.build.directory}/${packageName}-${project.version}-all.deb</deb>
+							<controlDir>${project.basedir}/deb/control</controlDir>
+							<snapshotExpand>true</snapshotExpand>
+							<snapshotEnv>BUILD_NUMBER</snapshotEnv>
+							<verbose>true</verbose>
+							<classifier>all</classifier>
+							<signPackage>false</signPackage>
+							<dataSet>
+								<data>
+									<src>${project.build.directory}/${execFinalName}</src>
+									<dst>${packageName}.zip</dst>
+									<type>file</type>
+									<mapper>
+										<type>perm</type>
+										<prefix>/opt/${packageName}/</prefix>
+									</mapper>
+								</data>
+								<data>
+									<type>template</type>
+									<paths>
+										<path>/etc/opt/${packageName}</path>
+										<path>/opt/${packageName}</path>
+									</paths>
+								</data>
+								<data>
+									<type>template</type>
+									<paths>
+										<path>/opt/${packageName}</path>
+									</paths>
+									<mapper>
+										<type>perm</type>
+										<user>${packageName}</user>
+										<group>${packageName}</group>
+										<dirmode>0750</dirmode>
+										<filemode>0750</filemode>
+									</mapper>
+								</data>
+							</dataSet>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

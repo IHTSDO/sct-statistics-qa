@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+#For debugging uncomment these two lines
+set -x
+echo $*
+APP_NAME=[[packageName]]
+INSTALL_DIR=/opt/$APP_NAME
+#make sure VERSION_DIR exists
+test -d $INSTALL_DIR || mkdir -p $INSTALL_DIR
+
+# Record package version number
+echo [[version]] > $INSTALL_DIR/version.txt
+
+#unzip
+unzip $INSTALL_DIR/sct-stats-package.zip -d $INSTALL_DIR
+#make the sh scripts executable
+chmod 0770 $INSTALL_DIR/Extension_Stats.sh 
+chmod 0770 $INSTALL_DIR/Stats.sh 
