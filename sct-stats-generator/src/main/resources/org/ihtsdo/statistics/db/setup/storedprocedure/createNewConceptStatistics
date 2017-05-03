@@ -37,10 +37,12 @@ Update cptRootLevel_table2
 set NewConcepts=newCpts ;
 
 
+if totCpt>0 then
 
 Update cptRootLevel_table2 
 set PercentOfTotal=(convert(100, decimal(16,2)) * newCpts/totCpt);
 
+end if;
 
 Update cptRootLevel_table2 
 set PercentOfAllNew=100;

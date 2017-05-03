@@ -283,6 +283,9 @@ values ( 138875005, 'SNOMED CT Concept (SNOMED RT+CTV3)' , cast(0 as decimal(5,2
 -- insert into testtime values (2,'cptRootLevel_table5' , CURRENT_TIMESTAMP);
 
 -- insert into testtime values (1,'cptRootLevel_table5 fields update' , CURRENT_TIMESTAMP);
+
+if totCpt>0 then
+
 Update cptRootLevel_table5
 set PercOfStatedDefChange=convert(100, decimal(16,2)) * statedCh / totCpt;
 
@@ -305,6 +308,7 @@ set PercOfFSNChange = convert(100, decimal(16,2)) * vFsnCh / totCpt;
 Update cptRootLevel_table5
 set PercOfAnyChange = convert(100, decimal(16,2)) * vAnyCh / totCpt;
 
+end if;
 
 -- insert into testtime values (2,'cptRootLevel_table5 fields update' , CURRENT_TIMESTAMP);
 truncate table cptFirstLevel_table5;
