@@ -418,11 +418,15 @@ public class TClosure {
 			HashSet<Long> pConcepts) {
 		HashSet<Long>ret=new HashSet<Long>();
 		HashSet<Long> parents = parentHier.get(concept);
-		for (Long parent:parents){
-			if (pConcepts.contains(parent)){
-				addNewProximalParent(ret,parent);
-			}else{
-				ret.addAll(getProximalPrimitives(parent,pConcepts));
+		if (parents == null) {
+			System.out.println ("*** WARNING: No parents defined for concept " + concept);
+		} else {
+			for (Long parent:parents){
+				if (pConcepts.contains(parent)){
+					addNewProximalParent(ret,parent);
+				}else{
+					ret.addAll(getProximalPrimitives(parent,pConcepts));
+				}
 			}
 		}
 		return ret;
