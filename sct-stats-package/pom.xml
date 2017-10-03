@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.ihtsdo</groupId>
     <artifactId>sct-statistics-qa</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.1</version>
   </parent>
   <artifactId>sct-stats-package</artifactId>
    <properties>
